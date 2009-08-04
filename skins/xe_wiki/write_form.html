@@ -8,9 +8,11 @@
 <input type="hidden" name="content" value="{$oDocument->getContentText()}" />
 <!--@end-->
 <input type="hidden" name="document_srl" value="{$document_srl}" />
-<input type="hidden" name="title" value="{$entry}" />
 
 <div class="wikiWriteHeader">
+
+	<div class="title"><input type="text" name="title" value="{$entry}" class="inputTypeText" /></div>
+
 
     <div class="editor">{$oDocument->getEditor()}</div>
 	

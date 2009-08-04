@@ -3,10 +3,8 @@
     <node target="title" required="true" minlength="1" maxlength="250" />
     <node target="content" required="true" />
   </form>
-  <response callback_func="completeDocumentInserted">
+  <response>
     <tag name="error" />
     <tag name="message" />
-    <tag name="mid" />
-    <tag name="document_srl" />
   </response>
 </filter>

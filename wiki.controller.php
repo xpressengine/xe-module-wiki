@@ -6,6 +6,12 @@
         }
 
         function procWikiInsertDocument() {
+            // document module의 model 객체 생성
+            $oDocumentModel = &getModel('document');
+
+            // document module의 controller 객체 생성
+            $oDocumentController = &getController('document');
+
             // 권한 체크
             if(!$this->grant->write_document) return new Object(-1, 'msg_not_permitted');
             $entry = Context::get('entry');
@@ -13,14 +19,8 @@
             // 글작성시 필요한 변수를 세팅
             $obj = Context::getRequestVars();
             $obj->module_srl = $this->module_srl;
-            if($this->module_info->use_comment != 'N')
-            {
-                $obj->allow_comment = 'Y';
-            }
-            else
-            {
-                $obj->allow_comment = 'N';
-            }
+            if($this->module_info->use_comment != 'N') $obj->allow_comment = 'Y';
+            else $obj->allow_comment = 'N';
 
             if(!$obj->nick_name) $obj->nick_name = "anonymous";
             if($obj->is_notice!='Y'||!$this->grant->manager) $obj->is_notice = 'N';
@@ -30,18 +30,20 @@
             //그래도 없으면 Untitled
             if($obj->title == '') $obj->title = 'Untitled';
 
-            // document module의 model 객체 생성
-            $oDocumentModel = &getModel('document');
-
-            // document module의 controller 객체 생성
-            $oDocumentController = &getController('document');
-
             // 이미 존재하는 글인지 체크
             $oDocument = $oDocumentModel->getDocument($obj->document_srl, $this->grant->manager);
 
             // 이미 존재하는 경우 수정
             if($oDocument->isExists() && $oDocument->document_srl == $obj->document_srl) {
                 $output = $oDocumentController->updateDocument($oDocument, $obj);
+
+                // 성공적으로 수정되었을 경우 계층구조/ alias 변경
+                if($output->toBool()) {
+                    $oDocumentController->deleteDocumentAliasByDocument($obj->document_srl);
+                    $oDocumentController->insertAlias($obj->module_srl, $obj->document_srl, $obj->title);
+                    FileHandler::removeFile(sprintf('%sfiles/cache/wiki/%d.xml', _XE_PATH_,$this->module_srl));
+
+                }
                 $msg_code = 'success_updated';
 
             // 그렇지 않으면 신규 등록
@@ -56,8 +58,14 @@
             if(!$output->toBool()) return $output;
 
             // 결과를 리턴
-            $this->add('mid', Context::get('mid'));
-            $this->add('document_srl', $output->get('document_srl'));
+            $entry = $oDocumentModel->getAlias($output->get('document_srl'));
+            if($entry) {
+                $site_module_info = Context::get('site_module_info');
+                $url = getSiteUrl($site_module_info->document,'','mid',$this->module_info->mid,'entry',$entry);
+            } else {
+                $url = getSiteUrl($site_module_info->document,'','document_srl',$output->get('document_srl'));
+            }
+            $this->setRedirectUrl($url);
 
             // 성공 메세지 등록
             $this->setMessage($msg_code);
@@ -134,6 +142,33 @@
             $this->add('mid', Context::get('mid'));
             $this->add('document_srl', $obj->document_srl);
             $this->add('comment_srl', $obj->comment_srl);
+        }
+
+        function procWikiDeleteDocument() {
+            $oDocumentController = &getController('document');
+            $oDocumentModel = &getModel('document');
+
+            // 권한 체크
+            if(!$this->grant->delete_document) return new Object(-1, 'msg_not_permitted');
+
+            $document_srl = Context::get('document_srl');
+            if(!$document_srl) return new Object(-1,'msg_invalid_request');
+
+            $oDocument = $oDocumentModel->getDocument($document_srl);
+            if(!$oDocument || !$oDocument->isExists()) return new Object(-1,'msg_invalid_request');
+
+            $output = $oDocumentController->deleteDocument($oDocument->document_srl);
+            if(!$output->toBool()) return $output;
+
+            $oDocumentController->deleteDocumentAliasByDocument($oDocument->document_srl);
+            FileHandler::removeFile(sprintf('%sfiles/cache/wiki/%d.xml', _XE_PATH_,$this->module_srl));
+
+            $tree_args->module_srl = $this->module_srl;
+            $tree_args->document_srl = $oDocument->document_srl;
+            $output = executeQuery('wiki.deleteTreeNode', $tree_args);
+
+            $site_module_info = Context::get('site_module_info');
+            $this->setRedirectUrl(getSiteUrl($site_module_info->domain,'','mid',$this->module_info->mid));
         }
 
         function procWikiDeleteComment() {

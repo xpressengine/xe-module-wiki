@@ -76,6 +76,9 @@
                     <!--@if($oDocument->isExists()&&$act!='dispWikiEditPage')-->
                         <span class="buttonOfficial"><a href="{getUrl('act','dispWikiEditPage','entry',$entry)}">{$lang->cmd_edit}</a></span>
                     <!--@end-->
+                    <!--@if($oDocument->isExists()&&$grant->delete_document)-->
+                        <span class="buttonOfficial"><a href="#" onclick="if(confirm('{$lang->confirm_delete}')) { doDeleteWiki('{$oDocument->document_srl}'); }; return false;">{$lang->cmd_delete}</a></span>
+                    <!--@end-->
                     <!--@if($use_history != 'N')-->
                         <span class="buttonOfficial"><a href="{getUrl('act','dispWikiHistory','document_srl',$oDocument->document_srl,'history_srl','')}">Histories</a></span>
                     <!--@end-->

@@ -339,16 +339,17 @@
 .wikiWrite li{ list-style:none;}
 .wikiWrite fieldset{ border:0;}
 .wikiWrite legend{ position:absolute; width:0; height:0; overflow:hidden; font:0/0 Sans-serif; visibility:hidden;}
-.wikiWrite .wikiWriteHeader{ margin:0 0 1em 0;}
-.wikiWrite .wikiWriteHeader *{ vertical-align:middle;}
-.wikiWrite .wikiWriteHeader select{ font-size:12px; vertical-align:top; height:23px;}
-.wikiWrite .wikiWriteHeader .inputText{ width:400px; padding:3px 4px; height:15px; font-size:12px; *margin-top:-1px;}
-.wikiWrite .wikiWriteHeader dl.title dd{ white-space:nowrap;}
-.wikiWrite .wikiWriteHeader dl.title dd .inputText{ width:60%;}
 .wikiWrite .tag{ clear:both; margin-bottom:10px; *zoom:1;}
 .wikiWrite .tag:after{ content:""; display:block; float:none; clear:both;}
 .wikiWrite .tag .inputText{ float:left; width:330px; padding:4px 4px 2px 4px; margin-right:10px; font-size:12px;}
 .wikiWrite .tag p{ float:left;}
+
+.wikiWriteHeader{ margin:0 0 1em 0;}
+.wikiWriteHeader *{ vertical-align:middle;}
+.wikiWriteHeader select{ font-size:12px; vertical-align:top; height:23px;}
+.wikiWriteHeader .inputText{ width:400px; padding:3px 4px; height:15px; font-size:12px; *margin-top:-1px;}
+.wikiWriteHeader .title { margin:0 0 10px 0; }
+.wikiWriteHeader .title .inputTypeText { font-size:14pt; width:99%; font-weight:bold;}
 
 /* Editor */
 .wiki .wikiEditor{ border:1px solid; margin-bottom:20px; -moz-border-radius:5px; -webkit-border-radius:5px; }
