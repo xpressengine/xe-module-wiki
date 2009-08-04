@@ -348,7 +348,7 @@
 .wikiWriteHeader *{ vertical-align:middle;}
 .wikiWriteHeader select{ font-size:12px; vertical-align:top; height:23px;}
 .wikiWriteHeader .inputText{ width:400px; padding:3px 4px; height:15px; font-size:12px; *margin-top:-1px;}
-.wikiWriteHeader .title { margin:0 0 10px 0; }
+.wikiWriteHeader .title { margin:0 0 30px 0; }
 .wikiWriteHeader .title .inputTypeText { font-size:14pt; width:99%; font-weight:bold;}
 
 /* Editor */
