@@ -168,7 +168,41 @@
                         {
                             Context::set('history', $output);
                         }
-                    } 
+                    } 	
+
+					// pre/next
+					$category_list = $oDocumentModel->getCategoryList($this->module_info->module_srl);
+					if($category_list && is_array($category_list)){
+						$prev = null;
+						$next = null;
+
+					 	$category_list = array_values($category_list);
+
+						for($i=0,$c=count($category_list);$i<$c;$i++){
+							if($category_list[$i]->category_srl == $oDocument->document_srl){
+
+								if(array_key_exists($i-1,$category_list) && $category_list[$i-1]){
+									$prev = $category_list[$i-1]->category_srl;
+									if($prev){
+										Context::set('oDocumentPrev',$oDocumentModel->getDocument($prev));
+									}else{
+										// todo front page
+									}
+
+								}
+								if(array_key_exists($i+1,$category_list) && $category_list[$i+1]){
+									$next = $category_list[$i+1]->category_srl;
+									if($next){
+										Context::set('oDocumentNext',$oDocumentModel->getDocument($next));
+									}
+
+								}
+							}
+						}
+
+
+					}
+
 
                 // 요청된 문서번호의 문서가 없으면 document_srl null 처리 및 경고 메세지 출력
                 } else {

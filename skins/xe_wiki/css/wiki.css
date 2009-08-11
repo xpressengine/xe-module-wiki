@@ -202,6 +202,11 @@
 .wikiReadBody .xe_content{ overflow:hidden; }
 .wikiReadBody .xe_content a { text-decoration:underline; }
 
+.wikiReadFooter .wikiNavigation { *zoom:1; margin-top:15px;border-top:1px solid #ccc !important; padding:10px;}
+.wikiReadFooter .wikiNavigation:after { content:""; display:block; clear:both;}
+.wikiReadFooter .wikiNavigation .wikiPrev { float:left;}
+.wikiReadFooter .wikiNavigation .wikiNext { float:right;}
+
 .wikiReadFooter .memberSignature { border:1px solid; padding:10px; margin:1em 0; overflow:hidden; *zoom:1; clear:both; -moz-border-radius:5px; -webkit-border-radius:5px;}
 .wikiReadFooter .memberSignature img.profile { margin:0 1em 0 0; border:1px solid;}
 .wikiReadFooter .tag{ margin:1em 0; clear:both;}

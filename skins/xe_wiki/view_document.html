@@ -24,7 +24,15 @@
 		<!--@end-->
 	</div>
 	<div class="wikiReadFooter">
-	
+		<div class="wikiNavigation">
+		<!--@if($oDocumentPrev)-->
+			<a href="{$oDocumentPrev->getPermanentUrl()}" class="wikiPrev">&laquo; {$oDocumentPrev->getTitle()}</a>
+		<!--@end-->
+		<!--@if($oDocumentNext)-->
+			<a href="{$oDocumentNext->getPermanentUrl()}" class="wikiNext">{$oDocumentNext->getTitle()} &raquo;</a>
+		<!--@end-->
+		</div>
+
 		{@ $tag_list = $oDocument->get('tag_list') }
 		<!--@if(count($tag_list))-->
 		<dl class="tag">
