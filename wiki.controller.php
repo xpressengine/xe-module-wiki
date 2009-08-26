@@ -35,14 +35,14 @@
 
             // 이미 존재하는 경우 수정
             if($oDocument->isExists() && $oDocument->document_srl == $obj->document_srl) {
+                if($oDocument->get('title')=='Front Page') $obj->title = 'Front Page';
                 $output = $oDocumentController->updateDocument($oDocument, $obj);
 
                 // 성공적으로 수정되었을 경우 계층구조/ alias 변경
                 if($output->toBool()) {
                     $oDocumentController->deleteDocumentAliasByDocument($obj->document_srl);
                     $oDocumentController->insertAlias($obj->module_srl, $obj->document_srl, $obj->title);
-                    FileHandler::removeFile(sprintf('%sfiles/cache/wiki/%d.xml', _XE_PATH_,$this->module_srl));
-
+                    $this->recompileTree($this->module_srl);
                 }
                 $msg_code = 'success_updated';
 
@@ -156,12 +156,13 @@
 
             $oDocument = $oDocumentModel->getDocument($document_srl);
             if(!$oDocument || !$oDocument->isExists()) return new Object(-1,'msg_invalid_request');
+            if($oDocument->get('title')=='Front Page') return new Object(-1,'msg_invalid_request');
 
             $output = $oDocumentController->deleteDocument($oDocument->document_srl);
             if(!$output->toBool()) return $output;
 
             $oDocumentController->deleteDocumentAliasByDocument($oDocument->document_srl);
-            FileHandler::removeFile(sprintf('%sfiles/cache/wiki/%d.xml', _XE_PATH_,$this->module_srl));
+            $this->recompileTree($this->module_srl);
 
             $tree_args->module_srl = $this->module_srl;
             $tree_args->document_srl = $oDocument->document_srl;
@@ -278,9 +279,40 @@
                     if(!$output->toBool()) return $output;
                 }
             }
+            $this->recompileTree($this->module_srl);
+        }
 
-            // 캐시파일 재생성
-            FileHandler::removeFile(sprintf('%sfiles/cache/wiki/%d.xml', _XE_PATH_,$this->module_srl));
+        /**
+         * @brief 위키 계층 구조 재생성
+         **/
+        function procWikiRecompileTree() {
+            if(!$this->grant->write_document) return new Object(-1,'msg_not_permitted');
+            return $this->recompileTree($this->module_srl);
+        }
+
+        function recompileTree($module_srl) {
+            $oWikiModel = &getModel('wiki');
+            $list = $oWikiModel->loadWikiTreeList($module_srl);
+
+            $dat_file = sprintf('%sfiles/cache/wiki/%d.dat', _XE_PATH_,$module_srl);
+            $xml_file = sprintf('%sfiles/cache/wiki/%d.xml', _XE_PATH_,$module_srl);
+
+            $buff = '';
+            $xml_buff = "<root>\n";
+
+            // cache 파일 생성
+            foreach($list as $key => $val) {
+                $buff .= sprintf('%d,%d,%d,%d,%s%s',$val->parent_srl,$val->document_srl,$val->depth,$val->childs,$val->title,"\n");
+                $xml_buff .= sprintf('<node node_srl="%d" parent_srl="%d" title="%s" />%s', $val->document_srl, $val->parent_srl, $val->title,"\n");
+            }
+
+            $xml_buff .= '</root>';
+
+            FileHandler::writeFile($dat_file, $buff);
+            FileHandler::writeFile($xml_file, $xml_buff);
+
+            return new Object();
+
         }
 
     }

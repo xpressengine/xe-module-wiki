@@ -18,6 +18,8 @@
          * document_category테이블에 등록되어 있지 않은 경우 depth = 0 으로 하여 신규 생성
          **/
         function getWikiTreeList() {
+            $oWikiController = &getController('wiki');
+
             header("Content-Type: text/xml; charset=UTF-8");
             header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
             header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -25,69 +27,103 @@
             header("Cache-Control: post-check=0, pre-check=0", false);
             header("Pragma: no-cache");
 
-            $oModuleModel = &getModel('module');
+            if(!$this->module_srl) return new Object(-1,'msg_invalid_request');
 
-            $mid = Context::get('mid');
-
-            $cache_file = sprintf('%sfiles/cache/wiki/%d.xml', _XE_PATH_,$this->module_srl);
-            if($this->grant->write_document || !file_exists($cache_file)) {
-                 FileHandler::writeFile($cache_file, $this->loadWikiTreeList($this->module_srl));
-            }
-
-            print FileHandler::readFile($cache_file);
+            $xml_file = sprintf('%sfiles/cache/wiki/%d.xml', _XE_PATH_,$this->module_srl);
+            if(!file_exists($xml_file)) $oWikiController->recompileTree($this->module_srl);
+            print FileHandler::readFile($xml_file);
             Context::close();
             exit();
         }
 
-        function loadWikiTreeList($module_srl) {
-            // 문서 목록
-            $list = array();
+        function readWikiTreeCache($module_srl) {
+            $oWikiController = &getController('wiki');
+            if(!$module_srl) return new Object(-1,'msg_invalid_request');
 
+            $dat_file = sprintf('%sfiles/cache/wiki/%d.dat', _XE_PATH_,$module_srl);
+            if(!file_exists($dat_file)) $oWikiController->recompileTree($module_srl);
+            $buff = explode("\n", trim(FileHandler::readFile($dat_file)));
+            if(!count($buff)) return array();
+            foreach($buff as $val) {
+                if(!preg_match('/^([0-9]+),([0-9]+),([0-9]+),([0-9]+),(.+)$/i', $val, $m)) continue;
+                unset($obj);
+                $obj->parent_srl = $m[1];
+                $obj->document_srl = $m[2];
+                $obj->depth = $m[3];
+                $obj->childs = $m[4];
+                $obj->title = $m[5];
+                $list[] = $obj;
+            }
+            return $list;
+        }
+
+        function loadWikiTreeList($module_srl) {
             // 목록을 구함
             $args->module_srl = $module_srl;
             $output = executeQueryArray('wiki.getTreeList', $args);
 
-            // 구해온 데이터가 없다면 빈 XML파일 return
-            if($output->data) {
-                // 데이트를 이용하여 XML 문서로 생성
-                foreach($output->data as $node) {
-                    $tree[(int)$node->parent_srl][$node->document_srl] = $node;
+            if(!$output->data || !$output->toBool()) return array();
+
+            $list = array();
+            $root_node = null;
+            foreach($output->data as $node) {
+                if($node->title == 'Front Page') {
+                    $root_node = $node;
+                    $root_node->parent_srl = 0;
+                    continue;
+                } 
+                unset($obj);
+                $obj->parent_srl = (int)$node->parent_srl;
+                $obj->document_srl = (int)$node->document_srl;
+                $obj->title = $node->title;
+                $list[$obj->document_srl] = $obj;
+            }
+
+            $tree[$root_node->document_srl]->node = $root_node;
+
+            foreach($list as $document_srl => $node) {
+                if(!$list[$node->parent_srl]) $node->parent_srl = $root_node->document_srl;
+                $tree[$node->parent_srl]->childs[$document_srl] = &$tree[$document_srl];
+                $tree[$document_srl]->node = $node;
+
+            }
+
+            $result[$root_node->document_srl] = $tree[$root_node->document_srl]->node;
+            $result[$root_node->document_srl]->childs = count($tree[$root_node->document_srl]->childs);
+
+            $this->getTreeToList($tree[$root_node->document_srl]->childs, $result,1);
+            return $result;
+        }
+
+        function getPrevNextDocument($module_srl, $document_srl) {
+            $list = $this->readWikiTreeCache($module_srl);
+            if(!count($list)) return array(0,0);
+
+            $prev = $next_srl = $prev_srl = 0;
+            $checked = false;
+            foreach($list as $key => $val) {
+                if($checked) {
+                    $next_srl = $val->document_srl; 
+                    break;
                 }
-
-                // XML 데이터를 생성
-                $xml_doc = '<root>'.$this->getXmlTree($tree[0], $tree).'</root>';
-            } else {
-                $xml_doc = '<root></root>';
+                if($val->document_srl == $document_srl) {
+                    $prev_srl = $prev;
+                    $checked = true;
+                }
+                $prev = $val->document_srl;
             }
-            return $xml_doc;
+            return array($prev_srl, $next_srl);
         }
 
-        function getXmlTree($source_node, $tree) {
-            if(!$source_node) return;
-            
-            foreach($source_node as $document_srl => $node) {
-                $child_buff = "";
-
-                // 자식 노드의 데이터 가져옴
-                if($document_srl && $tree[$document_srl]) $child_buff = $this->getXmlTree($tree[$document_srl], $tree);
-
-                // 변수 정리
-                $parent_srl = $node->parent_srl;
-
-                $title = $node->title;
-                $attribute = sprintf(
-                        'node_srl="%d" parent_srl="%d" title="%s" ',
-                        $document_srl,
-                        $parent_srl,
-                        $title
-                );
-
-                if($child_buff) $buff .= sprintf('<node %s>%s</node>', $attribute, $child_buff);
-                else $buff .=  sprintf('<node %s />', $attribute);
+        function getTreeToList($childs, &$result,$depth) {
+            if(!count($childs)) return;
+            foreach($childs as $key => $node) {
+                $node->node->depth = $depth;
+                $node->node->childs = count($node->childs);
+                $result[$key] = $node->node;
+                if($node->childs) $this->getTreeToList($node->childs, $result,$depth+1);
             }
-            return $buff;
         }
-
 
         function getContributors($document_srl) {
             $oDocumentModel = &getModel('document');

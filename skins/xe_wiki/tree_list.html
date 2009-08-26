@@ -1,17 +1,40 @@
 <!--#include("header.html")-->
 
-<!--// tree javascript plugin load -->
-<!--%load_js_plugin("ui.tree")-->
+<div id="treeList">
+{@ $_pDepth = 0;}
+		<ul>
+			<!--@foreach($list as $key => $val)-->
+			<!--@if($_pDepth > $val->depth)-->
+			<!--@for($i=$val->depth; $i<$_pDepth; $i++)-->
+		</ul>
+		</li>
+		<!--@end-->
+		{@ $_pDepth = $val->depth}
+		<!--@end-->
+		<li>
+		<!--@if($val->childs)-->
+		<!--@end-->
+            <a href="{getSiteUrl($site_module_info->domain, '','mid',$mid,'entry',$val->title)}">{$val->title}</a>
+		<!--@if($val->childs)-->
+		{@$_pDepth++}
+		<ul>
+			<!--@else-->
+			</li>
+			<!--@end-->
+			<!--@end-->
+			<!--@for($i=0;$i<$_pDepth;$i++)-->
+		</ul>
+		<!--@end-->
+		</li>
+		</ul>
 
-<div id="tree">
-    <ul class="simpleTree">
-        <li class="root noIcon"></li>
-    </ul>
+    <!--@if($grant->write_document)-->
+    <div class="treeUI">
+        <a href="{getUrl('act','dispWikiModifyTree')}" class="button"><span>{$lang->cmd_modify}</span></a>
+        <a href="#" class="button" onclick="doRecompileTree(); return false;"><span>{$lang->cmd_remake_cache}</span></a>
+    </div>
+    <!--@end-->
+
 </div>
-
-<script type="text/javascript">
-    var isManageGranted = {$isManageGranted};
-    jQuery(window).load( function() { Tree(); } );
-</script>
 
 <!--#include("footer.html")-->

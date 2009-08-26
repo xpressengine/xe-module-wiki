@@ -34,6 +34,7 @@
         <action name="dispWikiHistory" type="view" />
         <action name="dispWikiTitleIndex" type="view" />
         <action name="dispWikiTreeIndex" type="view" />
+        <action name="dispWikiModifyTree" type="view" />
         <action name="dispWikiReplyComment" type="view" />
         <action name="dispWikiModifyComment" type="view" />
         <action name="dispWikiDeleteComment" type="view" />
@@ -53,5 +54,6 @@
         <action name="procWikiDeleteDocument" type="controller" standalone="true" />
         <action name="procWikiDeleteComment" type="controller" standalone="true" />
         <action name="procWikiMoveTree" type="controller" standalone="true" />
+        <action name="procWikiRecompileTree" type="controller" standalone="true" />
     </actions>
 </module>

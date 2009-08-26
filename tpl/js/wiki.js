@@ -39,3 +39,10 @@ function completeDeleteComment(ret_obj) {
 
     location.href = url;
 }
+
+/* 계층 구조 재생성 */
+function doRecompileTree() {
+    var params = new Array();
+    params['mid'] = current_mid;
+    exec_xml('wiki','procWikiRecompileTree', params);
+}

@@ -202,10 +202,14 @@
 .wikiReadBody .xe_content{ overflow:hidden; }
 .wikiReadBody .xe_content a { text-decoration:underline; }
 
-.wikiReadFooter .wikiNavigation { *zoom:1; margin-top:15px;border-top:1px solid #ccc !important; padding:10px;}
+.wikiReadFooter .wikiNavigation { *zoom:1; margin-top:15px;border-top:1px solid #ccc !important; padding:10px; border-bottom:1px solid #ccc !important;}
 .wikiReadFooter .wikiNavigation:after { content:""; display:block; clear:both;}
 .wikiReadFooter .wikiNavigation .wikiPrev { float:left;}
 .wikiReadFooter .wikiNavigation .wikiNext { float:right;}
+.wikiReadFooter .wikiNavigation .wikiPrev ,
+.wikiReadFooter .wikiNavigation .wikiNext { color:#666; font-weight:bold; font-size:14px; text-decoration:none;}
+.wikiReadFooter .wikiNavigation .wikiPrev:hover ,
+.wikiReadFooter .wikiNavigation .wikiNext:hover { text-decoration:underline;}
 
 .wikiReadFooter .memberSignature { border:1px solid; padding:10px; margin:1em 0; overflow:hidden; *zoom:1; clear:both; -moz-border-radius:5px; -webkit-border-radius:5px;}
 .wikiReadFooter .memberSignature img.profile { margin:0 1em 0 0; border:1px solid;}
@@ -349,7 +353,7 @@
 .wikiWrite .tag .inputText{ float:left; width:330px; padding:4px 4px 2px 4px; margin-right:10px; font-size:12px;}
 .wikiWrite .tag p{ float:left;}
 
-.wikiWriteHeader{ margin:0 0 1em 0;}
+.wikiWriteHeader{ margin:0 0 1em 0; padding:10px 0 0 0;}
 .wikiWriteHeader *{ vertical-align:middle;}
 .wikiWriteHeader select{ font-size:12px; vertical-align:top; height:23px;}
 .wikiWriteHeader .inputText{ width:400px; padding:3px 4px; height:15px; font-size:12px; *margin-top:-1px;}
@@ -431,5 +435,14 @@ a.buttonOfficial a{ _vertical-align:top;}
 .hide { display:none; }
 
 /* tree */
+#tree { position:relative; }
 #tree ul.simpleTree li.noIcon { background:none; }
 #tree ul.simpleTree li ul li span { padding-left:5px; }
+#tree div.treeUI,
+#treeList div.treeUI { position:absolute; right:0; top:20px; }
+
+#treeList { position:relative; padding-top:20px; }
+#treeList ul { margin:0 0 0 20px; padding:0; }
+#treeList ul li { margin:5px 0; padding:0 0 0 0px; }
+#treeList ul li a { color:#000; text-decoration:none; }
+#treeList ul li a:hover { text-decoration:underline; }

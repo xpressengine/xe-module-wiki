@@ -32,6 +32,8 @@
             Context::set('use_history', $document_config->use_history);
 
             Context::addJsFile($this->module_path.'tpl/js/wiki.js');
+
+            Context::set('grant', $this->grant);
         }
 
         /**
@@ -126,15 +128,24 @@
         }
 
         function dispWikiTreeIndex() {
-            Context::set('isManageGranted', $this->grant->write_document?'true':'false');
+            $oWikiModel = &getModel('wiki');
+            Context::set('list', $oWikiModel->readWikiTreeCache($this->module_srl));
             $this->setTemplateFile('tree_list');
         }
 
+        function dispWikiModifyTree() {
+            if(!$this->grant->write_document) return new Object(-1,'msg_not_permitted');
+            Context::set('isManageGranted', $this->grant->write_document?'true':'false');
+            $this->setTemplateFile('modify_tree');
+        }
+
         function dispWikiContentView() {
+            $oWikiModel = &getModel('wiki');
+            $oDocumentModel = &getModel('document');
+
             // 요청된 변수 값들을 정리
             $document_srl = Context::get('document_srl');
             $entry = Context::get('entry');
-            $oDocumentModel = &getModel('document');
             if(!$document_srl && !$entry) {
                 $entry = "Front Page";
                 Context::set('entry', $entry);
@@ -170,39 +181,10 @@
                         }
                     } 	
 
-					// pre/next
-					$category_list = $oDocumentModel->getCategoryList($this->module_info->module_srl);
-					if($category_list && is_array($category_list)){
-						$prev = null;
-						$next = null;
-
-					 	$category_list = array_values($category_list);
-
-						for($i=0,$c=count($category_list);$i<$c;$i++){
-							if($category_list[$i]->category_srl == $oDocument->document_srl){
-
-								if(array_key_exists($i-1,$category_list) && $category_list[$i-1]){
-									$prev = $category_list[$i-1]->category_srl;
-									if($prev){
-										Context::set('oDocumentPrev',$oDocumentModel->getDocument($prev));
-									}else{
-										// todo front page
-									}
-
-								}
-								if(array_key_exists($i+1,$category_list) && $category_list[$i+1]){
-									$next = $category_list[$i+1]->category_srl;
-									if($next){
-										Context::set('oDocumentNext',$oDocumentModel->getDocument($next));
-									}
-
-								}
-							}
-						}
-
-
-					}
-
+                    // 이전 다음 구하기
+                    list($prev_document_srl, $next_document_srl) = $oWikiModel->getPrevNextDocument($this->module_srl, $document_srl);
+                    if($prev_document_srl) Context::set('oDocumentPrev', $oDocumentModel->getDocument($prev_document_srl));
+                    if($next_document_srl) Context::set('oDocumentNext', $oDocumentModel->getDocument($next_document_srl));
 
                 // 요청된 문서번호의 문서가 없으면 document_srl null 처리 및 경고 메세지 출력
                 } else {
