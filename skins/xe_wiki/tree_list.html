@@ -14,7 +14,7 @@
 		<li>
 		<!--@if($val->childs)-->
 		<!--@end-->
-            <a href="{getSiteUrl($site_module_info->domain, '','mid',$mid,'entry',$val->title)}">{$val->title}</a>
+            <a href="{getSiteUrl($site_module_info->domain, '','mid',$mid,'document_srl',$val->document_srl)}">{$val->title}</a>
 		<!--@if($val->childs)-->
 		{@$_pDepth++}
 		<ul>
