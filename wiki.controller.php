@@ -42,7 +42,6 @@
                 if($output->toBool()) {
                     $oDocumentController->deleteDocumentAliasByDocument($obj->document_srl);
                     $oDocumentController->insertAlias($obj->module_srl, $obj->document_srl, $obj->title);
-                    $this->recompileTree($this->module_srl);
                 }
                 $msg_code = 'success_updated';
 
@@ -56,6 +55,8 @@
 
             // 오류 발생시 멈춤
             if(!$output->toBool()) return $output;
+
+            $this->recompileTree($this->module_srl);
 
             // 결과를 리턴
             $entry = $oDocumentModel->getAlias($output->get('document_srl'));
