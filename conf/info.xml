@@ -10,8 +10,8 @@
     <description xml:lang="zh-CN">维基模块。</description>
     <description xml:lang="zh-TW">維基百科模組。</description>
     <description xml:lang="jp">wikiモジュール</description>
-    <version>0.1</version>
-    <date>2009-01-31</date>
+    <version>1.0</version>
+    <date>2009-09-30</date>
     <category>service</category>
 
     <author email_address="haneul0318@gmail.com" link="http://seungyeop.kr">
