@@ -27,7 +27,9 @@
             <span class="buttonOfficial"><a href="{getUrl('act','dispWikiTreeIndex','entry','','document_srl','')}">{$lang->cmd_view_document_tree}</a></span>
         </div>
 
-        <form action="./" method="get" onsubmit="moveHistory(this); return false;" class="wikiSearchForm">
+        <form action="./" method="get" class="wikiSearchForm">
+            <input type="hidden" name="mid" value="{$mid}" />
+            <input type="hidden" name="vid" value="{$vid}" />
             <input type="text" class="inputText" name="entry" />
             <span class="buttonOfficial"><input type="submit" value="{$lang->cmd_move}" /></span>
             <!--@if($grant->manager)-->
