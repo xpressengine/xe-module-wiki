@@ -20,7 +20,7 @@ function Tree(){
     //ajax get data and transeform ul il
     jQuery.get(url,function(data){
         jQuery(data).find("node").each(function(i){
-            var title = jQuery(this).attr("title");
+            var title = jQuery(this).text();
             var node_srl = jQuery(this).attr("node_srl");
             var parent_srl = jQuery(this).attr("parent_srl");
 

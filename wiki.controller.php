@@ -304,7 +304,7 @@
             // cache 파일 생성
             foreach($list as $key => $val) {
                 $buff .= sprintf('%d,%d,%d,%d,%s%s',$val->parent_srl,$val->document_srl,$val->depth,$val->childs,$val->title,"\n");
-                $xml_buff .= sprintf('<node node_srl="%d" parent_srl="%d" title="%s" />%s', $val->document_srl, $val->parent_srl, $val->title,"\n");
+                $xml_buff .= sprintf('<node node_srl="%d" parent_srl="%d"><![CDATA[%s]]></node>%s', $val->document_srl, $val->parent_srl, $val->title,"\n");
             }
 
             $xml_buff .= '</root>';
