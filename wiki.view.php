@@ -250,7 +250,7 @@
                 }
 
                 // 댓글 허용일 경우 문서에 강제 지정
-                if($this->module_info->use_comment) $oDocument->add('allow_comment','Y');
+                if($this->module_info->use_comment != 'N') $oDocument->add('allow_comment','Y');
             }
             else
             {
