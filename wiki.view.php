@@ -140,26 +140,27 @@
         }
 
         function addToVisitLog($entry) {
-            if(!$_SESSION['visit_log'])
+            $module_srl = $this->module_info->module_srl;
+            if(!$_SESSION[$module_srl]['visit_log'])
             {
-                $_SESSION['visit_log'] = array();
+                $_SESSION[$module_srl]['visit_log'] = array();
             }
             else
             {
-                foreach($_SESSION['visit_log'] as $key => $value)
+                foreach($_SESSION[$module_srl]['visit_log'] as $key => $value)
                 {
                     if($value == $entry)
                     {
-                        unset($_SESSION['visit_log'][$key]);
+                        unset($_SESSION[$module_srl]['visit_log'][$key]);
                     }
                 }
                 
-                if(count($_SESSION['visit_log']) >= 5)
+                if(count($_SESSION[$module_srl]['visit_log']) >= 5)
                 {
-                    array_shift($_SESSION['visit_log']);
+                    array_shift($_SESSION[$module_srl]['visit_log']);
                 }
             }
-            $_SESSION['visit_log'][] = $entry;
+            $_SESSION[$module_srl]['visit_log'][] = $entry;
         }
 
         function dispWikiContentView() {
@@ -257,7 +258,7 @@
                 $this->setTemplateFile('create_document');
             }
 
-            Context::set('visit_log', $_SESSION['visit_log']);
+            Context::set('visit_log', $_SESSION[$this->module_info->module_srl]['visit_log']);
             // 스킨에서 사용할 oDocument 변수 세팅
             Context::set('oDocument', $oDocument);
 

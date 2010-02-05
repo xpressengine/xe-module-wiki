@@ -61,7 +61,7 @@
     <div class="visitLog">
         {@ $bFirst = true; }
         <!--@foreach($visit_log as $_entry)-->
-            <!--@if(!$bFirst)--> > <!--@else-->{@ $bFirst = false; }<!--@end--> <a href="{getUrl('entry',$_entry)}">{$_entry}</a>
+            <!--@if(!$bFirst)--> > <!--@else-->{@ $bFirst = false; }<!--@end--> <a href="{getUrl('entry',$_entry,'document_srl','')}">{$_entry}</a>
         <!--@end-->
     </div>
     <!--@end-->
