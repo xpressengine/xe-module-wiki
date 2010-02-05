@@ -25,6 +25,7 @@
          * @brief 캐시 파일 재생성
          **/
         function recompileCache() {
+            FileHandler::removeFilesInDir(_XE_PATH_."files/cache/wiki");
         }
     }
 ?>
