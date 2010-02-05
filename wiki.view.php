@@ -141,26 +141,31 @@
 
         function addToVisitLog($entry) {
             $module_srl = $this->module_info->module_srl;
-            if(!$_SESSION[$module_srl]['visit_log'])
+            if(!$_SESSION['wiki_visit_log'])
             {
-                $_SESSION[$module_srl]['visit_log'] = array();
+                $_SESSION['wiki_visit_log'] = array();
+            }
+            if(!$_SESSION['wiki_visit_log'][$module_srl] || !is_array($_SESSION['wiki_visit_log'][$module_srl]))
+            {
+                $_SESSION['wiki_visit_log'][$module_srl] = array(); 
             }
             else
             {
-                foreach($_SESSION[$module_srl]['visit_log'] as $key => $value)
+                foreach($_SESSION['wiki_visit_log'][$module_srl] as $key => $value)
                 {
                     if($value == $entry)
                     {
-                        unset($_SESSION[$module_srl]['visit_log'][$key]);
+                        unset($_SESSION['wiki_visit_log'][$module_srl][$key]);
                     }
                 }
                 
-                if(count($_SESSION[$module_srl]['visit_log']) >= 5)
+                if(count($_SESSION['wiki_visit_log'][$module_srl]) >= 5)
                 {
-                    array_shift($_SESSION[$module_srl]['visit_log']);
+                    array_shift($_SESSION['wiki_visit_log'][$module_srl]);
                 }
             }
-            $_SESSION[$module_srl]['visit_log'][] = $entry;
+            $_SESSION['wiki_visit_log'][$module_srl][] = $entry;
+            debugPrint($_SESSION['wiki_visit_log']);
         }
 
         function dispWikiContentView() {
@@ -258,7 +263,8 @@
                 $this->setTemplateFile('create_document');
             }
 
-            Context::set('visit_log', $_SESSION[$this->module_info->module_srl]['visit_log']);
+            debugPrint($_SESSION['wiki_visit_log']);
+            Context::set('visit_log', $_SESSION['wiki_visit_log'][$this->module_info->module_srl]);
             // 스킨에서 사용할 oDocument 변수 세팅
             Context::set('oDocument', $oDocument);
 
