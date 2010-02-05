@@ -27,7 +27,7 @@
             <span class="buttonOfficial"><a href="{getUrl('act','dispWikiTreeIndex','entry','','document_srl','')}">{$lang->cmd_view_document_tree}</a></span>
         </div>
 
-        <form action="./" method="get" class="wikiSearchForm">
+        <form action="{getUrl()}" method="get" class="wikiSearchForm">
             <input type="hidden" name="mid" value="{$mid}" />
             <input type="hidden" name="vid" value="{$vid}" />
             <input type="text" class="inputText" name="entry" />
