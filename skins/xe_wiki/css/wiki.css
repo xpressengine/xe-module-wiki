@@ -445,3 +445,6 @@ a.buttonOfficial a{ _vertical-align:top;}
 #treeList ul li { margin:5px 0; padding:0 0 0 0px; }
 #treeList ul li a { color:#000; text-decoration:none; }
 #treeList ul li a:hover { text-decoration:underline; }
+
+.visitLog { padding-top:5px; padding-bottom:5px; border-bottom: 1px solid #dcdcdc; text-align: right;}
+.visitLog a { color:#AAA; text-decoration:underline; }

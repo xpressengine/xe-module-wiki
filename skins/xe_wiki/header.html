@@ -37,6 +37,7 @@
             <!--@end-->
         </form>
     </div>
+   
 
     <!--@if($oDocument && $oDocument->isExists())-->
     <div class="wikiRead">
@@ -55,6 +56,15 @@
                     </span>
                 </span>
             </div>
+
+    <!--@if($visit_log)-->
+    <div class="visitLog">
+        {@ $bFirst = true; }
+        <!--@foreach($visit_log as $_entry)-->
+            <!--@if(!$bFirst)--> > <!--@else-->{@ $bFirst = false; }<!--@end--> <a href="{getUrl('entry',$_entry)}">{$_entry}</a>
+        <!--@end-->
+    </div>
+    <!--@end-->
 
             <div class="authorArea">
                 <!--@if($history)-->
@@ -104,4 +114,12 @@
             </div>
         </div>
     </div>
+    <!--@if($visit_log)-->
+    <div class="visitLog">
+        {@ $bFirst = true; }
+        <!--@foreach($visit_log as $_entry)-->
+            <!--@if(!$bFirst)--> > <!--@else-->{@ $bFirst = false; }<!--@end--> <a href="{getUrl('entry',$_entry)}">{$_entry}</a>
+        <!--@end-->
+    </div>
+    <!--@end-->
     <!--@end-->

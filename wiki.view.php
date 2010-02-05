@@ -139,6 +139,29 @@
             $this->setTemplateFile('modify_tree');
         }
 
+        function addToVisitLog($entry) {
+            if(!$_SESSION['visit_log'])
+            {
+                $_SESSION['visit_log'] = array();
+            }
+            else
+            {
+                foreach($_SESSION['visit_log'] as $key => $value)
+                {
+                    if($value == $entry)
+                    {
+                        unset($_SESSION['visit_log'][$key]);
+                    }
+                }
+                
+                if(count($_SESSION['visit_log']) >= 5)
+                {
+                    array_shift($_SESSION['visit_log']);
+                }
+            }
+            $_SESSION['visit_log'][] = $entry;
+        }
+
         function dispWikiContentView() {
             $oWikiModel = &getModel('wiki');
             $oDocumentModel = &getModel('document');
@@ -167,7 +190,11 @@
                     // 관리 권한이 있다면 권한을 부여
                     if($this->grant->manager) $oDocument->setGrant();
 
-                    if(!Context::get('entry')) Context::set('entry', $oDocument->getTitleText());
+                    if(!$entry)
+                    {
+                        $entry = $oDocument->getTitleText();
+                        Context::set('entry', $entry);
+                    }
 
                     // 상담기능이 사용되고 공지사항이 아니고 사용자의 글도 아니면 무시
 
@@ -185,6 +212,7 @@
                     list($prev_document_srl, $next_document_srl) = $oWikiModel->getPrevNextDocument($this->module_srl, $document_srl);
                     if($prev_document_srl) Context::set('oDocumentPrev', $oDocumentModel->getDocument($prev_document_srl));
                     if($next_document_srl) Context::set('oDocumentNext', $oDocumentModel->getDocument($next_document_srl));
+                    $this->addToVisitLog($entry);
 
                 // 요청된 문서번호의 문서가 없으면 document_srl null 처리 및 경고 메세지 출력
                 } else {
@@ -229,6 +257,7 @@
                 $this->setTemplateFile('create_document');
             }
 
+            Context::set('visit_log', $_SESSION['visit_log']);
             // 스킨에서 사용할 oDocument 변수 세팅
             Context::set('oDocument', $oDocument);
 
