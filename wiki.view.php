@@ -165,7 +165,6 @@
                 }
             }
             $_SESSION['wiki_visit_log'][$module_srl][] = $entry;
-            debugPrint($_SESSION['wiki_visit_log']);
         }
 
         function dispWikiContentView() {
