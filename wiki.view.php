@@ -262,7 +262,6 @@
                 $this->setTemplateFile('create_document');
             }
 
-            debugPrint($_SESSION['wiki_visit_log']);
             Context::set('visit_log', $_SESSION['wiki_visit_log'][$this->module_info->module_srl]);
             // 스킨에서 사용할 oDocument 변수 세팅
             Context::set('oDocument', $oDocument);

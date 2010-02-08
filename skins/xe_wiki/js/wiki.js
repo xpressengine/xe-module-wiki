@@ -62,7 +62,6 @@ function Tree(){
                 var target_srl = 0;
                 if(target.length >0){
                     target_srl = source.prevAll("li:not([class^=line])").get(0).id.replace(/.*_/g,'');
-                    parent_srl = 0;
                 }
 
                 jQuery.exec_json("wiki.procWikiMoveTree",{ "mid":current_mid,"parent_srl":parent_srl,"target_srl":target_srl,"source_srl":source_srl}, function(data){ Tree(); });

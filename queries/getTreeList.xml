@@ -12,11 +12,12 @@
         <column name="doc.title" alias="title" />
         <column name="doc.document_srl" alias="document_srl" />
         <column name="category.parent_srl" alias="parent_srl" />
+        <column name="category.list_order" alias="list_order" />
     </columns>
     <conditions>
         <condition operation="equal" column="doc.module_srl" var="module_srl" filter="number" notnull="notnull" />
     </conditions>
     <navigation>
-        <index var="sort_index" default="doc.list_order" order="asc" />
+        <index var="sort_index" default="category.list_order" order="asc" />
     </navigation>
 </query>

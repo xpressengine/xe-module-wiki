@@ -13,7 +13,7 @@
         <column name="doc.module_srl" alias="module_srl" />
         <column name="doc.title" alias="title" />
         <column name="doc.document_srl" alias="document_srl" />
-        <column name="doc.list_order" alias="list_order" />
+        <column name="category.list_order" alias="list_order" />
     </columns>
     <conditions>
         <condition operation="equal" column="doc.document_srl" var="source_srl" filter="number" notnull="notnull" />
