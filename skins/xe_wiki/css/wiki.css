@@ -448,3 +448,5 @@ a.buttonOfficial a{ _vertical-align:top;}
 
 .visitLog { padding-top:5px; padding-bottom:5px; border-bottom: 1px solid #dcdcdc; text-align: right;}
 .visitLog a { color:#AAA; text-decoration:underline; }
+
+.wiki a.inlink { text-decoration:underline; color:green; }

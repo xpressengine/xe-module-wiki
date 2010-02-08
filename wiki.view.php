@@ -167,6 +167,16 @@
             $_SESSION['wiki_visit_log'][$module_srl][] = $entry;
         }
 
+        function callback_wikilink($matches)
+        {
+            $names = explode("|", $matches[1]);
+            if(count($names) == 2)
+            {
+                return "<a href=\"".getUrl('entry',$names[0])."\" class=\"inlink\" >".$names[1]."</a>";
+            }
+            return "<a href=\"".getUrl('entry',$matches[1])."\" class=\"inlink\" >".$matches[1]."</a>";
+        }
+
         function dispWikiContentView() {
             $oWikiModel = &getModel('wiki');
             $oDocumentModel = &getModel('document');
@@ -212,6 +222,10 @@
                             Context::set('history', $output);
                         }
                     } 	
+
+                    $content = $oDocument->getContent(false);
+                    $content = preg_replace_callback("!\[([^\]]+)\]!is", array( $this, 'callback_wikilink' ), $content );
+                    $oDocument->add('content', $content);
 
                     // 이전 다음 구하기
                     list($prev_document_srl, $next_document_srl) = $oWikiModel->getPrevNextDocument($this->module_srl, $document_srl);
