@@ -172,9 +172,9 @@
             $names = explode("|", $matches[1]);
             if(count($names) == 2)
             {
-                return "<a href=\"".getUrl('entry',$names[0])."\" class=\"inlink\" >".$names[1]."</a>";
+                return "<a href=\"".getUrl('entry',$names[0], 'document_srl', '')."\" class=\"inlink\" >".$names[1]."</a>";
             }
-            return "<a href=\"".getUrl('entry',$matches[1])."\" class=\"inlink\" >".$matches[1]."</a>";
+            return "<a href=\"".getUrl('entry',$matches[1], 'document_srl', '')."\" class=\"inlink\" >".$matches[1]."</a>";
         }
 
         function dispWikiContentView() {
