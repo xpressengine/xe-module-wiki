@@ -7,6 +7,7 @@
 
     class wikiView extends wiki {
         var $search_option = array('title','content','title_content','comment','user_name','nick_name','user_id','tag');
+        var $document_exists = array();
 
         /**
          * @brief 초기화
@@ -167,15 +168,40 @@
             $_SESSION['wiki_visit_log'][$module_srl][] = $entry;
         }
 
+        function callback_check_exists($matches)
+        {
+            if($matches[1][0] != "!") 
+            {
+                $names = explode("|", $matches[1]);
+                if(count($names) == 2)
+                {
+                    $entry = $names[0];
+                }
+                else
+                {
+                    $entry = $matches[1];
+                }
+
+                $this->document_exists["'".$entry."'"] = 0;
+            }
+            return $matches[0]; 
+        }
+
+        function getCSSClass($name)
+        {
+            if($this->document_exists[$name]) return "exists";
+            else return "notexist";
+        }
+
         function callback_wikilink($matches)
         {
             if($matches[1][0] == "!") return "[".substr($matches[1], 1)."]";
             $names = explode("|", $matches[1]);
             if(count($names) == 2)
             {
-                return "<a href=\"".getUrl('entry',$names[0], 'document_srl', '')."\" class=\"inlink\" >".$names[1]."</a>";
+                return "<a href=\"".getUrl('entry',$names[0], 'document_srl', '')."\" class=\"".$this->getCSSClass($names[0])."\" >".$names[1]."</a>";
             }
-            return "<a href=\"".getUrl('entry',$matches[1], 'document_srl', '')."\" class=\"inlink\" >".$matches[1]."</a>";
+            return "<a href=\"".getUrl('entry',$matches[1], 'document_srl', '')."\" class=\"".$this->getCSSClass($matches[1])."\" >".$matches[1]."</a>";
         }
 
         function dispWikiContentView() {
@@ -225,6 +251,18 @@
                     } 	
 
                     $content = $oDocument->getContent(false);
+                    $content = preg_replace_callback("!\[([^\]]+)\]!is", array( $this, 'callback_check_exists' ), $content );
+                    $entries = array_keys($this->document_exists);
+                    $args->entries = implode(",", $entries);
+                    $args->module_srl = $this->module_info->module_srl;
+                    $output = executeQueryArray("wiki.getDocumentsWithEntries", $args);
+                    if($output->data)
+                    {
+                        foreach($output->data as $alias)
+                        {
+                            $this->document_exists[$alias->alias_title] = 1;
+                        }
+                    }
                     $content = preg_replace_callback("!\[([^\]]+)\]!is", array( $this, 'callback_wikilink' ), $content );
                     $oDocument->add('content', $content);
 
@@ -276,7 +314,6 @@
             {
                 $this->setTemplateFile('create_document');
             }
-
             Context::set('visit_log', $_SESSION['wiki_visit_log'][$this->module_info->module_srl]);
             // 스킨에서 사용할 oDocument 변수 세팅
             Context::set('oDocument', $oDocument);
