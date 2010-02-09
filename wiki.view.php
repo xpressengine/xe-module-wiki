@@ -169,6 +169,7 @@
 
         function callback_wikilink($matches)
         {
+            if($matches[1][0] == "!") return "[".substr($matches[1], 1)."]";
             $names = explode("|", $matches[1]);
             if(count($names) == 2)
             {
