@@ -14,6 +14,13 @@
          * wiki 모듈은 일반 사용과 관리자용으로 나누어진다.\n
          **/
         function init() {
+			// 한국어 인코딩에 대한 체크 - #18764757 - taggon
+			$entry = Context::get('entry');
+			if ($entry == iconv('cp949', 'cp949', $entry)) {
+				$entry = iconv('cp949', 'utf-8', $entry);
+				Context::set('entry', $entry);
+			}
+
             /**
              * 스킨 경로를 미리 template_path 라는 변수로 설정함
              * 스킨이 존재하지 않는다면 xe_wiki로 변경
