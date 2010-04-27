@@ -21,6 +21,10 @@
             return new Object(0, 'success_updated');
         }
 
+		function moduleUninstall() {
+			return new Object();
+		}
+
         /**
          * @brief 캐시 파일 재생성
          **/
