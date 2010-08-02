@@ -269,7 +269,7 @@
 .feedbackList .item .itemContent { position:relative; padding:1em 0 1em 120px; *zoom:1; z-index:1;}
 .feedbackList .item .itemContent:after{ content:""; display:block; clear:both;}
 .feedbackList .item .itemContent *{ margin-top:0;}
-.feedbackList .item .itemContent .xe_content{ width:auto !important;}
+.feedbackList .item .itemContent .xe_content{ width:auto !important; clear:none;}
 .feedbackList .item .itemContent .xe_content a { text-decoration:underline; }
 .feedbackList .item .itemContent .option{ position:relative; margin:1em 0; padding:0; list-style:none; white-space:nowrap; overflow:hidden; *zoom:1; float:right;}
 .feedbackList .item .itemContent .option li{ position:relative; left:-1px; display:inline; padding:0 0 0 5px; background-repeat:no-repeat; background-position:left center; font-size:11px;}
