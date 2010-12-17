@@ -271,6 +271,9 @@
                         }
                     }
                     $content = preg_replace_callback("!\[([^\]]+)\]!is", array( $this, 'callback_wikilink' ), $content );
+					$content = preg_replace('@<([^>]*)(src|href)="((?!https?://)[^"]*)"([^>]*)>@i','<$1$2="'.Context::getRequestUri().'$3"$4>', $content);
+
+
                     $oDocument->add('content', $content);
 
                     // 이전 다음 구하기
