@@ -235,7 +235,6 @@
             }
             if(!$node->is_exists) $output = executeQuery('wiki.insertTreeNode',$args);
             else $output = executeQuery('wiki.updateTreeNode',$args);
-            debugPRint($output);
             if(!$output->toBool()) return $output;
 
             if($args->list_order) {

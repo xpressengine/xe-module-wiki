@@ -14,6 +14,10 @@
          * wiki 모듈은 일반 사용과 관리자용으로 나누어진다.\n
          **/
         function init() {
+			$site_module_info = Context::get('site_module_info');
+//			if($site_module_info->site_srl==0) die('not allowed');
+
+		
 			// 한국어 인코딩에 대한 체크 - #18764757 - taggon
 			$entry = Context::get('entry');
 			if ($entry == iconv('cp949', 'cp949', $entry)) {
@@ -94,7 +98,6 @@
                     Context::set('history', $output);
                 }
             } 
-
             Context::addJsFilter($this->module_path.'tpl/filter', 'insert.xml');
 
             $this->setTemplateFile('write_form');
@@ -189,7 +192,7 @@
                     $entry = $matches[1];
                 }
 
-                $this->document_exists["'".$entry."'"] = 0;
+                $this->document_exists[$entry] = 0;
             }
             return $matches[0]; 
         }
@@ -260,19 +263,23 @@
                     $content = $oDocument->getContent(false);
                     $content = preg_replace_callback("!\[([^\]]+)\]!is", array( $this, 'callback_check_exists' ), $content );
                     $entries = array_keys($this->document_exists);
-                    $args->entries = implode(",", $entries);
-                    $args->module_srl = $this->module_info->module_srl;
-                    $output = executeQueryArray("wiki.getDocumentsWithEntries", $args);
-                    if($output->data)
-                    {
-                        foreach($output->data as $alias)
-                        {
-                            $this->document_exists[$alias->alias_title] = 1;
-                        }
-                    }
+                    $oDB = &DB::getInstance();
+			
+					if(count($entries))
+					{
+						$args->entries = $entries;
+						$args->module_srl = $this->module_info->module_srl;
+						$output = executeQueryArray("wiki.getDocumentsWithEntries", $args);
+						if($output->data)
+						{
+							foreach($output->data as $alias)
+							{
+								$this->document_exists[$alias->alias_title] = 1;
+							}
+						}
+					}
                     $content = preg_replace_callback("!\[([^\]]+)\]!is", array( $this, 'callback_wikilink' ), $content );
 					$content = preg_replace('@<([^>]*)(src|href)="((?!https?://)[^"]*)"([^>]*)>@i','<$1$2="'.Context::getRequestUri().'$3"$4>', $content);
-
 
                     $oDocument->add('content', $content);
 
@@ -285,7 +292,8 @@
                 // 요청된 문서번호의 문서가 없으면 document_srl null 처리 및 경고 메세지 출력
                 } else {
                     Context::set('document_srl','',true);
-                    $this->alertMessage('msg_not_founded');
+
+                    return new Object(-1, 'msg_not_founded');
                 }
 
             /**
