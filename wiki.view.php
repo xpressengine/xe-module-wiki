@@ -203,16 +203,23 @@
             else return "notexist";
         }
 
+
+		/**
+		 * @brief 위키 문법에 따라 치환되는 링크를 리턴
+		 */
         function callback_wikilink($matches)
         {
             if($matches[1][0] == "!") return "[".substr($matches[1], 1)."]";
-            $names = explode("|", $matches[1]);
-			debugPrint($names);
+			
+			$title_not_processed = $matches[1];
+			$title_processed = strip_tags($matches[1]);
+
+            $names = explode("|", $title_processed);
             if(count($names) == 2)
             {
                 return "<a href=\"".getFullUrl('', 'mid', $this->mid, 'entry',$names[0], 'document_srl', '')."\" class=\"".$this->getCSSClass($names[0])."\" >".$names[1]."</a>";
             }
-            return "<a href=\"".getFullUrl('', 'mid', $this->mid, 'entry',$matches[1], 'document_srl', '')."\" class=\"".$this->getCSSClass($matches[1])."\" >".$matches[1]."</a>";
+            return "<a href=\"".getFullUrl('', 'mid', $this->mid, 'entry', $title_processed, 'document_srl', '')."\" class=\"".$this->getCSSClass($title_not_processed)."\" >".$matches[1]."</a>";
         }
 
         function dispWikiContentView() {
