@@ -20,10 +20,14 @@
 		
 			// 한국어 인코딩에 대한 체크 - #18764757 - taggon
 			$entry = Context::get('entry');
+			// #18707314 로 인해 주석 처리 - yarra
+			/*
 			if ($entry == iconv('cp949', 'cp949', $entry)) {
 				$entry = iconv('cp949', 'utf-8', $entry);
 				Context::set('entry', $entry);
-			}
+			}*/
+
+			
 
             /**
              * 스킨 경로를 미리 template_path 라는 변수로 설정함
