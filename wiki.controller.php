@@ -22,7 +22,14 @@
             if($this->module_info->use_comment != 'N') $obj->allow_comment = 'Y';
             else $obj->allow_comment = 'N';
 
-            if(!$obj->nick_name) $obj->nick_name = "anonymous";
+			// 수정시 nick_name 설정
+			if(!$obj->nick_name)
+			{
+				$logged_info = Context::get('logged_info');
+				if($logged_info) $obj->nick_name = $logged_info->nick_name;
+				else $obj->nick_name = 'anonymous';
+			}
+
             if($obj->is_notice!='Y'||!$this->grant->manager) $obj->is_notice = 'N';
 
             settype($obj->title, "string");

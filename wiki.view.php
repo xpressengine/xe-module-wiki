@@ -207,11 +207,12 @@
         {
             if($matches[1][0] == "!") return "[".substr($matches[1], 1)."]";
             $names = explode("|", $matches[1]);
+			debugPrint($names);
             if(count($names) == 2)
             {
-                return "<a href=\"".getUrl('entry',$names[0], 'document_srl', '')."\" class=\"".$this->getCSSClass($names[0])."\" >".$names[1]."</a>";
+                return "<a href=\"".getFullUrl('', 'mid', $this->mid, 'entry',$names[0], 'document_srl', '')."\" class=\"".$this->getCSSClass($names[0])."\" >".$names[1]."</a>";
             }
-            return "<a href=\"".getUrl('entry',$matches[1], 'document_srl', '')."\" class=\"".$this->getCSSClass($matches[1])."\" >".$matches[1]."</a>";
+            return "<a href=\"".getFullUrl('', 'mid', $this->mid, 'entry',$matches[1], 'document_srl', '')."\" class=\"".$this->getCSSClass($matches[1])."\" >".$matches[1]."</a>";
         }
 
         function dispWikiContentView() {
@@ -261,6 +262,7 @@
                     } 	
 
                     $content = $oDocument->getContent(false);
+
                     $content = preg_replace_callback("!\[([^\]]+)\]!is", array( $this, 'callback_check_exists' ), $content );
                     $entries = array_keys($this->document_exists);
                     $oDB = &DB::getInstance();
@@ -278,7 +280,9 @@
 							}
 						}
 					}
+					debugPrint($content);
                     $content = preg_replace_callback("!\[([^\]]+)\]!is", array( $this, 'callback_wikilink' ), $content );
+					debugPrint($content);
 					$content = preg_replace('@<([^>]*)(src|href)="((?!https?://)[^"]*)"([^>]*)>@i','<$1$2="'.Context::getRequestUri().'$3"$4>', $content);
 
                     $oDocument->add('content', $content);
