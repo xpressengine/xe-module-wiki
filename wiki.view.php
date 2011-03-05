@@ -50,6 +50,8 @@
             Context::addJsFile($this->module_path.'tpl/js/wiki.js');
 
             Context::set('grant', $this->grant);
+
+			debugPrint($this->document_exists);
         }
 
         /**
@@ -57,6 +59,7 @@
          **/
         function dispWikiContent() {
             $output = $this->dispWikiContentView();
+			debugPrint($this->document_exists);
             if(!$output->toBool()) return;
         }
 
@@ -184,26 +187,16 @@
 
         function callback_check_exists($matches)
         {
-            if($matches[1][0] != "!") 
-            {
-                $names = explode("|", $matches[1]);
-                if(count($names) == 2)
-                {
-                    $entry = $names[0];
-                }
-                else
-                {
-                    $entry = $matches[1];
-                }
+			$entry_name = wiki::makeEntryName($matches);
+			$this->document_exists[$entry_name->link_entry] = 0;
 
-                $this->document_exists[$entry] = 0;
-            }
-            return $matches[0]; 
+			return $matches[0];
         }
 
         function getCSSClass($name)
         {
             if($this->document_exists[$name]) return "exists";
+
             else return "notexist";
         }
 
@@ -213,18 +206,14 @@
 		 */
         function callback_wikilink($matches)
         {
-            if($matches[1][0] == "!") return "[".substr($matches[1], 1)."]";
-			
-			$title_not_processed = $matches[1];
-			$title_processed = strip_tags($matches[1]);
+			if($matches[1][0] == "!") return "[".substr($matches[1], 1)."]";
 
-            $names = explode("|", $title_processed);
-            if(count($names) == 2)
-            {
-                return "<a href=\"".getFullUrl('', 'mid', $this->mid, 'entry',$names[0], 'document_srl', '')."\" class=\"".$this->getCSSClass($names[0])."\" >".$names[1]."</a>";
-            }
-            return "<a href=\"".getFullUrl('', 'mid', $this->mid, 'entry', $title_processed, 'document_srl', '')."\" class=\"".$this->getCSSClass($title_not_processed)."\" >".$matches[1]."</a>";
+			$entry_name = wiki::makeEntryName($matches);
+			$answer = "<a href=\"".getFullUrl('', 'mid', $this->mid, 'entry', $entry_name->link_entry, 'document_srl', '')."\" class=\"".$this->getCSSClass($entry_name->link_entry)."\" >".$entry_name->printing_name."</a>";
+
+			return $answer;
         }
+
 
         function dispWikiContentView() {
             $oWikiModel = &getModel('wiki');
@@ -274,7 +263,12 @@
 
                     $content = $oDocument->getContent(false);
 
+					debugPrint($content);
+
                     $content = preg_replace_callback("!\[([^\]]+)\]!is", array( $this, 'callback_check_exists' ), $content );
+
+					debugPrint($content);
+
                     $entries = array_keys($this->document_exists);
                     $oDB = &DB::getInstance();
 			
@@ -283,6 +277,9 @@
 						$args->entries = $entries;
 						$args->module_srl = $this->module_info->module_srl;
 						$output = executeQueryArray("wiki.getDocumentsWithEntries", $args);
+
+						debugPrint($output);
+
 						if($output->data)
 						{
 							foreach($output->data as $alias)
@@ -291,9 +288,7 @@
 							}
 						}
 					}
-					debugPrint($content);
                     $content = preg_replace_callback("!\[([^\]]+)\]!is", array( $this, 'callback_wikilink' ), $content );
-					debugPrint($content);
 					$content = preg_replace('@<([^>]*)(src|href)="((?!https?://)[^"]*)"([^>]*)>@i','<$1$2="'.Context::getRequestUri().'$3"$4>', $content);
 
                     $oDocument->add('content', $content);
