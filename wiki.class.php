@@ -104,8 +104,11 @@
 
 				foreach($output->data as $key => $doc_alias)
 				{
+					if($doc_alias->alias_title == 'Front Page') continue;
 					foreach($omitting_characters as $key => $char)
 					{	
+						debugPrint($doc_alias->alias_title);
+						debugPrint(strpos($doc_alias->alias_title, $char));
 						if(strpos($doc_alias->alias_title, $char)) return true;
 					}
 				}
