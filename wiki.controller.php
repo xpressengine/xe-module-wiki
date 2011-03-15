@@ -1,10 +1,18 @@
 <?php
-	
+	/**
+	 * @class wikiController
+	 * @author NHN (developers@xpressengine.com)
+	 * @brief  wiki 모듈의 controller class
+	 **/
+
 	class wikiController extends wiki {
 
 		function init() {
 		}
 
+		/**
+		 * @brief 위키 모듈을 추가.
+		 */
 		function procWikiInsertDocument() {
 			// document module의 model 객체 생성
 			$oDocumentModel = &getModel('document');
@@ -79,6 +87,10 @@
 			$this->setMessage($msg_code);
 		}
 
+
+		/**
+		 * @brief 위키에 댓글 등록
+		 */
 		function procWikiInsertComment() {
 			// 권한 체크
 			if(!$this->grant->write_comment) return new Object(-1, 'msg_not_permitted');
@@ -152,6 +164,10 @@
 			$this->add('comment_srl', $obj->comment_srl);
 		}
 
+
+		/**
+		 * @brief 위키에서 문서 삭제
+		 */
 		function procWikiDeleteDocument() {
 			$oDocumentController = &getController('document');
 			$oDocumentModel = &getModel('document');
@@ -180,6 +196,10 @@
 			$this->setRedirectUrl(getSiteUrl($site_module_info->domain,'','mid',$this->module_info->mid));
 		}
 
+		
+		/**
+		 * @brief 위키 문서에서 댓글 삭제
+		 */
 		function procWikiDeleteComment() {
 			// check the comment's sequence number 
 			$comment_srl = Context::get('comment_srl');
@@ -197,6 +217,10 @@
 			$this->setMessage('success_deleted');
 		}
 
+		
+		/**
+		 * @brief 계층 구조 내 문서 이동
+		 */
 		function procWikiMoveTree() {
 			// 권한 체크
 			if(!$this->grant->write_document) return new Object(-1, 'msg_not_permitted');
@@ -254,6 +278,7 @@
 			$this->recompileTree($this->module_srl);
 		}
 
+
 		/**
 		 * @brief 위키 계층 구조 재생성
 		 **/
@@ -309,5 +334,6 @@
 				$oComment->setGrant();
 			}
 		}
+
 	}
 ?>

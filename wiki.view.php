@@ -52,6 +52,7 @@
 			Context::set('grant', $this->grant);
 		}
 
+
 		/**
 		 * @brief 선택된 글 출력
 		 **/
@@ -60,6 +61,10 @@
 			if(!$output->toBool()) return;
 		}
 
+		
+		/**
+		 * @brief 특정 위키 문서의 변경 이력 출력
+		 */
 		function dispWikiHistory() {
 			$oDocumentModel = &getModel('document');
 			$document_srl = Context::get('document_srl');
@@ -83,6 +88,10 @@
 			$this->setTemplateFile('histories');
 		}
 
+
+		/**
+		 * @brief 문서 편집 화면
+		 */
 		function dispWikiEditPage() {
 			if(!$this->grant->write_document) return $this->dispWikiMessage('msg_not_permitted');
 
@@ -107,6 +116,7 @@
 			$this->setTemplateFile('write_form');
 		}
 
+
 		/**
 		 * @brief Displaying Message 
 		 **/
@@ -117,6 +127,10 @@
 			$this->setTemplateFile('message');
 		}
 
+
+		/**
+		 * @brief 해당 위키의 문서 목록 보기
+		 */
 		function dispWikiTitleIndex() {
 			$page = Context::get('page');
 			$oDocumentModel = &getModel('document');
@@ -142,18 +156,30 @@
 			$this->setTemplateFile('title_index');
 		}
 
+
+		/**
+		 * @brief 해당 위키의 계층 구조 보기
+		 */
 		function dispWikiTreeIndex() {
 			$oWikiModel = &getModel('wiki');
 			Context::set('list', $oWikiModel->readWikiTreeCache($this->module_srl));
 			$this->setTemplateFile('tree_list');
 		}
 
+
+		/**
+		 * @brief 계층 구조 수정 화면
+		 */
 		function dispWikiModifyTree() {
 			if(!$this->grant->write_document) return new Object(-1,'msg_not_permitted');
 			Context::set('isManageGranted', $this->grant->write_document?'true':'false');
 			$this->setTemplateFile('modify_tree');
 		}
 
+
+		/**
+		 * @brief 열람이력 갱신
+		 */
 		function addToVisitLog($entry) {
 			$module_srl = $this->module_info->module_srl;
 			if(!$_SESSION['wiki_visit_log'])
@@ -183,7 +209,9 @@
 		}
 
 
-
+		/**
+		 * @brief 위키 문서 출력
+		 */
 		function dispWikiContentView() {
 			$oWikiModel = &getModel('wiki');
 			$oDocumentModel = &getModel('document');
@@ -296,6 +324,7 @@
 			$this->setTemplateFile('comment_form');
 		}
 
+
 		/**
 		 * @brief 댓글 수정 폼 출력
 		 **/
@@ -331,6 +360,7 @@
 
 			$this->setTemplateFile('comment_form');
 		}
+
 
 		/**
 		 * @brief 댓글 삭제 화면 출력
@@ -428,6 +458,7 @@
 			return $content;
 		}
 
+
 		/**
 		 * @brief 위키 문법으로 링크된 문서가 존재하는지를 체크.
 		 */
@@ -439,6 +470,7 @@
 			return $matches[0];
 		}
 
+
 		/**
 		 * @brief 위키 문법으로 링크된 문서가 존재하는지를 체크하여 링크의 CSS class를 리턴
 		 */
@@ -448,6 +480,7 @@
 
 			else return "notexist";
 		}
+
 
 		/**
 		 * @brief 위키 문법에 따라 치환되는 링크를 리턴

@@ -1,7 +1,7 @@
 <?php
 	/**
 	 * @class  wikiModel
-	 * @author haneul (haneul0318@gmail.com) 
+	 * @author NHN (developers@xpressengine.com) 
 	 * @brief  wiki 모듈의 Model class
 	 **/
 
@@ -36,6 +36,10 @@
 			exit();
 		}
 
+
+		/**
+		 * @brief 캐시로부터 계층 구조 읽기
+		 */
 		function readWikiTreeCache($module_srl) {
 			$oWikiController = &getController('wiki');
 			if(!$module_srl) return new Object(-1,'msg_invalid_request');
@@ -57,6 +61,10 @@
 			return $list;
 		}
 
+
+		/**
+		 * @brief 계층 구조 읽기
+		 */
 		function loadWikiTreeList($module_srl) {
 			// 목록을 구함
 			$args->module_srl = $module_srl;
@@ -95,6 +103,10 @@
 			return $result;
 		}
 
+
+		/**
+		 * @brief 이전 / 다음 문서 구하기
+		 */
 		function getPrevNextDocument($module_srl, $document_srl) {
 			$list = $this->readWikiTreeCache($module_srl);
 			if(!count($list)) return array(0,0);
@@ -114,6 +126,7 @@
 			}
 			return array($prev_srl, $next_srl);
 		}
+
 
 		function getTreeToList($childs, &$result,$depth) {
 			if(!count($childs)) return;

@@ -1,16 +1,18 @@
 <?php
 	/**
 	 * @class wiki
-	 * @author haneul (haneul0318@gmail.com)
+	 * @author NHN (developers@xpressengine.com)
 	 * @brief  wiki 모듈의 high class
 	 **/
 
 	class wiki extends ModuleObject {
 
-
 		static $omitting_characters = array('/&/', '/\//', '/,/', '/ /');
 		static $replacing_characters = array('', '', '', '_');
 
+		/**
+		 * @brief entry 이름으로 사용할 문자열을 생성
+		 */
 		static function makeEntryName($matches)
 		{
 			$answer->is_alias_link = false;
@@ -58,7 +60,7 @@
 		}
 
 		/**
-		 * @brief 설치가 이상이 없는지 체크하는 method
+		 * @brief 설치가 이상이 없으며 업데이트할 것이 있는지 확인.
 		 **/
 		function checkUpdate() {
 			$flag = false;
@@ -66,11 +68,17 @@
 			return $flag;
 		}
 
+		/**
+		 * @brief 모듈을 업데이트
+		 */
 		function moduleUpdate() {
 			$this->_updateOldStyleAliases();
 			return new Object(0, 'success_updated');
 		}
 
+		/**
+		 * @brief 모듈 제거시 조치
+		 */
 		function moduleUninstall() {
 			return new Object();
 		}
@@ -82,7 +90,9 @@
 			FileHandler::removeFilesInDir(_XE_PATH_."files/cache/wiki");
 		}
 
-
+		/**
+		 * @brief 특수 문자 / 공백 등이 제거되지 않은 alias 가 있는지 확인.
+		 */
 		function _hasOldStyleAliases()
 		{
 			// Wiki 모듈의 modules_srl 을 모두 구함.
@@ -116,6 +126,9 @@
 			return false;
 		}
 
+		/**
+		 * @brief 특수 문자 / 공백 등이 제거되지 않은 alias 를 일괄 수정
+		 */
 		function _updateOldStyleAliases()
 		{
 			// Wiki 모듈의 modules_srl 을 모두 구함.

@@ -1,10 +1,11 @@
 <?php
 	/**
 	 * @class  wikiAdminView
+	 * @author NHN (developers@xpressengine.com)
 	 * @brief  wiki 모듈의 admin view class
 	 **/
-
 	class wikiAdminView extends wiki {
+
 		function init() {
 			// module_srl이 있으면 미리 체크하여 존재하는 모듈이면 module_info 세팅
 			$module_srl = Context::get('module_srl');
@@ -37,6 +38,10 @@
 			$this->setTemplatePath($template_path);
 		}
 
+		
+		/**
+		 * @brief 위키 모듈 목록
+		 */
 		function dispWikiAdminContent() {
 			$args->sort_index = "module_srl";
 			$args->page = Context::get('page');
@@ -57,6 +62,10 @@
 			$this->setTemplateFile('index');
 		}
 
+
+		/**
+		 * @brief 위키 모듈 추가를 위한 정보입력 화면
+		 */
 		function dispWikiAdminInsertWiki() {
 			if(!in_array($this->module_info->module, array('admin', 'wiki'))) {
 				return $this->alertMessage('msg_invalid_request');
@@ -76,6 +85,10 @@
 			$this->setTemplateFile('wiki_insert');
 		}
 
+
+		/**
+		 * @brief 위키 모듈 삭제를 위한 확인 화면
+		 */
 		function dispWikiAdminDeleteWiki() {
 			if(!Context::get('module_srl')) return $this->dispWikiAdminContent();
 			if(!in_array($this->module_info->module, array('admin', 'wiki'))) {
@@ -91,6 +104,10 @@
 			$this->setTemplateFile('wiki_delete');
 		}
 
+
+		/**
+		 * @brief 위키 모듈에 대한 추가 설정 화면
+		 */
 		function dispWikiAdminWikiAdditionSetup() {
 			// content는 다른 모듈에서 call by reference로 받아오기에 미리 변수 선언만 해 놓음
 			$content = '';
@@ -105,6 +122,10 @@
 			$this->setTemplateFile('addition_setup');
 		}
 
+		
+		/**
+		 * @brief 위키 모듈에 대한 권한 설정 화면
+		 */
 		function dispWikiAdminGrantInfo() {
 			// 공통 모듈 권한 설정 페이지 호출
 			$oModuleAdminModel = &getAdminModel('module');
@@ -114,6 +135,10 @@
 			$this->setTemplateFile('grant_list');
 		}
 
+	
+		/**
+		 * @brief 위키 모듈 스킨 설정 화면
+		 */
 		function dispWikiAdminSkinInfo() {
 			// Call the common page for managing skin information
 			$oModuleAdminModel = &getAdminModel('module');
@@ -123,6 +148,10 @@
 			$this->setTemplateFile('skin_info');
 		}
 
+
+		/**
+		 * @brief 위키 모듈 목록 갱신 화면
+		 */
 		function dispWikiAdminArrange() {
 
 			$this->setTemplateFile('arrange_list');

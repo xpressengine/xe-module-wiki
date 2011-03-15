@@ -1,17 +1,21 @@
 <?php
 	/**
 	 * @class  wikiAdminController
-	 * @author zero (zero@nzeo.com)
+	 * @author NHN (developers@xpressengine.com)
 	 * @brief  wiki 모듈의 admin controller class
 	 **/
 
 	class wikiAdminController extends wiki {
+
 		/**
 		 * @brief 초기화
 		 **/
 		function init() {
 		}
 
+		/**
+		 * @brief 위키 모듈 추가
+		 */
 		function procWikiAdminInsertWiki($args = null) {
 			// module 모듈의 model/controller 객체 생성
 			$oModuleController = &getController('module');
@@ -43,6 +47,9 @@
 			$this->setMessage($msg_code);
 		}
 
+		/**
+		 * @brief 위키 모듈 삭제
+		 */
 		function procWikiAdminDeleteWiki() {
 			$module_srl = Context::get('module_srl');
 
@@ -55,6 +62,9 @@
 			$this->setMessage('success_deleted');
 		}
 
+		/**
+		 * @brief 제목으로 접근할 수 없는 글을 정리
+		 */ 
 		function procWikiAdminArrangeList() {
 			$oModuleModel = &getModel('module');
 			$oDocumentController = &getController('document');
