@@ -287,6 +287,27 @@
 
         }
 
-    }
 
+		/**
+		 * @brief 비회원 댓글 수정을 위한 패스워드 확인
+		 */
+		function procWikiVerificationPassword()
+		{
+			$password = Context::get('password');
+			$comment_srl = Context::get('comment_srl');
+
+			$oMemberModel = &getModel('member');
+
+			if($comment_srl)
+			{
+				$oCommentModel = &getModel('comment');
+				$oComment = $oCommentModel->getComment($comment_srl);
+				if(!$oComment->isExists()) return new Object(-1, 'msg_invalid_request');
+
+				if(!$oMemberModel->isValidPassword($oComment->get('password'), $password)) return new Object(-1, 'msg_invalid_password');
+				
+				$oComment->setGrant();
+			}
+		}
+    }
 ?>
