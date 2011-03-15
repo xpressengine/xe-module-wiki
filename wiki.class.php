@@ -1,11 +1,11 @@
 <?php
-    /**
-     * @class wiki
-     * @author haneul (haneul0318@gmail.com)
-     * @brief  wiki 모듈의 high class
-     **/
+	/**
+	 * @class wiki
+	 * @author haneul (haneul0318@gmail.com)
+	 * @brief  wiki 모듈의 high class
+	 **/
 
-    class wiki extends ModuleObject {
+	class wiki extends ModuleObject {
 
 
 		static $omitting_characters = array('/&/', '/\//', '/,/', '/ /');
@@ -53,34 +53,34 @@
 			return $entry_name;			
 		}
 
-        function moduleInstall() {
-            return new Object();
-        }
+		function moduleInstall() {
+			return new Object();
+		}
 
-        /**
-         * @brief 설치가 이상이 없는지 체크하는 method
-         **/
-        function checkUpdate() {
+		/**
+		 * @brief 설치가 이상이 없는지 체크하는 method
+		 **/
+		function checkUpdate() {
 			$flag = false;
 			$flag = $this->_hasOldStyleAliases();
-            return $flag;
-        }
+			return $flag;
+		}
 
-        function moduleUpdate() {
+		function moduleUpdate() {
 			$this->_updateOldStyleAliases();
-            return new Object(0, 'success_updated');
-        }
+			return new Object(0, 'success_updated');
+		}
 
 		function moduleUninstall() {
 			return new Object();
 		}
 
-        /**
-         * @brief 캐시 파일 재생성
-         **/
-        function recompileCache() {
-            FileHandler::removeFilesInDir(_XE_PATH_."files/cache/wiki");
-        }
+		/**
+		 * @brief 캐시 파일 재생성
+		 **/
+		function recompileCache() {
+			FileHandler::removeFilesInDir(_XE_PATH_."files/cache/wiki");
+		}
 
 
 		function _hasOldStyleAliases()
@@ -153,5 +153,5 @@
 			}
 		}
 
-    }
+	}
 ?>
