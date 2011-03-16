@@ -14,8 +14,8 @@
     <description xml:lang="zh-TW">維基百科模組。</description>
     <description xml:lang="jp">wikiモジュール</description>
     <description xml:lang="tr">Viki Modülü.</description>
-    <version>1.1.0</version>
-    <date>2010-02-08</date>
+    <version>1.2.0</version>
+    <date>2011-03-16</date>
     <category>service</category>
 
     <author email_address="developers@xpressengine.com" link="http://xpressengine.com">
