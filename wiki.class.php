@@ -126,45 +126,43 @@
 			return false;
 		}
 
+
 		/**
 		 * @brief 특수 문자 / 공백 등이 제거되지 않은 alias 를 일괄 수정
 		 */
 		function _updateOldStyleAliases()
-		{
+		{	   
 			// Wiki 모듈의 modules_srl 을 모두 구함.
 			$output = executeQueryArray('wiki.getAllWikiList', null);
 			$wiki_srls = array();
 			if(count($output->data))
-			{
+			{	   
 				foreach($output->data as $key => $module_instance)
-				{
+				{	   
 					$wiki_srls[] = $module_instance->module_srl;
-				}
-			}
+				}	   
+			}	   
 			$args->wiki_srls = $wiki_srls;
-
-			$output = executeQueryArray('wiki.checkOldStyleAliases', $args);
+			$output = executeQueryArray('wiki.checkOldStyleAliases', $args); 
 
 			if(count($output->data))
-			{
+			{	   
 				foreach($output->data as $key => $doc_alias)
-				{
+				{	   
 					$omitting_characters = array('&','//', ',', ' ');
-					if($doc_alias->alias_title == 'Front Page') break;
+					if($doc_alias->alias_title == 'Front Page') continue;
 					foreach($omitting_characters as $key => $char)
-					{	
-						if(strpos($doc_alias->alias_title, $char))
-						{
+					{	   
+						if(strpos($doc_alias->alias_title, $char)) 
+						{	   
 							unset($args);
 							$args->alias_srl = $doc_alias->alias_srl;
 							$args->alias_title = wiki::beautifyEntryName($doc_alias->alias_title);
-							$output = executeQuery('wiki.updateDocumentAlias', $args);
-							break;
-						}
-					}
-				}
-			}
-		}
-
+							$output = executeQuery('wiki.updateDocumentAlias', $args); 
+						}	   
+					}	   
+				}	   
+			}	   
+		} 
 	}
 ?>
