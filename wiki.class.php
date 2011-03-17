@@ -7,13 +7,13 @@
 
 	class wiki extends ModuleObject {
 
-		static $omitting_characters = array('/&/', '/\//', '/,/', '/ /');
-		static $replacing_characters = array('', '', '', '_');
+		var $omitting_characters = array('/&/', '/\//', '/,/', '/ /');
+		var $replacing_characters = array('', '', '', '_');
 
 		/**
 		 * @brief entry 이름으로 사용할 문자열을 생성
 		 */
-		static function makeEntryName($matches)
+		function makeEntryName($matches)
 		{
 			$answer->is_alias_link = false;
 
@@ -27,7 +27,7 @@
 			$processed_names = array();
 			foreach ($names as $key => $entry_name)
 			{
-				$entry_name = wiki::beautifyEntryName($entry_name);
+				$entry_name = $this->beautifyEntryName($entry_name);
 				$processed_names[] = $entry_name;
 			}
 
@@ -45,11 +45,11 @@
 			return $answer;
 		}
 
-		static function beautifyEntryName($entry_name)
+		function beautifyEntryName($entry_name)
 		{
 			$entry_name = strip_tags($entry_name);
 			$entry_name = html_entity_decode($entry_name);
-			$entry_name = preg_replace(wiki::$omitting_characters, wiki::$replacing_characters, $entry_name);
+			$entry_name = preg_replace($this->omitting_characters, $this->replacing_characters, $entry_name);
 			$entry_name = preg_replace('/[_]+/', '_', $entry_name);
 
 			return $entry_name;			

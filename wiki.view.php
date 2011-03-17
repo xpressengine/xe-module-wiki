@@ -396,7 +396,7 @@
 
 		//================================================================= private methods
 
-		function _handleWithExistingDocument($oDocument)
+		function _handleWithExistingDocument(&$oDocument)
 		{	
 			// 글과 요청된 모듈이 다르다면 오류 표시
 			if($oDocument->get('module_srl')!=$this->module_info->module_srl ) return $this->stop('msg_invalid_request');
@@ -426,6 +426,7 @@
 			} 
 			$content = $oDocument->getContent(false);
 			$content = $this->_renderWikiContent($content);
+
 			$oDocument->add('content', $content);
 		}
 
@@ -434,9 +435,10 @@
 		 */
 		function _renderWikiContent($org_content)
 		{	
-			$content = preg_replace_callback("!\[([^\]]+)\]!is", array( $this, 'callback_check_exists' ), $org_content );
+			$content = preg_replace_callback("!\[([^\]]+)\]!is", array(&$this, 'callback_check_exists' ), $org_content );
 			$entries = array_keys($this->document_exists);
 			$oDB = &DB::getInstance();
+
 
 			if(count($entries))
 			{ 
@@ -450,9 +452,9 @@
 					{ 
 						$this->document_exists[$alias->alias_title] = 1;
 					} 
-				} 
-			} 
-			$content = preg_replace_callback("!\[([^\]]+)\]!is", array( $this, 'callback_wikilink' ), $content );
+				}
+			}
+			$content = preg_replace_callback("!\[([^\]]+)\]!is", array(&$this, 'callback_wikilink' ), $content );
 			$content = preg_replace('@<([^>]*)(src|href)="((?!https?://)[^"]*)"([^>]*)>@i','<$1$2="'.Context::getRequestUri().'$3"$4>', $content);
 
 			return $content;
@@ -464,7 +466,7 @@
 		 */
 		function callback_check_exists($matches)
 		{
-			$entry_name = wiki::makeEntryName($matches);
+			$entry_name = $this->makeEntryName($matches);
 			$this->document_exists[$entry_name->link_entry] = 0;
 
 			return $matches[0];
@@ -487,9 +489,9 @@
 		 */
 		function callback_wikilink($matches)
 		{
-			if($matches[1][0] == "!") return "[".substr($matches[1], 1)."]";
+			if($matches[1]{0} == "!") return "[".substr($matches[1], 1)."]";
 
-			$entry_name = wiki::makeEntryName($matches);
+			$entry_name = $this->makeEntryName($matches);
 			$answer = "<a href=\"".getFullUrl('', 'mid', $this->mid, 'entry', $entry_name->link_entry, 'document_srl', '')."\" class=\"".$this->getCSSClass($entry_name->link_entry)."\" >".$entry_name->printing_name."</a>";
 
 			return $answer;
