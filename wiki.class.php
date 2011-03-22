@@ -155,7 +155,7 @@
 						{	   
 							unset($args);
 							$args->alias_srl = $doc_alias->alias_srl;
-							$args->alias_title = wiki::beautifyEntryName($doc_alias->alias_title);
+							$args->alias_title = $this->beautifyEntryName($doc_alias->alias_title);
 							$output = executeQuery('wiki.updateDocumentAlias', $args); 
 						}	   
 					}	   

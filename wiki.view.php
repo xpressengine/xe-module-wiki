@@ -57,6 +57,11 @@
 		 * @brief 선택된 글 출력
 		 **/
 		function dispWikiContent() {
+			// 이동시 혹은 entry 값을 넣어서 문서를 요청할 때에도 처리된 alias를 사용하도록 수정
+			$entry = Context::get('entry');
+			$beautifulEntry = $this->beautifyEntryName($entry);
+			Context::set('entry', $beautifulEntry);
+
 			$output = $this->dispWikiContentView();
 			if(!$output->toBool()) return;
 		}
