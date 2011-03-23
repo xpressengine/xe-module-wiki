@@ -224,9 +224,12 @@
 			// 요청된 변수 값들을 정리
 			$document_srl = Context::get('document_srl');
 			$entry = Context::get('entry');
-			if(!$document_srl && !$entry) {
-				$entry = "Front Page";
-				Context::set('entry', $entry);
+
+			if(!$document_srl) {
+				if (!$entry) {
+					$entry = "Front Page";
+					Context::set('entry', $entry);
+				}
 				$document_srl = $oDocumentModel->getDocumentSrlByAlias($this->module_info->mid, $entry);
 			}
 
