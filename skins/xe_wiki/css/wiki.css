@@ -260,11 +260,11 @@
 .feedbackList .item .indent:after{ content:""; display:block; clear:both;}
 .feedbackList .item.itemReply .indent{ padding-left:15px; background-repeat:no-repeat; background-position:0 1.2em;}
 
-.feedbackList .item .header{ margin:0 0 5px 0;}
-.feedbackList .item .header a{ font-size:12px; text-decoration:none;}
-.feedbackList .item .header a:hover,
-.feedbackList .item .header a:active,
-.feedbackList .item .header a:focus{ text-decoration:underline;}
+.feedbackList .item .fHeader{ margin:0 0 5px 0;}
+.feedbackList .item .fHeader a{ font-size:12px; text-decoration:none;}
+.feedbackList .item .fHeader a:hover,
+.feedbackList .item .fHeader a:active,
+.feedbackList .item .fHeader a:focus{ text-decoration:underline;}
 
 .feedbackList .item .itemContent { position:relative; padding:1em 0 1em 120px; *zoom:1; z-index:1;}
 .feedbackList .item .itemContent:after{ content:""; display:block; clear:both;}
@@ -311,8 +311,8 @@
 .feedbackList .trackbackURL a{ color:#adadad;}
 .feedbackList .item{ border-color:#f0f0f0;}
 .feedbackList .item.itemReply .indent{ background-image:url(../img/common/iconReply.gif);}
-.feedbackList .item .header{ color:#8b8b8b;}
-.feedbackList .item .header a{ color:#262626;}
+.feedbackList .item .fHeader{ color:#8b8b8b;}
+.feedbackList .item .fHeader a{ color:#262626;}
 .feedbackList .item .itemContent .option li{ background-image:url(../img/white/lineVr9.gif);}
 .feedbackList .item .itemContent .option li a{ color:#666;}
 .feedbackList .item .itemContent .delete{ background-image:url(../img/common/buttonDelete.gif);}
