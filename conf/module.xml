@@ -38,6 +38,7 @@
         <action name="dispWikiContent" type="view" index="true" />
         <action name="dispWikiEditPage" type="view" />
         <action name="dispWikiHistory" type="view" />
+        <action name="dispWikiHistoryCompare" type="view" />
         <action name="dispWikiTitleIndex" type="view" />
         <action name="dispWikiTreeIndex" type="view" />
         <action name="dispWikiModifyTree" type="view" />
@@ -50,17 +51,26 @@
         <action name="dispWikiAdminGrantInfo" type="view" standalone="true" />
         <action name="dispWikiAdminSkinInfo" type="view" standalone="true" />
         <action name="dispWikiAdminWikiAdditionSetup" type="view" standalone="true" />
-        <action name="procWikiAdminInsertWiki" type="controller" standalone="true" />
+        <action name="procWikiAdminInsertWiki" type="controller" standalone="true" ruleset="insert_wiki" />
+        <action name="dispWikiAdminMarkupExamples" type="view" standalone="true" />
         <action name="dispWikiAdminDeleteWiki" type="view" standalone="true" />
         <action name="dispWikiAdminArrange" type="view" standalone="true" />
-        <action name="procWikiAdminDeleteWiki" type="controller" standalone="true" />
+        <action name="dispWikiSearchResults" type="view" standalone="true" />
+        <action name="procWikiAdminDeleteWiki" type="controller" standalone="true" ruleset="delete_wiki" />
         <action name="procWikiAdminArrangeList" type="controller" standalone="true" />
-        <action name="procWikiInsertDocument" type="controller" standalone="true" />
-        <action name="procWikiInsertComment" type="controller" standalone="true" />
+        <action name="procWikiInsertDocument" type="controller" standalone="true" ruleset="insert" />
+        <action name="procWikiInsertComment" type="controller" standalone="true" ruleset="insert_comment" />
+        <action name="procWikiInsertCommentNotLogged" type="controller" standalone="true" ruleset="insert_comment_not_logged" />
         <action name="procWikiDeleteDocument" type="controller" standalone="true" />
-        <action name="procWikiDeleteComment" type="controller" standalone="true" />
+        <action name="procWikiDeleteComment" type="controller" standalone="true" ruleset="delete_comment" />
         <action name="procWikiMoveTree" type="controller" standalone="true" />
         <action name="procWikiRecompileTree" type="controller" standalone="true" />
-		<action name="procWikiVerificationPassword" type="controller" standalone="true" />
+		<action name="procWikiVerificationPassword" type="controller" standalone="true" ruleset="input_password" />
+		<action name="procWikiContentDiff" type="controller" standalone="true" />
+		<action name="procDispCommentEditor" type="controller" standalone="true" />
+		<action name="procWikiTextParse" type="controller" standalone="true" />
+		<action name="procWikiCheckIfDocumentWasUpdated" type="controller" standalone="true" />
+		<action name="displayWikiCommentList" type="view" standalone="true"/>
+		<action name="dispWikiAddComment" type="view" standalone="true"/>
     </actions>
 </module>

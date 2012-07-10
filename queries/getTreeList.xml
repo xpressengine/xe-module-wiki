@@ -18,6 +18,6 @@
         <condition operation="equal" column="doc.module_srl" var="module_srl" filter="number" notnull="notnull" />
     </conditions>
     <navigation>
-        <index var="sort_index" default="category.list_order" order="asc" />
+        <index var="sort_index" default="COALESCE(category.list_order, 0)" order="asc" />
     </navigation>
 </query>

@@ -5,7 +5,7 @@
  **/
 
 
-/* 모듈 생성 후 */
+/* after creation wiki Module */
 function completeInsertWiki(ret_obj) {
     var error = ret_obj['error'];
     var message = ret_obj['message'];
@@ -21,7 +21,7 @@ function completeInsertWiki(ret_obj) {
     location.href = url;
 }
 
-/* 모듈 삭제 후 */
+/*  after deleting wiki Module */
 function completeDeleteWiki(ret_obj) {
     var error = ret_obj['error'];
     var message = ret_obj['message'];
@@ -34,7 +34,7 @@ function completeDeleteWiki(ret_obj) {
 }
 
 
-/* 일괄 설정 */
+/* Set Batch for bulk operations */
 function doCartSetup(url) {
     var module_srl = new Array();
     jQuery('#fo_list input[name=cart]:checked').each(function() {

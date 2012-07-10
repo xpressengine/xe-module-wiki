@@ -1,8 +1,8 @@
 <!--@if($oDocument->getCommentCount())-->
 <hr class="hr" />
-<div class="feedbackList" id="reply">
+<div class="fbList" id="reply">
 
-	<h3 class="feedbackHeader">
+	<h3 class="fbHeader">
 		<!--@if($grant->write_comment && $oDocument->allowComment()) -->
 			{$lang->comment} <em>'{$oDocument->getCommentcount()}'</em>
 		<!--@end-->
@@ -19,7 +19,7 @@
                         <!--@if($comment->getProfileImage())-->
                             <img src="{$comment->getProfileImage()}" alt="profile" class="profile" />
                         <!--@end-->
-						<h4 class="fHeader">
+						<h4 class="author">
 						<!--@if(!$comment->member_srl)-->
 							<!--@if($comment->homepage)-->
 								<a href="{$comment->homepage}" onclick="window.open(this.href);return false;">{$comment->getNickName()}</a>
@@ -50,17 +50,19 @@
 						
 					</div>
 	
-                    <div class="itemContent">
+                    <div class="iContent">
 					<!--@if(!$comment->isAccessible())-->
-						<form action="./" method="get" onsubmit="return procFilter(this, input_password)" class="secretMessage">
-						<input type="hidden" name="mid" value="{$mid}" />
-						<input type="hidden" name="page" value="{$page}" />
-						<input type="hidden" name="document_srl" value="{$comment->get('document_srl')}" />
-						<input type="hidden" name="comment_srl" value="{$comment->get('comment_srl')}" />
+						<form action="./" method="get" ruleset="input_password" class="secretMessage">
+							<input type="hidden" name="act" value="procWikiVerificationPassword" />
+							<input type="hidden" name="success_return_url" value="{getUrl('act','dispWikiContent','mid',$mid,'entry',$entry, 'document_srl', '')}" />
+							<input type="hidden" name="mid" value="{$mid}" />
+							<input type="hidden" name="page" value="{$page}" />
+							<input type="hidden" name="document_srl" value="{$comment->get('document_srl')}" />
+							<input type="hidden" name="comment_srl" value="{$comment->get('comment_srl')}" />
 							<p>&quot;{$lang->msg_is_secret}&quot;</p>
 							<dl>
 								<dt><label for="cpw">{$lang->password}</label> :</dt>
-								<dd><input type="password" id="cpw" name="password" class="inputText" /><span class="buttonOfficial"><input type="submit" value="{$lang->cmd_input}" /></span></dd>
+								<dd><input type="password" id="cpw" name="password" class="iText" /><span class="btn"><input type="submit" value="{$lang->cmd_input}" /></span></dd>
 							</dl>
 						</form>
 					<!--@else-->
@@ -68,7 +70,7 @@
 
 					<!--@if($comment->hasUploadedFIles())-->
 					<dl class="attachedFile">
-						<dt><img src="./img/common/iconFiles.gif" width="27" height="11" alt="{$lang->uploaded_file}" /> <button type="button" class="fileToggle" onclick="jQuery(this).parents('dl.attachedFile').toggleClass('open');return false;">{$lang->uploaded_file} ({$comment->get('uploaded_count')})</button></dt>
+						<dt><img src="./img/iconFiles.gif" width="27" height="11" alt="{$lang->uploaded_file}" /> <button type="button" class="fileToggle" onclick="jQuery(this).parents('dl.attachedFile').toggleClass('open');return false;">{$lang->uploaded_file} ({$comment->get('uploaded_count')})</button></dt>
 						<dd>
 							<ul class="files">
 								{@ $_uploaded_files = $comment->getUploadedFiles() }
@@ -106,7 +108,7 @@
 
     <!--@if($oDocument->comment_page_navigation)-->
     <div class="pagination">
-        <a href="{getUrl('cpage',1)}#comment" class="prevEnd">{$lang->first_page}</a> 
+        <a href="{getUrl('cpage',1)}#comment" class="prevEnd">&lsaquo; {$lang->first_page}</a> 
         <!--@while($page_no = $oDocument->comment_page_navigation->getNextPage())-->
             <!--@if($cpage == $page_no)-->
                 <strong>{$page_no}</strong> 
@@ -114,7 +116,7 @@
                 <a href="{getUrl('cpage',$page_no)}#comment">{$page_no}</a>
             <!--@end-->
         <!--@end-->
-        <a href="{getUrl('cpage',$oDocument->comment_page_navigation->last_page)}#comment" class="nextEnd">{$lang->last_page}</a>
+        <a href="{getUrl('cpage',$oDocument->comment_page_navigation->last_page)}#comment" class="nextEnd">{$lang->last_page} &rsaquo;</a>
     </div>
     <!--@end-->
 

@@ -1,0 +1,21 @@
+<!--#include("header.html")-->
+
+<!--// tree javascript plugin load -->
+<!--%load_js_plugin("ui.tree")-->
+
+<div id="tree">
+    <ul class="simpleTree">
+        <li class="root noIcon"></li>
+    </ul>
+
+    <div class="treeUI">
+        <a href="{getUrl('act','dispWikiTreeIndex')}" class="button"><span>{$lang->cmd_back}</span></a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var isManageGranted = {$isManageGranted};
+    jQuery(window).load( function() { Tree(); } );
+</script>
+
+<!--#include("footer.html")-->

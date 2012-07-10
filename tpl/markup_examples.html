@@ -1,0 +1,25 @@
+<include target="header.html" />
+
+<script>
+jQuery(function($) {
+	$( "#markupExamples" ).tabs();
+});
+</script>
+
+<h2>{$lang->wiki_language_help}</h2>
+
+<div id="markupExamples">
+	<ul>
+	<!--@foreach($wiki_markup_list as $markup)-->
+		<li>
+			<a href="#{$markup}"> <!--@ echo $lang->{$markup}; --><!--@end--> </a>
+		</li>
+	<!--@end-->
+	</ul>
+
+	<!--@foreach($wiki_markup_list as $markup)-->
+		<div id="{$markup}">
+			<!--@ echo nl2br($lang->{$markup . '_help'}); --><!--@end-->
+		</div>
+	<!--@end-->
+</div>

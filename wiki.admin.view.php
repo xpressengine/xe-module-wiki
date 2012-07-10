@@ -1,160 +1,233 @@
 <?php
+/**
+* @class  wikiAdminView
+* @developer NHN (developers@xpressengine.com)
+* @brief  wiki admin view class
+*/
+class WikiAdminView extends Wiki
+{
+	var $wiki_markup_list = array("markdown", "mediawiki_markup", "googlecode_markup", "xe_wiki_markup" );
+
 	/**
-	 * @class  wikiAdminView
-	 * @author NHN (developers@xpressengine.com)
-	 * @brief  wiki 모듈의 admin view class
-	 **/
-	class wikiAdminView extends wiki {
-
-		function init() {
-			// module_srl이 있으면 미리 체크하여 존재하는 모듈이면 module_info 세팅
-			$module_srl = Context::get('module_srl');
-			if(!$module_srl && $this->module_srl) {
-				$module_srl = $this->module_srl;
-				Context::set('module_srl', $module_srl);
-			}
-
-			// module model 객체 생성 
-			$oModuleModel = &getModel('module');
-
-			// module_srl이 넘어오면 해당 모듈의 정보를 미리 구해 놓음
-			if($module_srl) {
-				$module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl);
-				if(!$module_info) {
-					Context::set('module_srl','');
-					$this->act = 'list';
-				} else {
-					ModuleModel::syncModuleToSite($module_info);
-					$this->module_info = $module_info;
-					Context::set('module_info',$module_info);
-				}
-			}
-
-			$module_category = $oModuleModel->getModuleCategories();
-			Context::set('module_category', $module_category);
-
-			// 템플릿 경로 지정 (board의 경우 tpl에 관리자용 템플릿 모아놓음)
-			$template_path = sprintf("%stpl/",$this->module_path);
-			$this->setTemplatePath($template_path);
+	 * @brief Admin view initialisation
+	 * @developer NHN (developers@xpressengine.com)
+	 * @access public
+	 * @return 
+	 */
+	function init() 
+	{
+		// check if module_srl is already set
+		$module_srl = Context::get('module_srl');
+		if(!$module_srl && $this->module_srl) 
+		{
+			$module_srl = $this->module_srl; 
+			Context::set('module_srl', $module_srl);
 		}
-
 		
-		/**
-		 * @brief 위키 모듈 목록
-		 */
-		function dispWikiAdminContent() {
-			$args->sort_index = "module_srl";
-			$args->page = Context::get('page');
-			$args->list_count = 20;
-			$args->page_count = 10;
-			$args->s_module_category_srl = Context::get('module_category_srl');
-			$output = executeQueryArray('wiki.getWikiList', $args);
-			ModuleModel::syncModuleToSite($output->data);
-
-			// 템플릿에 쓰기 위해서 context::set
-			Context::set('total_count', $output->total_count);
-			Context::set('total_page', $output->total_page);
-			Context::set('page', $output->page);
-			Context::set('wiki_list', $output->data);
-			Context::set('page_navigation', $output->page_navigation);
-
-			// 템플릿 파일 지정
-			$this->setTemplateFile('index');
-		}
-
-
-		/**
-		 * @brief 위키 모듈 추가를 위한 정보입력 화면
-		 */
-		function dispWikiAdminInsertWiki() {
-			if(!in_array($this->module_info->module, array('admin', 'wiki'))) {
-				return $this->alertMessage('msg_invalid_request');
-			}
-
-			// 스킨 목록을 구해옴
-			$oModuleModel = &getModel('module');
-			$skin_list = $oModuleModel->getSkins($this->module_path);
-			Context::set('skin_list',$skin_list);
-
-			// 레이아웃 목록을 구해옴
-			$oLayoutMode = &getModel('layout');
-			$layout_list = $oLayoutMode->getLayoutList();
-			Context::set('layout_list', $layout_list);
-
-			// 템플릿 파일 지정
-			$this->setTemplateFile('wiki_insert');
-		}
-
-
-		/**
-		 * @brief 위키 모듈 삭제를 위한 확인 화면
-		 */
-		function dispWikiAdminDeleteWiki() {
-			if(!Context::get('module_srl')) return $this->dispWikiAdminContent();
-			if(!in_array($this->module_info->module, array('admin', 'wiki'))) {
-				return $this->alertMessage('msg_invalid_request');
-			}
-			$module_info = Context::get('module_info');
-
-			$oDocumentModel = &getModel('document');
-			$document_count = $oDocumentModel->getDocumentCount($module_info->module_srl);
-			$module_info->document_count = $document_count;
-
-			Context::set('module_info',$module_info);
-			$this->setTemplateFile('wiki_delete');
-		}
-
-
-		/**
-		 * @brief 위키 모듈에 대한 추가 설정 화면
-		 */
-		function dispWikiAdminWikiAdditionSetup() {
-			// content는 다른 모듈에서 call by reference로 받아오기에 미리 변수 선언만 해 놓음
-			$content = '';
-
-			// 추가 설정을 위한 트리거 호출 
-			// 게시판 모듈이지만 차후 다른 모듈에서의 사용도 고려하여 trigger 이름을 공용으로 사용할 수 있도록 하였음
-			$output = ModuleHandler::triggerCall('module.dispAdditionSetup', 'before', $content);
-			$output = ModuleHandler::triggerCall('module.dispAdditionSetup', 'after', $content);
-			Context::set('setup_content', $content);
-
-			// 템플릿 파일 지정
-			$this->setTemplateFile('addition_setup');
-		}
-
+		// Create Object Module model
+		$oModuleModel = &getModel('module');
 		
-		/**
-		 * @brief 위키 모듈에 대한 권한 설정 화면
-		 */
-		function dispWikiAdminGrantInfo() {
-			// 공통 모듈 권한 설정 페이지 호출
-			$oModuleAdminModel = &getAdminModel('module');
-			$grant_content = $oModuleAdminModel->getModuleGrantHTML($this->module_info->module_srl, $this->xml_info->grant);
-			Context::set('grant_content', $grant_content);
-
-			$this->setTemplateFile('grant_list');
+		// Second module_srl come over to save the module, putting the information in advance
+		if($module_srl) 
+		{
+			$module_info = $oModuleModel->getModuleInfoByModuleSrl($module_srl);
+			if(!$module_info) 
+			{
+				Context::set('module_srl', ''); 
+				$this->act = 'list';
+			}
+			else 
+			{
+				ModuleModel::syncModuleToSite($module_info); 
+				$this->module_info = $module_info;
+				$this->module_info->use_status = explode('|@|', $module_info->use_status);
+				Context::set('module_info', $module_info);
+			}
 		}
-
-	
-		/**
-		 * @brief 위키 모듈 스킨 설정 화면
-		 */
-		function dispWikiAdminSkinInfo() {
-			// Call the common page for managing skin information
-			$oModuleAdminModel = &getAdminModel('module');
-			$skin_content = $oModuleAdminModel->getModuleSkinHTML($this->module_info->module_srl);
-			Context::set('skin_content', $skin_content);
-
-			$this->setTemplateFile('skin_info');
-		}
-
-
-		/**
-		 * @brief 위키 모듈 목록 갱신 화면
-		 */
-		function dispWikiAdminArrange() {
-
-			$this->setTemplateFile('arrange_list');
-		}
+		$module_category = $oModuleModel->getModuleCategories(); 
+		Context::set('module_category', $module_category);
+		
+		// Initialize default markup type
+		if(!$this->module_info->markup_type) 
+		{
+			$this->module_info->markup_type = 'markdown'; 
+		}		
+		
+		// Specify template path
+		$template_path = sprintf("%stpl/", $this->module_path); 
+		$this->setTemplatePath($template_path);	
 	}
-?>
+	
+	/**
+	 * @brief List of Wiki module
+	 * @developer NHN (developers@xpressengine.com)
+	 * @access public
+	 * @return
+	 */
+	function dispWikiAdminContent() 
+	{
+		$args->sort_index = "module_srl"; 
+		$args->page = Context::get('page'); 
+		$args->list_count = 20; 
+		$args->page_count = 10; 
+		$args->s_module_category_srl = Context::get('module_category_srl'); 
+		$output = executeQueryArray('wiki.getWikiList', $args); 
+		
+		ModuleModel::syncModuleToSite($output->data);
+		// In order to write in the template context::set
+		Context::set('total_count', $output->total_count); 
+		Context::set('total_page', $output->total_page); 
+		Context::set('page', $output->page); 
+		Context::set('wiki_list', $output->data); 
+		Context::set('page_navigation', $output->page_navigation);
+		// Specify the template file
+		$this->setTemplateFile('index');
+	}
+	
+	/**
+	 * @brief Wiki module input screen for additional information
+	 * @developer NHN (developers@xpressengine.com)
+	 * @access public
+	 * @return
+	 */	
+	function dispWikiAdminInsertWiki() 
+	{	
+		if(!in_array($this->module_info->module, array('admin', 'wiki'))) 
+		{
+			return $this->alertMessage('msg_invalid_request');
+		}
+		// set skin list
+		$oModuleModel = &getModel('module'); 
+		$skin_list = $oModuleModel->getSkins($this->module_path); 
+		Context::set('skin_list', $skin_list); 
+		$mskin_list = $oModuleModel->getSkins($this->module_path, "m.skins"); 
+		Context::set('mskin_list', $mskin_list);
+		
+		// set layout list
+		$oLayoutModel = &getModel('layout'); 
+		$layout_list = $oLayoutModel->getLayoutList(); 
+		Context::set('layout_list', $layout_list); 
+		$mobile_layout_list = $oLayoutModel->getLayoutList(0, "M"); 
+		Context::set('mlayout_list', $mobile_layout_list); 
+		
+		$wiki_markup_list = $this->wiki_markup_list;
+		Context::set('wiki_markup_list', $wiki_markup_list);
+
+		// get document status list
+		$oDocumentModel = &getModel('document');
+		$documentStatusList = $oDocumentModel->getStatusNameList();
+		Context::set('document_status_list', $documentStatusList);
+
+		$security = new Security(); 
+		$security->encodeHTML('wiki_list..browser_title', 'wiki_list..mid'); 
+		$security->encodeHTML('skin_list..title', 'mskin_list..title'); 
+		$security->encodeHTML('layout_list..title', 'layout_list..layout'); 
+		$security->encodeHTML('mlayout_list..title', 'mlayout_list..layout');
+		
+		// Specify the template file
+		$this->setTemplateFile('wiki_insert');
+	}
+
+	/**
+	 * @brief Help page for wiki markup type
+	 * @developer Corina Udrescu (xe_dev@arnia.ro)
+	 * @access public
+	 * @return
+	 */
+	function dispWikiAdminMarkupExamples()
+	{
+		$wiki_markup_list = $this->wiki_markup_list;
+		Context::set('wiki_markup_list', $wiki_markup_list);
+
+		$this->setTemplateFile('markup_examples');
+	}
+	
+	/**
+	 * @brief Confirmation screen for deleting wiki module
+	 * @developer NHN (developers@xpressengine.com)
+	 * @access public
+	 * @return
+	 */		
+	function dispWikiAdminDeleteWiki() 
+	{
+		if(!Context::get('module_srl')) 
+		{
+			return $this->dispWikiAdminContent();
+		}
+		if(!in_array($this->module_info->module, array('admin', 'wiki'))) 
+		{
+			return $this->alertMessage('msg_invalid_request');
+		}
+		$module_info = Context::get('module_info'); 
+		$oDocumentModel = &getModel('document'); 
+		$document_count = $oDocumentModel->getDocumentCount($module_info->module_srl); 
+		$module_info->document_count = $document_count; 
+		Context::set('module_info', $module_info); 
+		$this->setTemplateFile('wiki_delete');
+	}
+	
+	/**
+	 * @brief Additional setup screen for Wiki module
+	 * @developer NHN (developers@xpressengine.com)
+	 * @access public
+	 * @return
+	 */			
+	function dispWikiAdminWikiAdditionSetup() 
+	{
+		// content will be passsed by reference to all triggers
+		$content = '';
+		// Trigger calls for additional settings
+		// trigger name to be used
+		$output = ModuleHandler::triggerCall('module.dispAdditionSetup', 'before', $content); 
+		$output = ModuleHandler::triggerCall('module.dispAdditionSetup', 'after', $content); 
+		
+		Context::set('setup_content', $content);
+		// Setup markup type, for disabling certain fields when wiki syntax is used
+		Context::set('markup_type', $this->module_info->markup_type);
+		// Specify the template file
+		$this->setTemplateFile('addition_setup');
+	}
+	
+	/**
+	 * @brief Set permissions for a wiki module screen
+	 * @developer NHN (developers@xpressengine.com)
+	 * @access public
+	 * @return
+	 */			
+	function dispWikiAdminGrantInfo() 
+	{
+		// Call the common page for managing grants information
+		$oModuleAdminModel = getAdminModel('module'); 
+		$grant_content = $oModuleAdminModel->getModuleGrantHTML($this->module_info->module_srl, $this->xml_info->grant); 
+		Context::set('grant_content', $grant_content); 
+		$this->setTemplateFile('grant_list');
+	}
+	
+	/**
+	 * @brief Wiki module screen skins settings
+	 * @developer NHN (developers@xpressengine.com)
+	 * @access public
+	 * @return
+	 */		
+	function dispWikiAdminSkinInfo() 
+	{
+		// Call the common page for managing skin information
+		$oModuleAdminModel = & getAdminModel('module'); 
+		$skin_content = $oModuleAdminModel->getModuleSkinHTML($this->module_info->module_srl); 
+		Context::set('skin_content', $skin_content); 
+		$this->setTemplateFile('skin_info');
+	}
+	
+	/**
+	 * @brief Wiki module list update screen
+	 * @developer NHN (developers@xpressengine.com)
+	 * @access public
+	 * @return
+	 */			
+	function dispWikiAdminArrange() 
+	{
+		$this->setTemplateFile('arrange_list') ;
+	}
+}
+/* End of file wiki.admin.view.php */
+/* Location: wiki.admin.view.php */

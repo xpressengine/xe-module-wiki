@@ -1,9 +1,9 @@
-<!--#include("header.html")-->
+<include target="header.html" />
 
-<div id="treeList">
+<div class="treeList">
 {@ $_pDepth = 0;}
 		<ul>
-			<!--@foreach($list as $key => $val)-->
+			<!--@foreach($document_tree as $key => $val)-->
 			<!--@if($_pDepth > $val->depth)-->
 			<!--@for($i=$val->depth; $i<$_pDepth; $i++)-->
 		</ul>
@@ -30,11 +30,11 @@
 
     <!--@if($grant->write_document)-->
     <div class="treeUI">
-        <a href="{getUrl('act','dispWikiModifyTree')}" class="button"><span>{$lang->cmd_modify}</span></a>
-        <a href="#" class="button" onclick="doRecompileTree(); return false;"><span>{$lang->cmd_remake_cache}</span></a>
+        <a href="{getUrl('act','dispWikiModifyTree')}">{$lang->cmd_modify}</a>
+        <button type="button" onclick="doRecompileTree()" class="text">{$lang->cmd_remake_cache}</button>
     </div>
     <!--@end-->
 
 </div>
 
-<!--#include("footer.html")-->
+<include target="footer.html" />

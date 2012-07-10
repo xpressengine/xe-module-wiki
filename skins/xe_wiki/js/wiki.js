@@ -3,6 +3,95 @@ function viewHistory(history_srl) {
     if(zone.css('display')=='block') zone.css('display','none');
     else zone.css('display','block');
 }
+
+jQuery(document).ready(function(){
+	if (jQuery("input[name=title]").length && jQuery("input[name=title]").hasClass("iText"))
+	{
+		jQuery("input[name=title]").focus();
+	}
+});	
+
+
+function resizeDiv(docHeight)
+{
+	
+	if (docHeight < (jQuery(window).height()-140))
+    {
+		docHeight = jQuery(window).height()-140;
+    }
+    jQuery("#leftSideTreeList").height(docHeight);
+	leftWidth = jQuery("#leftSideTreeList").width();
+	
+	if (jQuery("#columnRight").length > 0)
+	{
+		jQuery("#wiki").css("min-width",jQuery("#columnRight").width());
+		//leftWidth += jQuery("#columnRight").position().left;
+	}
+	else
+	{
+		rightWidth = jQuery(document).width()-leftWidth-marginRight;
+	}
+	leftWidth += jQuery("#wiki").position().left;
+	rightWidth = jQuery("#wiki").width()-jQuery("#leftSideTreeList").width()-marginRight;
+    jQuery("#content_Body").width(rightWidth);
+	 
+	if( jQuery("#leftSideTreeList").width() > 1 )
+	{
+		jQuery("#showHideTree").css("left",(leftWidth-7)+"px");
+	}
+}
+
+jQuery.fn.decHTML = function() {
+  return this.each(function(){
+    var me   = jQuery(this);
+    var html = me.html();
+    me.html("<div style='text-align:left'>"+html.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>')+"</div>");
+  });
+};
+
+function getDiff(elem,document_srl,history_srl)
+{
+    var type = "td";
+    var diffDiv = jQuery("#"+elem);
+    if (!diffDiv.hasClass("hide"))
+    {
+	diffDiv.addClass("hide");
+    }
+    else
+    {
+		jQuery.exec_json
+		(
+			"wiki.procWikiContentDiff",
+			{
+				"document_srl": document_srl,
+				"history_srl": history_srl
+			},
+			function(data)
+			{
+				var old = data.old;
+				var current = data.current;
+				wDiffHtmlInsertStart = "<span class='wDiffHtmlInsert'>";
+				wDiffHtmlInsertEnd = "</span>";
+				wDiffHtmlDeleteStart = "<span class='wDiffHtmlDelete'>";
+				wDiffHtmlDeleteEnd = "</span>";
+				var htmlText = WDiffString(old, current);
+				//var htmlText = diffString(old,current);
+				jQuery('#diff'+history_srl).html(htmlText).decHTML();
+				jQuery(type+'[name*="diff"]').each(function()
+				{
+					if (!jQuery(this).hasClass("hide")) 
+					jQuery(this).addClass("hide");
+				});
+				jQuery('#diff'+history_srl).toggleClass("hide");
+				docHeight = jQuery("#wikiBody").height();
+				resizeDiv(docHeight);
+			}
+		);
+    }
+    docHeight = jQuery("#content_Body").height();
+    resizeDiv(docHeight);
+}
+
 /**
  * @file   modules/document/tpl/js/document_category.js
  * @author sol (sol@ngleader.com)
