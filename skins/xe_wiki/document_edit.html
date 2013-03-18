@@ -1,8 +1,8 @@
 <include target="header.html" />
 
 <!--@if($module_info->markup_type == 'markdown')-->
-<script type="text/javascript" src="../../lib/pagedown/Markdown.Converter.js"></script>
-<script type="text/javascript">
+<script src="../../lib/pagedown/Markdown.Converter.js"></script>
+<script>
 	jQuery(function($) {
 		var $textarea = $('#wikiContentContainer textarea');
 		var $preview = $('#wikiDocumentPreview');
@@ -19,8 +19,8 @@
 	});
 </script>
 <!--@elseif ($module_info->markup_type == 'googlecode_markup')-->
-<script type="text/javascript" src="../../lib/js/GoogleCodeWikiParser.js"></script>
-<script type="text/javascript">
+<script src="../../lib/js/GoogleCodeWikiParser.js"></script>
+<script>
     jQuery(function($) {
         setInterval(function() {
             var wikitext = editorGetContent( jQuery('form[editor_sequence]').attr('editor_sequence') );
@@ -31,7 +31,7 @@
     });
 </script>
 <!--@elseif ($module_info->markup_type == 'mediawiki_markup')-->
-<script type="text/javascript">
+<script>
 //ajax:
 jQuery.fn.syncPreviewWithEditor = function(options) {
     var form = (
@@ -71,7 +71,7 @@ jQuery(function($) {
 </script>
 <!--@end-->
 
-<script type="text/javascript">
+<script>
 	jQuery(document).ready(function($){
 		$("#title").change(function(){			
 			var alias = $("#title").val().replace(/[ ]/g, "_").toLowerCase();
@@ -123,69 +123,64 @@ jQuery(function($) {
 	<input type="hidden" name="section" value="{$section}" />
 	<input type="hidden" name="section_title" value="{$section_title}" />
     <input type="hidden" name="success_return_url" value="{getUrl('act','dispWikiContent', 'module_srl', $module_info->module_srl)}" />
-<!--@if($history)-->
-<input type="hidden" name="content" value="{htmlspecialchars($history->content)}" />
-<!--@else-->
-<input type="hidden" name="content" value="{$oDocument->getContentText()}" />
-<!--@end-->
-<input type="hidden" name="document_srl" value="{$document_srl}" />
-
-<div class="wkWrite" id="wikiContentContainer">
-	<div class="title">
-		<label for="title">{$lang->write_form_title}</label>
-		<input type="text" name="title"  id="title" value="{$oDocument->get('title')}" class="iText" />
-	</div>
-	<div class="alias" >
-		<label for="alias">{$lang->write_form_alias}</label>
-		{getFullUrl()}entry/
-		<input type="text" name="alias" id="alias" value="{$oDocument->get('alias')}" class="iText" />
-	</div>
-	
-    <div class="editor">
-		{$oDocument->getEditor()}
-	</div>
-	
-	<!--@if($module_info->markup_type != 'xe_wiki_markup')-->
-	<a href="#" id="toggleWikiHelp">{$lang->wiki_language_help}</a>
-	<div id="wikiHelp" class="hide" title="Click to hide">
-		<!--@if($module_info->markup_type == 'markdown')-->
-			{nl2br($lang->markdown_help)}
-		<!--@elseif($module_info->markup_type == 'googlecode_markup')-->
-			{nl2br($lang->googlecode_markup_help)}
-		<!--@elseif($module_info->markup_type == 'mediawiki_markup')-->
-			{nl2br($lang->mediawiki_markup_help)}
+	<!--@if($history)-->
+	<input type="hidden" name="content" value="{htmlspecialchars($history->content)}" />
+	<!--@else-->
+	<input type="hidden" name="content" value="{$oDocument->getContentText()}" />
+	<!--@end-->
+	<input type="hidden" name="document_srl" value="{$document_srl}" />
+	<div class="wkWrite" id="wikiContentContainer">
+		<div class="title">
+			<label for="title">{$lang->write_form_title}</label>
+			<input type="text" name="title"  id="title" value="{$oDocument->get('title')}" class="iText" />
+		</div>
+		<div class="alias" >
+			<label for="alias">{$lang->write_form_alias}</label>
+			{getFullUrl()}entry/
+			<input type="text" name="alias" id="alias" value="{$oDocument->get('alias')}" class="iText" />
+		</div>
+		
+		<div class="editor">
+			{$oDocument->getEditor()}
+		</div>
+		
+		<!--@if($module_info->markup_type != 'xe_wiki_markup')-->
+		<a href="#" id="toggleWikiHelp">{$lang->wiki_language_help}</a>
+		<div id="wikiHelp" class="hide" title="Click to hide">
+			<!--@if($module_info->markup_type == 'markdown')-->
+				{nl2br($lang->markdown_help)}
+			<!--@elseif($module_info->markup_type == 'googlecode_markup')-->
+				{nl2br($lang->googlecode_markup_help)}
+			<!--@elseif($module_info->markup_type == 'mediawiki_markup')-->
+				{nl2br($lang->mediawiki_markup_help)}
+			<!--@end-->
+		</div>
 		<!--@end-->
-	</div>
-	<!--@end-->
-
-	<div class="wkNav">
-		<span class="btn"><input type="submit" value="{$lang->cmd_registration}" /></span>
-	</div>
 	
-	<!--@if($module_info->markup_type != 'xe_wiki_markup')-->
-	<div id="wikiDocumentPreview"></div>
-	<!--@end-->
-
-	<br /><br />
-	<!--@if(!$is_logged)-->
-		<input type="text" name="nick_name" class="inputText userName" value="{$lang->writer}" onfocus="this.value=''" />
-		<input type="password" name="password" class="inputText userPw" value="{$lang->password}" onfocus="this.value=''" />
-		<input type="text" name="email_address" class="inputText emailAddress" value="{$lang->email_address}" onfocus="this.value=''" />
-		<input type="text" name="homepage" class="inputText homePage" value="{$lang->homepage}" onfocus="this.value=''" />
-	<!--@end-->
-	<!--@if(is_array($status_list))-->
-		<!--@foreach($status_list AS $key=>$value)-->
-		<input type="radio" name="status" value="{$key}" id="{$key}" <!--@if($oDocument->get('status') == $key || ($key == 'PUBLIC' && !$document_srl))-->checked="checked"<!--@end--> />
-		<label for="{$key}">{$value}</label>
+		<div class="wkNav">
+			<input class="btn" type="submit" value="{$lang->cmd_registration}" />
+		</div>
+		
+		<!--@if($module_info->markup_type != 'xe_wiki_markup')-->
+		<div id="wikiDocumentPreview"></div>
 		<!--@end-->
-	<!--@end-->
-
-
-
-	<div class="wkNav">
-        <span class="btn"><input type="submit" value="{$lang->cmd_registration}" /></span>
-    </div>
-</div>
-
+	
+		<br /><br />
+		<!--@if(!$is_logged)-->
+			<input type="text" name="nick_name" class="inputText userName" value="{$lang->writer}" onfocus="this.value=''" />
+			<input type="password" name="password" class="inputText userPw" value="{$lang->password}" onfocus="this.value=''" />
+			<input type="text" name="email_address" class="inputText emailAddress" value="{$lang->email_address}" onfocus="this.value=''" />
+			<input type="text" name="homepage" class="inputText homePage" value="{$lang->homepage}" onfocus="this.value=''" />
+		<!--@end-->
+		<!--@if(is_array($status_list))-->
+			<!--@foreach($status_list AS $key=>$value)-->
+			<input type="radio" name="status" value="{$key}" id="{$key}" <!--@if($oDocument->get('status') == $key || ($key == 'PUBLIC' && !$document_srl))-->checked="checked"<!--@end--> />
+			<label for="{$key}">{$value}</label>
+			<!--@end-->
+		<!--@end-->
+		<div class="wkNav">
+			<input class="btn" type="submit" value="{$lang->cmd_registration}" />
+		</div>
+	</div>
 </form>
 <include target="footer.html" />

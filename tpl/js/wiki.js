@@ -1,6 +1,6 @@
 /**
  * @file   modules/wiki/js/wiki.js
- * @author zero (zero@nzeo.com)
+ * @author NHN(developers@xpressengine.com)
  * @brief  wiki 모듈의 javascript
  **/
 

@@ -1,4 +1,4 @@
-<!--#include("header.html")-->
+<include target="header.html" />
 
 <div class="wikiRead">
 	<div class="wikiReadBody">
@@ -78,11 +78,11 @@
 </div>
 
 <!--@if($oDocument->allowTrackback())-->
-    <!--#include("./trackback.html")-->
+    <include target="./trackback.html" />
 <!--@end-->
 <!--@if($oDocument->allowComment())-->
     <a name="comment"></a>
-    <!--#include("./comment.html")-->
+    <include target="./comment.html" />
 
     <!--@if($grant->write_comment && $oDocument->isEnableComment() )-->
         <form action="./" method="post" onsubmit="test(this);" class="wikiEditor" >
@@ -117,4 +117,4 @@
 <!--@end-->
 
 
-<!--#include("footer.html")-->
+<include target="footer.html" />

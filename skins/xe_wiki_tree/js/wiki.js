@@ -184,7 +184,7 @@ jQuery(document).ready(function(){
 		tree.animate({
 							width: 'toggle'
 						 }
-						 , 500
+						 , 200
 						 , function() {
 								resizeDiv(docHeight);
 						   }
@@ -199,12 +199,12 @@ jQuery(document).ready(function(){
 			// Remove body left padding - the one used for the left sidebar
 			wikiBody.animate({
 				'padding-left': '0'
-			}, 500);			
+			}, 200);			
 			
 			// Position toggle button
 			toggleButton.animate({
 									left: '-='+(treeWidth-13)
-								}, 500
+								}, 200
 								, function() {
 									tree.children().show();
 									toggleButton.css('background-position', "-13px 0px");
@@ -219,12 +219,12 @@ jQuery(document).ready(function(){
 			// Re-add the body padding
 			wikiBody.animate({
 				'padding-left': '250px'
-			}, 500);	
+			}, 200);	
 			
 			// Position toggle button
 			toggleButton.animate({
 								  left: '+='+(treeWidth-13)
-								}, 500
+								}, 200
 								, function() {
 									tree.children().show();		
 									toggleButton.css('background-position', "0px 0px");
@@ -276,7 +276,7 @@ function loadCommentForm(document_srl)
 				}
 				else{
 					// 10 is the length of "<!--#Meta:"
-					jQuery("head").append('<script type="text/javascript" src="' + editor.substring(pos + 10, posEnd) + '"></script>');
+					jQuery("head").append('<script src="' + editor.substring(pos + 10, posEnd) + '"></script>');
 				}
 			}
 			jQuery('div.editor').append(editor);

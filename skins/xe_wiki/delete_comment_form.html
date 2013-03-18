@@ -8,7 +8,7 @@
 	<input type="hidden" name="page" value="{$page}" />
 	<input type="hidden" name="document_srl" value="{$oComment->get('document_srl')}" />
 	<input type="hidden" name="comment_srl" value="{$oComment->get('comment_srl')}" />
-	<span class="btn"><input type="submit" value="{$lang->cmd_delete}" /></span>
-	<span class="btn"><a href="{getUrl('act','','comment_srl','')}">{$lang->cmd_cancel}</a></span>
+	<a href="{getUrl('act','','comment_srl','')}" class="btn">{$lang->cmd_cancel}</a>
+	<input type="submit" value="{$lang->cmd_delete}" class="btn" />
 </form>
 <include target="footer.html" />

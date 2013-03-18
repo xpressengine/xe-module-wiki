@@ -1,21 +1,14 @@
-<!--@if($module_info->menu_style == "classic")-->
-    <!--%import("css/jquery.treeview.css")-->
-<!--@end-->
-<!--%import("css/wiki.css")-->
-<!--%import("js/jquery.cookie.js")-->
-<!--%import("js/jquery.treeview.js")-->
-<!--@if($use_history != 'N' && $act == "dispWikiHistory")-->
-    <!--%import("js/diff.js")-->
-<!--@end-->
-<!--%import("js/wiki.js")-->
-
-<script type="text/javascript">
+<load target="css/jquery.treeview.css" cond="$module_info->menu_style == 'classic'" />
+<load target="css/wiki.css" />
+<load target="js/jquery.cookie.js" />
+<load target="js/jquery.treeview.js" />
+<load target="js/diff.js" cond="$use_history != 'N' && $act == 'dispWikiHistory'" />
+<load target="js/wiki.js" />
+<script>
 	jQuery(document).ready(function($){
 		$(".message.info").delay(1500).fadeOut('slow');
 	});
 </script>
-
-
 <div id="wiki">
 	<div id="wikiCustomHeader" cond="$module_info->header_text">
 			{$module_info->header_text}
@@ -72,17 +65,8 @@
 	</div>
 	   
 <div id="wikiBody">
-	<!--#include("left_side_tree_list.html")-->
-	
-	<!--
-    <div class="wikiInformation">
-		<span><a class="wikiButtonAdmin" href="{getUrl('','act','dispWikiEditPage','entry','','document_srl','','mid',$mid,'vid',$vid)}">{$lang->new_document}</a></span>
-    </div>
-	-->    
-	
+	<include target="left_side_tree_list.html" />
 	<div id="showHideTree" class="showHideTree" title="{$lang->hide_tree}/{$lang->show_tree}"></div>
-	
-
 	<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 			<p>{$XE_VALIDATOR_MESSAGE}</p>
 	</div>	

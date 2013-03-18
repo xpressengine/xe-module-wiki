@@ -1,6 +1,6 @@
-<!--#include("header.html")-->
+<include target="header.html" />
 
-<script type="text/javascript">
+<script>
 jQuery(document).ready(function($){
 	var old_radios = $("input[name=old_history_srl]");
 	var new_radios = $("input[name=history_srl]");
@@ -87,6 +87,6 @@ jQuery(document).ready(function($){
 <input type="submit" value="Compare selected revisions" />
 </form>
 
-	<!--#include("document_pagination.html")-->
+	<include target="document_pagination.html" />
 
-<!--#include("footer.html")-->
+<include target="footer.html" />

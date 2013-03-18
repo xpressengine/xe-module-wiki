@@ -1,5 +1,4 @@
-<!--#include("header.html")-->
-
+<include target="header.html" />
 <!--@if($oSourceComment->isExists())-->
 <div class="fbList">
     <div class="item itemOnly">
@@ -60,7 +59,7 @@
 		</div>
 
 		<div class="wkNav">
-			<span class="btn"><input type="submit" value="{$lang->cmd_comment_registration}" /></span>
+			<input type="submit" class="btn" value="{$lang->cmd_comment_registration}" />
 		</div>
 
 	</div>
@@ -68,4 +67,4 @@
 
 </form>
 
-<!--#include("footer.html")-->
+<include target="footer.html" />

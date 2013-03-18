@@ -1,4 +1,4 @@
-<!--#include("header.html")-->
+<include target="header.html" />
 
 <table cellspacing="0" border="1" summary="List of Articles" class="wkList">
     <thead>
@@ -36,9 +36,9 @@
         </select>
         <input type="text" name="search_keyword" value="{htmlspecialchars($search_keyword)}" class="iText" title="{$lang->cmd_search}" />
         <!--@if($last_division)-->
-            <a href="{getUrl('page',1,'document_srl','','division',$last_division,'last_division','')}" class="button"><span>{$lang->cmd_search_next}</span></a>
+            <a href="{getUrl('page',1,'document_srl','','division',$last_division,'last_division','')}" class="btn">{$lang->cmd_search_next}</a>
         <!--@end-->
-        <span class="btn"><button type="submit">{$lang->cmd_search}</button></span>
+        <button class="btn" type="submit">{$lang->cmd_search}</button>
     </fieldset>
 </form>
 
@@ -55,4 +55,4 @@
     <a href="{getUrl('page',$page_navigation->last_page,'document_srl','','division',$division,'last_division',$last_division,'entry','')}" class="nextEnd">{$lang->last_page} &rsaquo;</a>
 </div>
 
-<!--#include("footer.html")-->
+<include target="footer.html" />
