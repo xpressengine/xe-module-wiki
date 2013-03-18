@@ -1,0 +1,32 @@
+<load target="filter/delete_wiki.xml" />
+<load target="js/wiki_admin.js" />
+<include target="header.html" />
+
+<form action="./" method="get" ruleset="delete_wiki">
+	<input type="hidden" name="page" value="{$page}" />
+	<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
+	<input type="hidden" name="act" value="procWikiAdminDeleteWiki" />
+	<input type="hidden" name="module" value="wiki" />
+    <input type="hidden" name="success_return_url" value="{getUrl('act','dispWikiAdminContent', 'module_srl', '')}" />
+	
+    <h2 class="2">{$lang->confirm_delete}</h2>
+	<div class="table">
+		<table cellspacing="0">
+			<tr>
+				<th scope="row">{$lang->module_name}</th>
+				<td>{$module_info->mid}</td>
+			</tr>
+			<tr>
+				<th scope="row">{$lang->module}</th>
+				<td>{$module_info->module}</td>
+			</tr>
+			<tr>
+				<th scope="row">{$lang->document_count}</th>
+				<td>{$module_info->document_count}</td>
+			</tr>
+		</table>
+	</div>
+	<div class="btnArea">
+		<span class="btn"><input type="submit" value="{$lang->cmd_delete}" /></span>
+	</div>
+</form>
