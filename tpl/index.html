@@ -1,5 +1,5 @@
 <include target="./header.html" />
-<form action="./" method="get" onsubmit="return doChangeCategory(this);" id="fo_list">
+<form action="./" method="get" onsubmit="return doChangeCategory(this);" id="fo_list" no-error-return-url="true">
 	<table class="x_table x_table-striped x_table-hover">
 		<caption>
 			<strong>Total {number_format($total_count)}, Page {number_format($page)}/{number_format($total_page)}</strong>
@@ -17,7 +17,7 @@
 						<option value="">&hellip;</option>
 						<option value="-1">{$lang->cmd_management}</option>
 					</select>
-					<input type="submit" name="go_button" id="go_button" value="GO" class="x_btn" />
+					<input type="submit" id="go_button" value="GO" class="x_btn" />
 				</th>
 				<th scope="col">{$lang->mid}</th>
 				<th scope="col">{$lang->browser_title}</th>

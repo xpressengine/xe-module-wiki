@@ -50,3 +50,12 @@ function doCartSetup(url) {
 function doArrangeWikiList(module_srl) {
     exec_xml('wiki','procWikiAdminArrangeList',{module_srl:module_srl},function() {location.reload();});
 }
+
+function doChangeCategory(fo_obj) {
+    var module_category_srl = fo_list.module_category_srl.options[fo_list.module_category_srl.selectedIndex].value;
+    if(module_category_srl==-1) {
+        location.href = current_url.setQuery('act','dispModuleAdminCategory');
+        return false;
+    }
+    return true;
+}
