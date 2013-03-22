@@ -50,6 +50,7 @@
         <action name="dispWikiAdminInsertWiki" type="view" standalone="true" setup_index="true" />
         <action name="dispWikiAdminGrantInfo" type="view" standalone="true" />
         <action name="dispWikiAdminSkinInfo" type="view" standalone="true" />
+        <action name="dispWikiAdminMobileSkinInfo" type="view" />
         <action name="dispWikiAdminWikiAdditionSetup" type="view" standalone="true" />
         <action name="procWikiAdminInsertWiki" type="controller" standalone="true" ruleset="insert_wiki" />
         <action name="dispWikiAdminMarkupExamples" type="view" standalone="true" />
