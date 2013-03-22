@@ -16,6 +16,6 @@
 	<li cond="$module_srl" class="x_active"|cond="$act=='dispWikiAdminSkinInfo'"><a href="{getUrl('act','dispWikiAdminSkinInfo')}">{$lang->cmd_manage_skin}</a></li>
 	<li class="x_active"|cond="$act=='dispWikiAdminMarkupExamples'"><a href="{getUrl('act','dispWikiAdminMarkupExamples')}">{$lang->wiki_language_help}</a></li>
 </ul>
-<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/wiki/tpl'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 	<p>{$XE_VALIDATOR_MESSAGE}</p>
 </div>

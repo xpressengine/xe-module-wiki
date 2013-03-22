@@ -11,6 +11,7 @@
     <input type="hidden" name="success_return_url" value="{getUrl('act','dispWikiAdminContent')}" cond="!$module_info->module_srl" />
 	<input type="hidden" name="mid" value="{$module_info->mid}" cond="$logged_info->is_admin!='Y'" />
 	<input type="hidden" name="use_status[]" value="PUBLIC" />
+	<input type="hidden" name="xe_validator_id" value="modules/wiki/tpl" />
 	<div class="x_control-group" cond="$logged_info->is_admin=='Y'">
 		<label for="mid" class="x_control-label">{$lang->mid}</label>
 		<div class="x_controls">

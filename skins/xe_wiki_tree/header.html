@@ -67,6 +67,6 @@
 <div id="wikiBody">
 	<include target="left_side_tree_list.html" />
 	<div id="showHideTree" class="showHideTree" title="{$lang->hide_tree}/{$lang->show_tree}"></div>
-	<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/wiki/skins/xe_wiki_tree'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 			<p>{$XE_VALIDATOR_MESSAGE}</p>
 	</div>	

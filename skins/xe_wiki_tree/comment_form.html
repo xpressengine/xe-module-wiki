@@ -10,6 +10,7 @@
 	<input type="hidden" name="success_return_url" value="{getUrl('act','dispWikiContent','mid',$mid,'entry',$entry, 'document_srl', '')}" />
 	<input type="hidden" name="module" value="wiki" />
 	<input type="hidden" name="mid" value="{$mid}" />
+	<input type="hidden" name="xe_validator_id" value="modules/wiki/skins/xe_wiki_tree" />
 	<!--@if($oComment) -->
 		<input type="hidden" name="document_srl" value="{$oComment->get('document_srl')}" />
 		<input type="hidden" name="comment_srl" value="{$oComment->get('comment_srl')}" />

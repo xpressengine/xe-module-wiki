@@ -8,6 +8,7 @@
 	<input type="hidden" name="page" value="{$page}" />
 	<input type="hidden" name="document_srl" value="{$oComment->get('document_srl')}" />
 	<input type="hidden" name="comment_srl" value="{$oComment->get('comment_srl')}" />
+	<input type="hidden" name="xe_validator_id" value="modules/wiki/skins/xe_wiki" />
 	<a href="{getUrl('act','','comment_srl','')}" class="btn">{$lang->cmd_cancel}</a>
 	<input type="submit" value="{$lang->cmd_delete}" class="btn" />
 </form>
