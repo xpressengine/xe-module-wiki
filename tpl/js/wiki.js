@@ -46,7 +46,9 @@ function completeDeleteComment(ret_obj) {
 function doRecompileTree() {
     var params = new Array();
     params['mid'] = current_mid;
-    exec_xml('wiki','procWikiRecompileTree', params);
+    exec_xml('wiki','procWikiRecompileTree', params, function(){
+    	document.location.reload();
+    });
 }
 
 jQuery(document).ready(function($){
