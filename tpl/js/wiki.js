@@ -9,7 +9,9 @@ function doDeleteWiki(document_srl) {
     var params = new Array();
     params['mid'] = current_mid;
     params['document_srl'] = document_srl;
-    exec_xml('wiki','procWikiDeleteDocument', params);
+    exec_xml('wiki','procWikiDeleteDocument', params, function(){
+    	document.location.reload()
+    });
 }
 
 /* insert the comment and than return to view document's page */
