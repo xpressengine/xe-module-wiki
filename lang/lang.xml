@@ -36,7 +36,7 @@
 		<value xml:lang="tr"><![CDATA[Liste]]></value>
 		<value xml:lang="vi"><![CDATA[Danh sách]]></value>
 	</item>
-	<item name="cmd_view_info">
+	<item name="cmd_wiki_info">
 		<value xml:lang="ko"><![CDATA[위키 정보]]></value>
 		<value xml:lang="en"><![CDATA[Wiki Information]]></value>
 		<value xml:lang="jp"><![CDATA[wiki情報]]></value>
@@ -46,7 +46,7 @@
 		<value xml:lang="vi"><![CDATA[Thông tin Wiki]]></value>
 	</item>
 	<item name="use_comment">
-		<value xml:lang="ko"><![CDATA[위키]]></value>
+		<value xml:lang="ko"><![CDATA[댓글 사용]]></value>
 		<value xml:lang="en"><![CDATA[Use Comments]]></value>
 		<value xml:lang="jp"><![CDATA[アンケート調査]]></value>
 		<value xml:lang="zh-CN"><![CDATA[使用评论]]></value>
@@ -91,7 +91,7 @@
 		<value xml:lang="vi"><![CDATA[Thêm vào danh bạ]]></value>
 	</item>
 	<item name="notice_old_revision">
-		<value xml:lang="ko"><![CDATA[옛날 버전을 보고 계십니다]]></value>
+		<value xml:lang="ko"><![CDATA[이전 버전을 보고 계십니다]]></value>
 		<value xml:lang="en"><![CDATA[This is an old revision]]></value>
 		<value xml:lang="jp"><![CDATA[過去のバージョンです。]]></value>
 		<value xml:lang="zh-CN"><![CDATA[此为旧版本]]></value>
@@ -172,27 +172,27 @@
 		<value xml:lang="vi"><![CDATA[Markup type]]></value>
 	</item>
 	<item name="markdown">
-		<value xml:lang="ko"><![CDATA[Markdown 마크업]]></value>
-		<value xml:lang="en"><![CDATA[Markdown markup]]></value>
-		<value xml:lang="zh-CN"><![CDATA[Markdown 标记]]></value>
+		<value xml:lang="ko"><![CDATA[마크다운]]></value>
+		<value xml:lang="en"><![CDATA[Markdown]]></value>
+		<value xml:lang="zh-CN"><![CDATA[Markdown]]></value>
 	</item>	
 	<item name="googlecode_markup">
-		<value xml:lang="ko"><![CDATA[Google Code 위키 마크업]]></value>
-		<value xml:lang="en"><![CDATA[Google Code Wiki markup]]></value>
-		<value xml:lang="zh-CN"><![CDATA[Google Code Wiki标记]]></value>
+		<value xml:lang="ko"><![CDATA[구글코드위키]]></value>
+		<value xml:lang="en"><![CDATA[Google Code]]></value>
+		<value xml:lang="zh-CN"><![CDATA[Google Code]]></value>
 	</item>
 	<item name="mediawiki_markup">
-		<value xml:lang="ko"><![CDATA[MediaWiki 마크업]]></value>
-		<value xml:lang="en"><![CDATA[MediaWiki markup]]></value>
-		<value xml:lang="zh-CN"><![CDATA[MediaWiki 标记]]></value>
+		<value xml:lang="ko"><![CDATA[미디어위키]]></value>
+		<value xml:lang="en"><![CDATA[MediaWiki]]></value>
+		<value xml:lang="zh-CN"><![CDATA[MediaWiki]]></value>
 	</item>	
 	<item name="xe_wiki_markup">
-		<value xml:lang="ko"><![CDATA[XE Wiki 마크업]]></value>
-		<value xml:lang="en"><![CDATA[XE Wiki markup]]></value>
-		<value xml:lang="zh-CN"><![CDATA[XE Wiki 标记]]></value>
+		<value xml:lang="ko"><![CDATA[XE위키]]></value>
+		<value xml:lang="en"><![CDATA[XE Wiki]]></value>
+		<value xml:lang="zh-CN"><![CDATA[XE Wiki]]></value>
 	</item>
 	<item name="about_markup_type">
-		<value xml:lang="ko"><![CDATA[내용추가를 위한 HTML 마크업은 XE Editor를 사용합니다. MediaWiki나 GoogleCode와 같은 <짧은 태그>형식의 위키 마크업은 간단한 text를 사용합니다.]]></value>
+		<value xml:lang="ko"><![CDATA[내용추가를 위한 HTML 마크업은 XE 편집기를 사용합니다. 마크다운, 미디어위키, 구글코드와 같은 짧은 태그 형식의 위키는 단순한 문자를 사용합니다.]]></value>
 		<value xml:lang="en"><![CDATA[XE Wiki markup uses XE Editor and HTML for adding content. Markdown, MediaWiki and GoogleCode markup use a simpler syntax, much more appropriate for wikis. %sSee some examples%s]]></value>
 		<value xml:lang="jp"><![CDATA[HTML markup uses the XE Editor for adding content, while Wiki markup uses simple text with wiki tags (shortcode) just like the ones in MediaWiki or GoogleCode.]]></value>
 		<value xml:lang="zh-CN"><![CDATA[HTML标记通过XE编辑器添加内容，Wiki 标记（例如 MediaWiki 或者 GoogleCode）通过简单的文本以及wiki的标签添加内容。]]></value>
@@ -237,7 +237,7 @@
 		<value xml:lang="vi"><![CDATA[Cancel]]></value>
 	</item>
 	<item name="xewiki_no_results">
-		<value xml:lang="ko"><![CDATA[검색에 대한 결과가 없습니다.]]></value>
+		<value xml:lang="ko"><![CDATA[검색 결과가 없습니다.]]></value>
 		<value xml:lang="en"><![CDATA[No results found for your query.]]></value>
 		<value xml:lang="jp"><![CDATA[No results found for your query.]]></value>
 		<value xml:lang="zh-CN"><![CDATA[找不到查询的结果。]]></value>
@@ -255,7 +255,7 @@
 		<value xml:lang="vi"><![CDATA[Search results]]></value>
 	</item>
 	<item name="too_many_results">
-		<value xml:lang="ko"><![CDATA[검색결과가 많습니다. 검색어를 조금더 구체적으로 넣어주세요.]]></value>
+		<value xml:lang="ko"><![CDATA[검색 결과가 많습니다. 검색어를 조금 더 구체적으로 넣어주세요.]]></value>
 		<value xml:lang="en"><![CDATA[Consider making your search more speciffic as there are a lot of results.]]></value>
 		<value xml:lang="jp"><![CDATA[Consider making your search more speciffic as there are a lot of results.]]></value>
 		<value xml:lang="zh-CN"><![CDATA[搜索到很多结果，请搜索更具体的关键字。]]></value>
@@ -264,13 +264,13 @@
 		<value xml:lang="vi"><![CDATA[Consider making your search more speciffic as there are a lot of results.]]></value>
 	</item>
 	<item name="results_number">
-		<value xml:lang="ko"><![CDATA[ 질의에 대한 검색 결과.]]></value>
-		<value xml:lang="en"><![CDATA[ results match your query.]]></value>
-		<value xml:lang="jp"><![CDATA[ results match your query.]]></value>
-		<value xml:lang="zh-CN"><![CDATA[ 符合查询条件的结果.]]></value>
-		<value xml:lang="zh-TW"><![CDATA[ results match your query.]]></value>
-		<value xml:lang="tr"><![CDATA[ results match your query.]]></value>
-		<value xml:lang="vi"><![CDATA[ results match your query.]]></value>
+		<value xml:lang="ko"><![CDATA[질의에 대한 검색 결과.]]></value>
+		<value xml:lang="en"><![CDATA[results match your query.]]></value>
+		<value xml:lang="jp"><![CDATA[results match your query.]]></value>
+		<value xml:lang="zh-CN"><![CDATA[符合查询条件的结果.]]></value>
+		<value xml:lang="zh-TW"><![CDATA[results match your query.]]></value>
+		<value xml:lang="tr"><![CDATA[results match your query.]]></value>
+		<value xml:lang="vi"><![CDATA[results match your query.]]></value>
 	</item>
 	<item name="title_lang_bar">
 		<value xml:lang="ko"><![CDATA[언어]]></value>
@@ -282,7 +282,7 @@
 		<value xml:lang="vi"><![CDATA[Languages]]></value>
 	</item>
 	<item name="title_breadcrumbs_bar">
-		<value xml:lang="ko"><![CDATA[빵부스러기]]></value>
+		<value xml:lang="ko"><![CDATA[경로]]></value>
 		<value xml:lang="en"><![CDATA[Breadcrumbs]]></value>
 		<value xml:lang="jp"><![CDATA[Breadcrumbs]]></value>
 		<value xml:lang="zh-CN"><![CDATA[面包屑导航]]></value>
@@ -309,7 +309,7 @@
 		<value xml:lang="vi"><![CDATA[Home page]]></value>
 	</item>
 	<item name="histories">
-		<value xml:lang="ko"><![CDATA[Histories]]></value>
+		<value xml:lang="ko"><![CDATA[역사]]></value>
 		<value xml:lang="en"><![CDATA[Histories]]></value>
 		<value xml:lang="jp"><![CDATA[Histories]]></value>
 		<value xml:lang="zh-CN"><![CDATA[历史记录]]></value>
@@ -504,18 +504,22 @@ XpressEngine 维基系统使用 [Markdown](http://daringfireball.net/projects/ma
 		<value xml:lang="zh-CN"><![CDATA[浏览此页面的%s版本]]></value>
 	</item>					
 	<item name="pages_that_link_to_this">
+		<value xml:lang="ko"><![CDATA[이 문서를 참조하는 페이지:]]></value>
 		<value xml:lang="en"><![CDATA[Pages that reference this entry:]]></value>
 		<value xml:lang="zh-CN"><![CDATA[链接到此的页面:]]></value>
 	</item>				
 	<item name="links_in_this_page">
+		<value xml:lang="ko"><![CDATA[이 페이지의 링크:]]></value>
 		<value xml:lang="en"><![CDATA[Links in this page:]]></value>
 		<value xml:lang="zh-CN"><![CDATA[页面中的链接:]]></value>
 	</item>					
 	<item name="confirm_document_override">
+		<value xml:lang="ko"><![CDATA[글을 쓰는동안 다른 누군가에 의해 문서가 갱신됐습니다. 당신의 변경사항으로 덮어 쓸까요?]]></value>
 		<value xml:lang="en"><![CDATA[The document has been updated by someone else. Do you still want to save your changes?]]></value>
 	</item>			
 	<item name="wiki_language_help">
-		<value xml:lang="en"><![CDATA[Wiki language help]]></value>
+		<value xml:lang="ko"><![CDATA[위키 문법]]></value>
+		<value xml:lang="en"><![CDATA[Wiki Syntax]]></value>
 	</item>				
 	<item name="markdown_help">
 		<value xml:lang="en"><![CDATA[
@@ -624,20 +628,23 @@ XpressEngine 维基系统使用 [Markdown](http://daringfireball.net/projects/ma
 		]]></value>
 	</item>
     <item name="xe_wiki_markup_help">
-        <value xml:lang="en"><![CDATA[
-        XE Wiki markup uses XE Editor to add content. This is the way documents were added in older versions of XE Wiki.
-        ]]></value>
+        <value xml:lang="ko"><![CDATA[XE 위키 마크업은 XE HTML 편집기를 사용합니다. XE 위키의 지난 버전에 존재하던 방식입니다.]]></value>
+        <value xml:lang="en"><![CDATA[XE Wiki markup uses XE Editor to add content. This is the way documents were added in older versions of XE Wiki.]]></value>
     </item>
     <item name="diff_no_differences">
+        <value xml:lang="ko"><![CDATA[두 버전 사이에 차이가 없습니다.]]></value>
         <value xml:lang="en"><![CDATA[There are no differences between the two versions.]]></value>
     </item>
     <item name="diff_old_version">
+        <value xml:lang="ko"><![CDATA[낡은 버전]]></value>
         <value xml:lang="en"><![CDATA[Old version]]></value>
     </item>
     <item name="diff_new_version">
+        <value xml:lang="ko"><![CDATA[새 버전]]></value>
         <value xml:lang="en"><![CDATA[New version]]></value>
     </item>
     <item name="compare">
+        <value xml:lang="ko"><![CDATA[비교]]></value>
         <value xml:lang="en"><![CDATA[Compare]]></value>
     </item>
     <item name="about_use_status">

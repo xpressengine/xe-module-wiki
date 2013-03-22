@@ -1,16 +1,13 @@
-<!--#include("header.html")-->
-
+<include target="header.html" />
 <!--@if($module_info->markup_type != 'xe_wiki_markup')-->
-	<!--%import("../../lib/google-code-prettify/prettify.css")-->
-	<!--%import("../../lib/google-code-prettify/prettify.js")-->
-
-	<script type="text/javascript">
+	<load target="../../lib/google-code-prettify/prettify.css" />
+	<load target="../../lib/google-code-prettify/prettify.js" />
+	<script>
 		jQuery(document).ready(function($){
 			prettyPrint();
 		});
 	</script>
 <!--@end-->
-
 <div class="wikiRead">
 	<div class="wkReadBody">
 		<!--@if($oDocument->isSecret() && !$oDocument->isGranted())-->
@@ -20,11 +17,12 @@
 				<input type="hidden" name="mid" value="{$mid}" />
 				<input type="hidden" name="page" value="{$page}" />
 				<input type="hidden" name="document_srl" value="{$oDocument->document_srl}" />
+				<input type="hidden" name="xe_validator_id" value="modules/wiki/skins/xe_wiki" />
 
 				<p>&quot;{$lang->msg_is_secret}&quot;</p>
 				<dl>
 					<dt><label for="cpw">{$lang->password}</label> :</dt>
-					<dd><input type="password" name="password" id="cpw" class="iText" /><span class="btn"><input type="submit" value="{$lang->cmd_input}" /></span></dd>
+					<dd><input type="password" name="password" id="cpw" class="iText" /><input class="btn" type="submit" value="{$lang->cmd_input}" /></dd>
 				</dl>
 
 			</form>
@@ -72,11 +70,11 @@
 </div>
 
 <!--@if($oDocument->allowTrackback())-->
-    <!--#include("./trackback.html")-->
+    <include target="./trackback.html" />
 <!--@end-->
 <!--@if($oDocument->allowComment())-->
     <a name="comment"></a>
-    <!--#include("./comment.html")-->
+    <include target="./comment.html" />
 
     <!--@if($grant->write_comment && $oDocument->isEnableComment() )-->
         <!--@if(!$is_logged)-->
@@ -94,6 +92,7 @@
 			<input type="hidden" name="document_srl" value="{$oDocument->document_srl}" />
 			<input type="hidden" name="comment_srl" value="" />
 			<input type="hidden" name="content" value="" />
+			<input type="hidden" name="xe_validator_id" value="modules/wiki/skins/xe_wiki" />
             <div class="wkWrite commentEditor">
                 <div class="editor">{$oDocument->getCommentEditor()}</div>
 
@@ -114,7 +113,7 @@
                 </div>
         
                 <div class="wkNav">
-                    <span class="btn"><input type="submit" value="{$lang->cmd_comment_registration}" /></span>
+                    <input class="btn" type="submit" value="{$lang->cmd_comment_registration}" />
                 </div>
 
             </div>
@@ -124,4 +123,4 @@
 <!--@end-->
 
 
-<!--#include("footer.html")-->
+<include target="footer.html" />

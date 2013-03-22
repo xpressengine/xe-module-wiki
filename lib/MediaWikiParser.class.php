@@ -1,6 +1,6 @@
 <?php
 /* require_once ('SyntaxParser.interface.php'); // Commented for backwards compatibility with PHP4 */
-require_once ('ParserBase.class.php'); 
+require_once ('ParserBase.class.php');
 require_once ('WikiText.class.php');
 
 /**
@@ -16,8 +16,8 @@ class MediaWikiParser extends ParserBase
 									, "multiline_code_close" => "[<][\/]nowiki[>]"
 									, "superscript" => '\^'
 									, "subscript" => ',,'
-									, "strikeout" => '~~'); 
-	
+									, "strikeout" => '~~');
+
 	var $internal_links_regex = "/
 									[[][[]				# Starts with [[
 									(([^#|]+?)[:])?		# Can start with something that ends in : [matches 1,2]
@@ -27,7 +27,7 @@ class MediaWikiParser extends ParserBase
 									[]][]]				# Ends with ]]
 									([^ \n]*)?		# Optional tail for brackets - take all characters until first space or newline  [matches 8]
 								/x";
-	
+
 	/**
 	 * @brief Constructor
 	 * @developer Corina Udrescu (xe_dev@arnia.ro)
@@ -35,11 +35,11 @@ class MediaWikiParser extends ParserBase
 	 * @param $wiki_site WikiSite
 	 * @return
 	 */
-	function __construct($wiki_site) 
+	function __construct($wiki_site)
 	{
 		parent::__construct($wiki_site);
 	}
-	
+
 	/**
 	 * @brief Overrides parseText in base
 	 * @developer Corina Udrescu (xe_dev@arnia.ro)
@@ -64,39 +64,39 @@ class MediaWikiParser extends ParserBase
 	 * @param $text string
 	 * @return array()
 	 */
-	function getLinkedDocuments($text) 
+	function getLinkedDocuments($text)
 	{
-		$matches = array(); 
-		$aliases = array(); 
-		preg_match_all($this->internal_links_regex, $text, &$matches, PREG_SET_ORDER);
-		foreach($matches as $match) 
+		$matches = array();
+		$aliases = array();
+		preg_match_all($this->internal_links_regex, $text, $matches, PREG_SET_ORDER);
+		foreach($matches as $match)
 		{
 			$content = $match[3]; // Page name or external url
 			// If external URL, continue
-			
-			if(preg_match("/^(https?|ftp|file)/", $content)) 
+
+			if(preg_match("/^(https?|ftp|file)/", $content))
 			{
-					continue; 
+					continue;
 			}
 			$alias = $this->wiki_site->documentExists($content);
-			if($alias && !in_array($alias, $aliases)) 
+			if($alias && !in_array($alias, $aliases))
 			{
 					$aliases[] = $alias;
 			}
 		}
 		return $aliases;
 	}
-	
+
 	/**
 	 * @brief Removes all blocks that need to be escaped from original text
 	 * @developer Corina Udrescu (xe_dev@arnia.ro)
 	 * @access protected
 	 * @return
-	 * 
-	 * Blocks are saved in a private member until parsing is done, 
+	 *
+	 * Blocks are saved in a private member until parsing is done,
 	 * and after that they are inserted back into the content.
 	 */
-	function escapeWhateverThereIsToEscape() 
+	function escapeWhateverThereIsToEscape()
 	{
 		// Escape text between <nowiki> and </nowiki>
 		$this->text = preg_replace_callback("~
@@ -110,7 +110,7 @@ class MediaWikiParser extends ParserBase
 												([^ ]*)
 											~x", array($this, "_escapeBlock"), $this->text);
 	}
-	
+
 	/**
 	 * @brief Callback function for escapes
 	 * @developer Corina Udrescu (xe_dev@arnia.ro)
@@ -118,21 +118,21 @@ class MediaWikiParser extends ParserBase
 	 * @param $matches array()
 	 * @return string
 	 */
-	function _escapeBlock(&$matches) 
+	function _escapeBlock(&$matches)
 	{
 		$this->batch_count++;
 		$replacement = "%%%" . $this->batch_count . "%%%";
 		$this->escaped_blocks[$replacement] = $matches[1];
 		return $replacement;
 	}
-	
+
 	/**
 	 * @brief Handles list like content
 	 * @developer Corina Udrescu (xe_dev@arnia.ro)
 	 * @access protected
-	 * @return 
+	 * @return
 	 */
-	function parseLists() 
+	function parseLists()
 	{
 		// Ordered list
 		// Find all ordered list blocks - at most 4 levels deep - and surround them with <ol></ol>
@@ -162,30 +162,30 @@ class MediaWikiParser extends ParserBase
 		// Wraps all list items to <li/>
 		$this->text = preg_replace("/^[#\*]+ *(.+)$/m", "<li>$1</li>", $this->text); return ;
 	}
-	
+
 	/**
 	 * @brief Handles definition lists
 	 * @developer Corina Udrescu (xe_dev@arnia.ro)
 	 * @access protected
 	 * @return
-	 * 
+	 *
 	 * Only allow one level lists - anything else is ignored
 	 */
-	function parseDefinitionLists() 
+	function parseDefinitionLists()
 	{
 		// Wrap block with <dl> tags
-		$this->text = preg_replace("/	
+		$this->text = preg_replace("/
 									[\r]?[\n]					# Newline
 									[;:]						# That start with #
 									.+						# Followed by any characters (at least one)
-									(([\r]?[\n])[:;].+)+			# Then repeat at least once										
+									(([\r]?[\n])[:;].+)+			# Then repeat at least once
 									/x", "\n<dl>$0\n</dl>", $this->text);
 		// Wrap term with <dt>
 		$this->text = preg_replace("/^[;](.+)$/m", "<dt>$1</dt>", $this->text);
 		// Wrap definitio with <dd>
 		$this->text = preg_replace("/^[:](.+)$/m", "<dd>$1</dd>", $this->text);
 	}
-	
+
 	/**
 	 * @brief Skips indent parsing
 	 * @developer Corina Udrescu (xe_dev@arnia.ro)
@@ -193,10 +193,10 @@ class MediaWikiParser extends ParserBase
 	 * @override
 	 * @return
 	 */
-	function parseIndents() 
+	function parseIndents()
 	{
 	}
-	
+
 	/**
 	 * @brief Skip blockquote parsing; indenting means Preformatted text in MediaWiki
 	 * @developer Corina Udrescu (xe_dev@arnia.ro)
@@ -204,17 +204,17 @@ class MediaWikiParser extends ParserBase
 	 * @override
 	 * @return
 	 */
-	function parseQuotes() 
+	function parseQuotes()
 	{
 	}
-	
+
 	/**
 	 * @brief Handle <pre> text
 	 * @developer Corina Udrescu (xe_dev@arnia.ro)
 	 * @access protected
 	 * @return
 	 */
-	function parsePreformattedText() 
+	function parsePreformattedText()
 	{
 		$this->text = preg_replace("/(
 							(([\n])			# Start with newline
@@ -223,14 +223,14 @@ class MediaWikiParser extends ParserBase
 							)+				# Repeat at least once
 							)/xe", "str_replace('$3', '', '<pre>$1</pre>')", $this->text);
 	}
-	
+
 	/**
 	 * @brief Handle links
 	 * @developer Corina Udrescu (xe_dev@arnia.ro)
 	 * @access protected
 	 * @return
 	 */
-	function parseLinks() 
+	function parseLinks()
 	{
 		// Replace external urls that just start with http, https, ftp etc.;
 		// skip the ones in square brackets;
@@ -257,7 +257,7 @@ class MediaWikiParser extends ParserBase
 									[]]				# Ends with ]
 								/x", array($this, "_handle_external_link"), $this->text);
 	}
-	
+
 	/**
 	 * @brief Callback function for parseLinks
 	 * @developer Corina Udrescu (xe_dev@arnia.ro)
@@ -265,25 +265,25 @@ class MediaWikiParser extends ParserBase
 	 * @param $matches array()
 	 * @return string
 	 */
-	function _handle_external_link(&$matches) 
+	function _handle_external_link(&$matches)
 	{
-		$url = $matches[1]; 
-		$local_anchor = $matches[2]; 
-		$description = $matches[5]; 
-		$href = '"' . $url . $local_anchor . '"'; 
-		$title = " title=\"$url\""; 
-		$class = " class=\"external\""; 
-		$description = ($description ? $description : $url); 
+		$url = $matches[1];
+		$local_anchor = $matches[2];
+		$description = $matches[5];
+		$href = '"' . $url . $local_anchor . '"';
+		$title = " title=\"$url\"";
+		$class = " class=\"external\"";
+		$description = ($description ? $description : $url);
 		return "<a href=$href$title$class>$description</a>";
 	}
-	
+
 	/**
 	 * @brief Callback for call to preg_replace_callback that parses links
 	 * @developer Corina Udrescu (xe_dev@arnia.ro)
 	 * @access private
 	 * @param $matches array()
 	 * @return string
-	 * 
+	 *
 	 * Sample input:
 	 * array(9) {
 	 *		[0]=> "[[Help:Main Page#See also|different text]]esses"
@@ -298,17 +298,17 @@ class MediaWikiParser extends ParserBase
 	 *		}
 	 *
 	 */
-	function _handle_internal_link(&$matches) 
+	function _handle_internal_link(&$matches)
 	{
-		$namespace = $matches[2]; 
+		$namespace = $matches[2];
 		$content = $matches[3]; // Page name or external url
-		$local_anchor = $matches[4]; 
-		$description = $matches[7]; 
+		$local_anchor = $matches[4];
+		$description = $matches[7];
 		$tail = $matches[8];
 		// If tail had a <nowiki /> tag before it, the words would have been removed from text by now
 		// That is why we search for %%%
-		
-		if(strpos($matches[8], '%%%') === 0) 
+
+		if(strpos($matches[8], '%%%') === 0)
 		{
 			$external_tail = $tail;
 			$tail = '';
@@ -316,25 +316,25 @@ class MediaWikiParser extends ParserBase
 		// Building href
 		// url#local_anchor
 		$alias = $this->wiki_site->documentExists(str_replace(' ', '_', $content));
-		if($alias) 
+		if($alias)
 		{
 			$href = $alias;
 		}
-		else 
+		else
 		{
-			$href = str_replace(' ', '_', $content); 
+			$href = str_replace(' ', '_', $content);
 		}
 		$href .= str_replace(' ', '_', $local_anchor);
 		// Building title attribute
 		$title = $content ? " title=\"$content\"" : '';
-		
+
 		// Add class attribute
 		$class = '';
-		if(preg_match("/^(https?|ftp|file)/", $href)) 
+		if(preg_match("/^(https?|ftp|file)/", $href))
 		{
 			$class = 'external ';
 		}
-		if($alias) 
+		if($alias)
 		{
 			$class .= 'exist';
 		}
@@ -344,39 +344,39 @@ class MediaWikiParser extends ParserBase
 			{
 				$class .= 'exist';
 			}
-			else 
+			else
 			{
-				$class .= 'notexist'; 
+				$class .= 'notexist';
 			}
 		}
 		$class = " class=\"$class\"";
-		
+
 		// Build description
-		if(!$description) 
+		if(!$description)
 		{
 			$description = $content . $local_anchor;
 		}
-		if($tail) 
+		if($tail)
 		{
 			$description .= $tail;
 		}
 		// If document does not exist, return plain text
-		
-		if(!$alias && !$this->wiki_site->currentUserCanCreateContent()) 
+
+		if(!$alias && !$this->wiki_site->currentUserCanCreateContent())
 		{
-			return $description; 
+			return $description;
 		}
-		
+
 		return "<a href=\"$href\"$title$class>$description</a>$external_tail";
 	}
-	
+
 	/**
 	 * @brief Handle tables
 	 * @developer Corina Udrescu (xe_dev@arnia.ro)
 	 * @access protected
 	 * @return
 	 */
-	function parseTables() 
+	function parseTables()
 	{
 		// Table rows: |-
 		// First row is default
@@ -416,7 +416,7 @@ class MediaWikiParser extends ParserBase
 	 * @param $matches array
 	 * @return string
 	 */
-	function _handle_cell($matches) 
+	function _handle_cell($matches)
 	{
 		$table_cells = preg_replace('/[\s]*[|][|][\s]*/', '</td><td>', $matches[0]);
 		return $table_cells;

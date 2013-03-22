@@ -59,10 +59,11 @@
 							<input type="hidden" name="page" value="{$page}" />
 							<input type="hidden" name="document_srl" value="{$comment->get('document_srl')}" />
 							<input type="hidden" name="comment_srl" value="{$comment->get('comment_srl')}" />
+							<input type="hidden" name="xe_validator_id" value="modules/wiki/skins/xe_wiki" />
 							<p>&quot;{$lang->msg_is_secret}&quot;</p>
 							<dl>
 								<dt><label for="cpw">{$lang->password}</label> :</dt>
-								<dd><input type="password" id="cpw" name="password" class="iText" /><span class="btn"><input type="submit" value="{$lang->cmd_input}" /></span></dd>
+								<dd><input type="password" id="cpw" name="password" class="iText" /><input type="submit" value="{$lang->cmd_input}" class="btn" /></dd>
 							</dl>
 						</form>
 					<!--@else-->

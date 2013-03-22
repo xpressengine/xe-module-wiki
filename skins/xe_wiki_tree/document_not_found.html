@@ -1,4 +1,4 @@
-<!--#include("header.html")-->
+<include target="header.html" />
 
 	<div id="wikiTitleArea">
 		<!-- Needs to acces title with get('title') instead of getTitle() because oDocument is seen as invalid when doc_srl is 0 -->
@@ -8,8 +8,8 @@
 	<div id="wikiContentContainer" class="xe_content">
 		{$oDocument->get('content')}
 		<div class="command">
-			<span class="buttonOfficial"><a href="{getUrl('act','dispWikiEditPage','entry',$oDocument->get('title'), 'document_srl', '')}">{$lang->cmd_create}</a></span>
+			<a class="btn" href="{getUrl('act','dispWikiEditPage','entry',$oDocument->get('title'), 'document_srl', '')}">{$lang->cmd_create}</a>
 		</div>
 	</div>
 
-<!--#include("footer.html")-->
+<include target="footer.html" />

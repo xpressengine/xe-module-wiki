@@ -1,4 +1,4 @@
-<!--#include("header.html")-->
+<include target="header.html" />
 <h3>{$lang->confirm_delete}</h3>
 <form action="./" method="get" ruleset="delete_comment">
 	<input type="hidden" name="act" value="procWikiDeleteComment" />
@@ -13,4 +13,4 @@
 		<a class="bn" href="{getUrl('act','','comment_srl','')}">{$lang->cmd_cancel}</a>
 	</div>
 </form>
-<!--#include("footer.html")-->
+<include target="footer.html" />

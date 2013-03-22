@@ -1,16 +1,14 @@
-<!--#include("header.html")-->
-
+<include target="header.html" />
 <!--@if($module_info->markup_type != 'xe_wiki_markup')-->
-	<!--%import("../../lib/google-code-prettify/prettify.css")-->
-	<!--%import("../../lib/google-code-prettify/prettify.js")-->
+	<load target="../../lib/google-code-prettify/prettify.css" />
+	<load target="../../lib/google-code-prettify/prettify.js" />
 
-	<script type="text/javascript">
+	<script>
 		jQuery(document).ready(function($){
 			prettyPrint();
 		});
 	</script>
 <!--@end-->
-
 <div id="wikiDocument">
 	<!--@if($oDocument && $oDocument->isExists())-->
 	
@@ -42,17 +40,17 @@
 					<a href="{getUrl('act','dispWikiEditPage', 'entry', '', 'document_srl', '')}"><img src="img/icon_add_page.png" alt="Add new page" title="Add new page"/></a>
 				<!--@end-->
 				<!--@if($oDocument->isExists()&&$act!='dispWikiEditPage'&&$grant->write_document)-->
-					<a class="buttonOfficial" href="{getUrl('act','dispWikiEditPage','entry',$entry, 'document_srl', '')}">
+					<a href="{getUrl('act','dispWikiEditPage','entry',$entry, 'document_srl', '')}">
 						<img src="img/icon_edit_page.png" alt="{$lang->cmd_edit}" title="{$lang->cmd_edit}"/>
 					</a>
 				<!--@end-->
 				<!--@if($oDocument->isExists() && $grant->delete_document && $oDocument->document_srl != (int)$root->document_srl)-->
-					<a class="buttonOfficial" href="#" onclick="if(confirm('{$lang->confirm_delete}')) { doDeleteWiki('{$oDocument->document_srl}'); }; return false;">
+					<a href="#" onclick="if(confirm('{$lang->confirm_delete}')) { doDeleteWiki('{$oDocument->document_srl}'); }; return false;">
 						<img src="img/icon_delete_page.png" alt="{$lang->cmd_delete}" title="{$lang->cmd_delete}"/>
 					</a>
 				<!--@end-->
 				<!--@if($use_history != 'N')-->
-					<a class="buttonOfficial" href="{getUrl('act','dispWikiHistory','entry',$entry,'history_srl','', 'document_srl', '')}">
+					<a href="{getUrl('act','dispWikiHistory','entry',$entry,'history_srl','', 'document_srl', '')}">
 						<img src="img/icon_history.png" alt="{$lang->histories}" title="{$lang->histories}"/>
 					</a>
 				<!--@end-->
@@ -61,7 +59,7 @@
 					{$lang->notice_old_revision}
 				<!--@end-->
 				<a href="{getUrl('act','dispWikiEditPage', 'entry', '', 'document_srl', '')}"><img src="img/icon_add_page.png" alt="Add new page" title="Add new page"/></a>
-				<a class="buttonOfficial" href="{getUrl('act','','history_srl','')}">{$lang->cmd_back}</a>
+				<a class="btn" href="{getUrl('act','','history_srl','')}">{$lang->cmd_back}</a>
 		    <!--@end-->
 			</div>						
 			
@@ -118,11 +116,12 @@
 				<input type="hidden" name="mid" value="{$mid}" />
 				<input type="hidden" name="page" value="{$page}" />
 				<input type="hidden" name="document_srl" value="{$oDocument->document_srl}" />
+				<input type="hidden" name="xe_validator_id" value="modules/wiki/skins/xe_wiki_tree" />
 
 				<p>&quot;{$lang->msg_is_secret}&quot;</p>
 				<dl>
 					<dt><label for="cpw">{$lang->password}</label> :</dt>
-					<dd><input type="password" name="password" id="cpw" class="inputText" /><span class="buttonOfficial"><input type="submit" value="{$lang->cmd_input}" /></span></dd>
+					<dd><input type="password" name="password" id="cpw" class="inputText" /> <input type="submit" class="btn" value="{$lang->cmd_input}" /></dd>
 				</dl>
 
 			</form>
@@ -185,19 +184,18 @@
 	<!--@end-->
 
 	<!--@if($oDocument->allowTrackback())-->
-		<!--#include("./trackback.html")-->
+		<include target="./trackback.html" />
 	<!--@end-->
 	
 	<div id="wikiComments">
 	<!--@if($oDocument->allowComment())-->
-		<!--#include("./comment_list.html")-->
+		<include target="./comment_list.html" />
 
 		<!--@if($grant->write_comment && $oDocument->isEnableComment() )-->
-			<!--#include("./comment_form.html")-->
+			<include target="./comment_form.html" />
 		<!--@end-->
 	<!--@end-->
 	</div>
 	
-	<div class="cleared" />
-</div>
-<!--#include("footer.html")-->
+	<div class="cleared" /></div>
+<include target="footer.html" />

@@ -1,5 +1,4 @@
-<!--#include("header.html")-->
-
+<include target="header.html" />
 <!--@if($oSourceComment->isExists())-->
 <div class="fbList">
     <div class="item itemOnly">
@@ -38,6 +37,7 @@
 	<input type="hidden" name="comment_srl" value="{$oComment->get('comment_srl')}" />
 	<input type="hidden" name="content" value="{htmlspecialchars($oComment->get('content'))}" />
 	<input type="hidden" name="parent_srl" value="{$oComment->get('parent_srl')}" />
+	<input type="hidden" name="xe_validator_id" value="modules/wiki/skins/xe_wiki" />
 
 	<div class="wkWrite commentEditor">
 
@@ -60,7 +60,7 @@
 		</div>
 
 		<div class="wkNav">
-			<span class="btn"><input type="submit" value="{$lang->cmd_comment_registration}" /></span>
+			<input type="submit" class="btn" value="{$lang->cmd_comment_registration}" />
 		</div>
 
 	</div>
@@ -68,4 +68,4 @@
 
 </form>
 
-<!--#include("footer.html")-->
+<include target="footer.html" />

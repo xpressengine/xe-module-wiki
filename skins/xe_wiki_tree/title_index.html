@@ -1,4 +1,4 @@
-<!--#include("header.html")-->
+<include target="header.html" />
 
 <div id="wikiTitleArea">
 	<h2 id="wikiTitle">{$lang->cmd_view_document_list}</h2>
@@ -25,7 +25,7 @@
     </tbody>
 </table>
 
-<form action="{getUrl()}" method="get" id="wikiSearchFormTitleIndex">
+<form action="{getUrl()}" method="get" id="wikiSearchFormTitleIndex" no-error-return-url="true">
         <input type="hidden" name="vid" value="{$vid}" />
         <input type="hidden" name="mid" value="{$mid}" />
         <input type="hidden" name="act" value="{$act}" />
@@ -36,13 +36,13 @@
             <option value="{$key}" <!--@if($search_target==$key)-->selected="selected"<!--@end-->>{$val}</option>
             <!--@end-->
         </select>
-        <input type="text" name="search_keyword" value="{htmlspecialchars($search_keyword)}" class="inputText" accesskey="S" title="{$lang->cmd_search}" />
+        <input type="text" name="search_keyword" value="{htmlspecialchars($search_keyword)}" class="inputText" title="{$lang->cmd_search}" />
         <!--@if($last_division)-->
-            <a href="{getUrl('page',1,'document_srl','','division',$last_division,'last_division','')}" class="button"><span>{$lang->cmd_search_next}</span></a>
+            <a href="{getUrl('page',1,'document_srl','','division',$last_division,'last_division','')}" class="btn">{$lang->cmd_search_next}</a>
         <!--@end-->
-        <span class="buttonOfficial"><input type="submit" value="{$lang->cmd_search}" /></span>
+    	<input class="btn" type="submit" value="{$lang->cmd_search}" />
 </form>
 
-	<!--#include("document_pagination.html")-->
+	<include target="document_pagination.html" />
 
-<!--#include("footer.html")-->
+<include target="footer.html" />

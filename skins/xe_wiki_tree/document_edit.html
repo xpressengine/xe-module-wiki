@@ -1,8 +1,8 @@
-<!--#include("header.html")-->
+<include target="header.html" />
 
 <!--@if($module_info->markup_type == 'markdown')-->
-<script type="text/javascript" src="../../lib/pagedown/Markdown.Converter.js"></script>
-<script type="text/javascript">
+<script src="../../lib/pagedown/Markdown.Converter.js"></script>
+<script>
     jQuery(function ($) {
         var $textarea = $('#wikiContentContainer textarea');
         var $preview = $('#wikiDocumentPreview');
@@ -19,8 +19,8 @@
     });
 </script>
 <!--@elseif ($module_info->markup_type == 'googlecode_markup')-->
-<script type="text/javascript" src="../../lib/js/GoogleCodeWikiParser.js"></script>
-<script type="text/javascript">
+<script src="../../lib/js/GoogleCodeWikiParser.js"></script>
+<script>
     jQuery(function ($) {
         setInterval(function () {
             var wikitext = editorGetContent(jQuery('form[editor_sequence]').attr('editor_sequence'));
@@ -31,7 +31,7 @@
     });
 </script>
 <!--@elseif ($module_info->markup_type == 'mediawiki_markup')-->
-<script type="text/javascript">
+<script>
     //ajax:
     jQuery.fn.syncPreviewWithEditor = function (options) {
         var form = (
@@ -71,7 +71,7 @@
 </script>
 <!--@end-->
 
-<script type="text/javascript">
+<script>
 	jQuery(document).ready(function($){
 		$("#title").change(function(){
 			var alias = $("#title").val().replace(/[ ]/g, "_").toLowerCase();
@@ -122,6 +122,7 @@
 	<input type="hidden" name="section" value="{$section}" />
 	<input type="hidden" name="section_title" value="{$section_title}" />
     <input type="hidden" name="success_return_url" value="{getUrl('act','dispWikiContent', 'module_srl', $module_info->module_srl)}" />
+    <input type="hidden" name="xe_validator_id" value="modules/wiki/skins/xe_wiki_tree" />
 	
 	<!--@if($history)-->
 	<input type="hidden" name="content" value="{htmlspecialchars($history->content)}" />
@@ -156,7 +157,7 @@
 	<!--@end-->
 
 	<div class="wikiNavigation">
-		<span class="button black strong"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
+		<input class="btn" type="submit" value="{$lang->cmd_registration}" />
 	</div>
 
 	<!--@if($module_info->markup_type != 'xe_wiki_markup')-->
@@ -184,8 +185,8 @@
 	</div>
 
 	<div class="wikiNavigation">
-		<span class="button black strong"><input type="submit" value="{$lang->cmd_registration}" accesskey="s" /></span>
+		<input class="btn" type="submit" value="{$lang->cmd_registration}" />
 	</div>
 
 </form>
-<!--#include("footer.html")-->
+<include target="footer.html" />

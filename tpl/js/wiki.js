@@ -1,6 +1,6 @@
 /**
  * @file   modules/wiki/js/wiki.js
- * @author zero (zero@nzeo.com)
+ * @author NHN(developers@xpressengine.com)
  * @brief  wiki 모듈의 javascript
  **/
 
@@ -9,7 +9,9 @@ function doDeleteWiki(document_srl) {
     var params = new Array();
     params['mid'] = current_mid;
     params['document_srl'] = document_srl;
-    exec_xml('wiki','procWikiDeleteDocument', params);
+    exec_xml('wiki','procWikiDeleteDocument', params, function(){
+    	document.location.reload()
+    });
 }
 
 /* insert the comment and than return to view document's page */
@@ -44,7 +46,9 @@ function completeDeleteComment(ret_obj) {
 function doRecompileTree() {
     var params = new Array();
     params['mid'] = current_mid;
-    exec_xml('wiki','procWikiRecompileTree', params);
+    exec_xml('wiki','procWikiRecompileTree', params, function(){
+    	document.location.reload();
+    });
 }
 
 jQuery(document).ready(function($){

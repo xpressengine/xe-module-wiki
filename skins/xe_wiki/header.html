@@ -1,7 +1,7 @@
 <load target="css/wiki.css" />
 <load target="js/wiki.js" />
 <load target="js/diff.js" cond="$use_history != 'N' && $act == 'dispWikiHistory'" />
-<script type="text/javascript">
+<script>
 	jQuery(document).ready(function($){
 		$(".message.info").delay(1500).fadeOut('slow');
 	});
@@ -14,23 +14,25 @@
 		</div>
 		<p class="wkDesc" cond="$module_info->comment">{$module_info->comment}</p>
     </div>
-	<div cond="$XE_VALIDATOR_MESSAGE" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
+	<div cond="$XE_VALIDATOR_MESSAGE && $XE_VALIDATOR_ID == 'modules/wiki/skins/xe_wiki'" class="message {$XE_VALIDATOR_MESSAGE_TYPE}">
 			<p>{$XE_VALIDATOR_MESSAGE}</p>
 	</div>
     <div class="wkInfo">
         <div class="infoView">
-			<span class="btn"><a href="{getUrl('act','dispWikiContent','entry','','document_srl','')}">{$lang->home_page}</a></span>
-            <span class="btn"><a href="{getUrl('act','dispWikiTitleIndex','entry','','document_srl','')}">{$lang->cmd_view_document_list}</a></span>
-            <span class="btn"><a href="{getUrl('act','dispWikiTreeIndex','entry','','document_srl','')}">{$lang->cmd_view_document_tree}</a></span>
-			<span class="btn"><a href="{getUrl('','act','dispWikiEditPage','entry','','document_srl','','mid',$mid,'vid',$vid)}">{$lang->new_document}</a></span>
+			<span class="btn-group">
+				<a class="btn" href="{getUrl('act','dispWikiContent','entry','','document_srl','')}">{$lang->home_page}</a>
+				<a class="btn" href="{getUrl('act','dispWikiTitleIndex','entry','','document_srl','')}">{$lang->cmd_view_document_list}</a>
+				<a class="btn" href="{getUrl('act','dispWikiTreeIndex','entry','','document_srl','')}">{$lang->cmd_view_document_tree}</a>
+				<a class="btn" href="{getUrl('','act','dispWikiEditPage','entry','','document_srl','','mid',$mid,'vid',$vid)}">{$lang->new_document}</a>
+			</span>
         </div>
         <form action="{getUrl()}" method="post" class="wkSearch">
             <input type="hidden" name="mid" value="{$mid}" />
             <input type="hidden" name="vid" value="{$vid}" />
 			<input type="hidden" name="act" value="dispWikiContent" />
             <input type="text" class="iText" name="entry" />
-            <span class="btn"><input type="submit" value="{$lang->cmd_move}" /></span>
-            <span class="btn" cond="$grant->manager"><a href="{getUrl('act','dispWikiAdminInsertWiki')}">{$lang->cmd_setup}</a></span>
+            <input class="btn" type="submit" value="{$lang->cmd_move}" />
+            <a class="btn" cond="$grant->manager" href="{getUrl('act','dispWikiAdminInsertWiki')}">{$lang->cmd_setup}</a>
         </form>
     </div>
     <!--@if($oDocument && $oDocument->isExists())-->
@@ -74,14 +76,16 @@
                 <span class="ipAddress" cond="$grant->manager || $module_info->display_ip_address!='N'">{$oDocument->getIpaddress()}</span>
                 <!--@if(!$history && ($oDocument->isExists()||$use_history != 'N'))-->
                 <div class="command">
-					<a cond="$oDocument->isExists()&& $act!='dispWikiEditPage' && $grant->write_document" href="{getUrl('act','dispWikiEditPage','entry',$entry, 'document_srl', '')}">{$lang->cmd_edit}</a>
-					<button cond="$oDocument->isExists() && $grant->delete_document" type="button" class="text" onclick="if(confirm('{$lang->confirm_delete}')) { doDeleteWiki('{$oDocument->document_srl}'); }">{$lang->cmd_delete}</button>
-					<a cond="$use_history != 'N'" href="{getUrl('act','dispWikiHistory','document_srl',$oDocument->document_srl,'history_srl','')}">{$lang->histories}</a>
+					<span class="btn-group">
+						<a cond="$oDocument->isExists()&& $act!='dispWikiEditPage' && $grant->write_document" class="btn" href="{getUrl('act','dispWikiEditPage','entry',$entry, 'document_srl', '')}">{$lang->cmd_edit}</a>
+						<button cond="$oDocument->isExists() && $grant->delete_document" type="button" class="btn" onclick="if(confirm('{$lang->confirm_delete}')) { doDeleteWiki('{$oDocument->document_srl}'); }">{$lang->cmd_delete}</button>
+						<a cond="$use_history != 'N'" href="{getUrl('act','dispWikiHistory','document_srl',$oDocument->document_srl,'history_srl','')}" class="btn">{$lang->histories}</a>
+					</span>
                 </div>
                 <!--@else-->
                 <div class="command">
                     <block cond="$history">{$lang->notice_old_revision}</block>
-                    <a href="{getUrl('act','','history_srl','')}">{$lang->cmd_back}</a>
+                    <a href="{getUrl('act','','history_srl','')}" class="btn">{$lang->cmd_back}</a>
                 </div>
                 <!--@end-->
             </div>
