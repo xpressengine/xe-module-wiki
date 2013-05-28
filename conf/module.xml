@@ -70,7 +70,7 @@
 		<action name="procWikiContentDiff" type="controller" standalone="true" />
 		<action name="procDispCommentEditor" type="controller" standalone="true" />
 		<action name="procWikiTextParse" type="controller" standalone="true" />
-		<action name="procWikiCheckIfDocumentWasUpdated" type="controller" standalone="true" />
+		<action name="procWikiCheckIfDocumentWasUpdated" type="controller" standalone="true" method="get" />
 		<action name="displayWikiCommentList" type="view" standalone="true"/>
 		<action name="dispWikiAddComment" type="view" standalone="true"/>
     </actions>

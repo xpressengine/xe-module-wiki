@@ -133,12 +133,12 @@ jQuery(function($) {
 	<div class="wkWrite" id="wikiContentContainer">
 		<div class="title">
 			<label for="title">{$lang->write_form_title}</label>
-			<input type="text" name="title"  id="title" value="{$oDocument->get('title')}" class="iText" />
+			<input type="text" name="title"  id="title" value="{htmlspecialchars($oDocument->get('title'))}" class="iText" />
 		</div>
 		<div class="alias" >
 			<label for="alias">{$lang->write_form_alias}</label>
 			{getFullUrl()}entry/
-			<input type="text" name="alias" id="alias" value="{$oDocument->get('alias')}" class="iText" />
+			<input type="text" name="alias" id="alias" value="{htmlspecialchars($oDocument->get('alias'))}" class="iText" />
 		</div>
 		
 		<div class="editor">

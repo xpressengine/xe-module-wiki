@@ -133,12 +133,12 @@
 
 	<div id="wikiTitleArea">
 		<em>{$lang->write_form_title}</em>
-		<input id="title" type="text" name="title" value="{$oDocument->get('title')}" class="inputTypeText" />
+		<input id="title" type="text" name="title" value="{htmlspecialchars($oDocument->get('title'))}" class="inputTypeText" />
 			
 		<br />
 		<em>{$lang->write_form_alias}</em>
 		{getFullUrl()}entry/
-		<input type="text" id="alias" name="alias" value="{$oDocument->get('alias')}" class="inputTypeText" />
+		<input type="text" id="alias" name="alias" value="{htmlspecialchars($oDocument->get('alias'))}" class="inputTypeText" />
 	</div>
 
 	<div id="wikiContentContainer">{$oDocument->getEditor()}</div>

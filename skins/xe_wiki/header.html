@@ -56,7 +56,7 @@
 				{@ $bFirst = true; }
 				<block loop="$visit_log=>$_entry">
 					<!--@if(!$bFirst)--> > <!--@else-->{@ $bFirst = false; }<!--@end--> 
-					<a href="{getUrl('entry',$_entry,'document_srl','')}">{$_entry}</a>
+					<a href="{getUrl('entry',$_entry,'document_srl','')}">{htmlspecialchars($_entry)}</a>
 				</block>
 			</div>
             <div class="authorArea">
@@ -77,6 +77,10 @@
                 <!--@if(!$history && ($oDocument->isExists()||$use_history != 'N'))-->
                 <div class="command">
 					<span class="btn-group">
+						{@
+							$oDocumentModel = getModel('document');
+							$entry = $oDocumentModel->getAlias($oDocument->get('document_srl'));
+						}
 						<a cond="$oDocument->isExists()&& $act!='dispWikiEditPage' && $grant->write_document" class="btn" href="{getUrl('act','dispWikiEditPage','entry',$entry, 'document_srl', '')}">{$lang->cmd_edit}</a>
 						<button cond="$oDocument->isExists() && $grant->delete_document" type="button" class="btn" onclick="if(confirm('{$lang->confirm_delete}')) { doDeleteWiki('{$oDocument->document_srl}'); }">{$lang->cmd_delete}</button>
 						<a cond="$use_history != 'N'" href="{getUrl('act','dispWikiHistory','document_srl',$oDocument->document_srl,'history_srl','')}" class="btn">{$lang->histories}</a>

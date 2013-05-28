@@ -65,6 +65,9 @@ class WikiView extends Wiki
 		{
 			$this->getLeftMenu();
 		}
+
+		$security = new Security($this->module_info);
+		$security->encodeHTML('title');
 	}
 
 	/**
@@ -133,6 +136,9 @@ class WikiView extends Wiki
 		Context::set('oDocument', $oDocument);
 
 		$this->setTemplateFile('document_histories');
+
+		$security = new Security();
+		$security->encodeHTML('histories..nick_name');
 
 		return new Object(0, 'success');
 	}
@@ -296,6 +302,8 @@ class WikiView extends Wiki
 			if($output && $output->content != NULL)
 			{
 				Context::set('history', $output);
+				$security = new Security();
+				$security->encodeHTML('history.nick_name');
 			}
 		}
 		$this->setTemplateFile('document_edit');
@@ -380,6 +388,9 @@ class WikiView extends Wiki
 		$oWikiModel = &getModel('wiki');
 		Context::set('document_tree', $oWikiModel->readWikiTreeCache($this->module_srl));
 		$this->setTemplateFile('tree_list');
+
+		$security = new Security();
+		$security->encodeHTML('document_tree..');
 
 		return new Object(0, 'success');
 	}
@@ -911,6 +922,9 @@ class WikiView extends Wiki
 			$this->list = $oWikiModel->getMenuTree($module_srl, $document_srl, $this->module_info->mid);
 		}
 		Context::set("list", $this->list);
+		
+		$security = new Security();
+		$security->encodeHTML('list..title');
 	}
 
 	/**

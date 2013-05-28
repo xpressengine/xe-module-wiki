@@ -171,7 +171,7 @@ dl dd{display:inline}
 #wikiSearchInfo{padding:10px;margin:0}
 #wikiSearchFormTitleIndex{margin:10px;text-align:right}
 .wikiLinks{padding:10px 0}
-.diff{background-color:#E0E8EC;padding:3px;border:1px dashed #DDDDDD;width:100%;font-weight:normal}
+.diff{background-color:#E0E8EC;padding:3px;border:1px dashed #DDDDDD;width:100%;font-weight:normal;word-break:break-all}
 .wDiffHtmlInsert,
 .wDiffHtmlInsert *{color:#009900}
 .wDiffHtmlDelete,

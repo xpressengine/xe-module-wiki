@@ -165,11 +165,11 @@ class WikiController extends Wiki
 		if($entry) 
 		{
 			$site_module_info = Context::get('site_module_info'); 
-			$url = getSiteUrl($site_module_info->document, '', 'mid', $this->module_info->mid, 'entry', $entry, 'document_srl', '');
+			$url = getNotEncodedSiteUrl($site_module_info->document, '', 'mid', $this->module_info->mid, 'entry', $entry, 'document_srl', '');
 		}
 		else 
 		{
-			$url = getSiteUrl($site_module_info->document, '', 'document_srl', $output->get('document_srl'));
+			$url = getNotEncodedSiteUrl($site_module_info->document, '', 'document_srl', $output->get('document_srl'));
 		}
 		if($section)
 		{

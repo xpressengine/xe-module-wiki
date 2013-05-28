@@ -56,6 +56,9 @@ class WikiAdminView extends Wiki
 		// Specify template path
 		$template_path = sprintf("%stpl/", $this->module_path);
 		$this->setTemplatePath($template_path);
+
+		$security = new Security();
+		$security->encodeHTML('module_category..');
 	}
 
 	/**
@@ -82,6 +85,9 @@ class WikiAdminView extends Wiki
 		Context::set('page_navigation', $output->page_navigation);
 		// Specify the template file
 		$this->setTemplateFile('index');
+
+		$security = new Security();
+		$security->encodeHTML('wiki_list..');
 	}
 
 	/**
