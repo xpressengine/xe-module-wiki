@@ -6,10 +6,10 @@
     </span></h2>
     <button class="btn_srch">search</button>
     <nav class="nav_wk b01" > <!-- [D] class opt => b00, b10, b01 -->
-        <a href="{getUrl('act','dispWikiContent','entry','','document_srl','')}" class="f">Front</a>
+        <a href="{getUrl('','mid',$mid)}" class="f">Front</a>
         <a href="{getUrl('act','dispWikiTitleIndex','entry','','document_srl','','search_target','','search_keyword','')}" class="l">List</a>
     </nav>
-    <form action="{getUrl()}" method="get" class="srch">
+    <form action="{getUrl()}" method="get" class="srch" no-error-return-url="true">
         <fieldset>
         <legend>{$lang->cmd_move}</legend>
             <input type="hidden" name="mid" value="{$mid}" />
@@ -27,6 +27,7 @@
     </block>
 </ul>
 <footer class="list_btm">
-    <a  href="#" onclick="return false;"  class="more"  id="more_view">More<i class="icon_arrow_dn"></i></a>
-    <a href="#ct" class="top">Top</a>
+	<a cond="$page != 1" href="{getUrl('page', $page - 1)}" class="prev">Prev</a>
+	<a cond="$page != $page_navigation->last_page" href="{getUrl('page', $page + 1)}" class="next">Next</a>
+    <a href="#" class="top">Top</a>
 </footer>

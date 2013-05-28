@@ -30,7 +30,13 @@
          </tr>
 	<tr>
 	    <td colspan="3" id="historyContent{$val->history_srl}" class="history_content hide">
-		<div style="text-align: left;">{$val->content}</div>
+		<div style="text-align: left;">
+			<!--@if($module_info->markup_type == 'xe_wiki_markup')-->
+			{$val->content}
+			<!--@else-->
+			{nl2br(htmlspecialchars($val->content))}
+			<!--@end-->
+		</div>
 	    </td>
 	</tr>
 	<tr>

@@ -460,6 +460,9 @@ h3 a, h3 a:hover, h3 a:active, h3 a:hover, h3 a:focus
     border: 1px dashed #DDDDDD;
     width: 100%;
     font-weight: normal;
+	word-break:break-all;
+	white-space: normal!important;
+	text-align: left!important;
 }
 .wDiffHtmlInsert, .wDiffHtmlInsert *
 {

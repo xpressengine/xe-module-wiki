@@ -121,6 +121,10 @@
 		    <!--@if(!$history && ($oDocument->isExists()||$use_history != 'N'))-->
 		    <div class="command">
 			<!--@if($oDocument->isExists()&&$act!='dispWikiEditPage')-->
+				{@
+					$oDocumentModel = getModel('document');
+					$entry = $oDocumentModel->getAlias($oDocument->get('document_srl'));
+				}
 			    <a class="bn" href="{getUrl('act','dispWikiEditPage','entry',$entry, 'document_srl', '')}"><span>{$lang->cmd_edit}</span></a>
 			<!--@end-->
 			<!--@if($oDocument->isExists() && $grant->delete_document)-->

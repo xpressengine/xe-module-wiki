@@ -76,7 +76,7 @@ function getDiff(elem,document_srl,history_srl)
 				wDiffHtmlDeleteEnd = "</span>";
 				var htmlText = WDiffString(old, current);
 				//var htmlText = diffString(old,current);
-				jQuery('#diff'+history_srl).html(htmlText).decHTML();
+				jQuery('#diff'+history_srl).html(htmlText);
 				jQuery(type+'[name*="diff"]').each(function()
 				{
 					if (!jQuery(this).hasClass("hide")) 
@@ -84,12 +84,12 @@ function getDiff(elem,document_srl,history_srl)
 				});
 				jQuery('#diff'+history_srl).toggleClass("hide");
 				docHeight = jQuery("#wikiBody").height();
-				resizeDiv(docHeight);
+				//resizeDiv(docHeight);
 			}
 		);
     }
     docHeight = jQuery("#content_Body").height();
-    resizeDiv(docHeight);
+    //resizeDiv(docHeight);
 }
 
 /**
@@ -119,7 +119,8 @@ function Tree(){
             url = request_uri+'?'+args.join('&');
 
             // node
-            var node = jQuery('<li id="tree_'+node_srl+'" rel="'+url+'"><span>'+title+'</span></li>');
+            var node = jQuery('<li id="tree_'+node_srl+'" rel="'+url+'"><span></span></li>');
+			jQuery('span', node).text(title);
 
             // insert parent child
             if(parent_srl>0){

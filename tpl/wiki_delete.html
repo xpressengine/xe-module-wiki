@@ -1,7 +1,7 @@
 <load target="filter/delete_wiki.xml" />
 <load target="js/wiki_admin.js" />
 <include target="header.html" />
-<form action="./" method="get" ruleset="delete_wiki" class="section">
+<form action="./" method="post" ruleset="delete_wiki" class="section">
 	<input type="hidden" name="page" value="{$page}" />
 	<input type="hidden" name="module_srl" value="{$module_info->module_srl}" />
 	<input type="hidden" name="act" value="procWikiAdminDeleteWiki" />

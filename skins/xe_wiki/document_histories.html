@@ -64,7 +64,13 @@
 				<button type="button" class="btn" onclick="jQuery('#historyContent{$val->history_srl}').toggleClass('hide')">{$lang->cmd_view}</button>
 				<a href="{getUrl('act','dispWikiEditPage','history_srl',$val->history_srl)}" class="btn">{$lang->restore}</a>
 				<button type="button" class="btn" onclick="getDiff('diff{$val->history_srl}',{$oDocument->document_srl},{$val->history_srl})">{$lang->diff}</button>
-                <div id="historyContent{$val->history_srl}" class="hide history_content">{nl2br($val->content)}</div>
+                <div id="historyContent{$val->history_srl}" class="hide history_content">
+					<!--@if($module_info->markup_type == 'xe_wiki_markup')-->
+					{$val->content}
+					<!--@else-->
+					{nl2br(htmlspecialchars($val->content))}
+					<!--@end-->
+				</div>
 				<div id="diff{$val->history_srl}" name="diff{$val->history_srl}" class="hide diff">
 				</div>				
             </td>
