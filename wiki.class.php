@@ -231,6 +231,7 @@ class Wiki extends ModuleObject /* implements WikiSite // Commented for backward
 				$wiki_srls[] = $module_instance->module_srl;
 			}
 		}
+		$args = new stdClass();
 		$args->wiki_srls = $wiki_srls; $output = executeQueryArray('wiki.checkOldStyleAliases', $args);
 		if(count($output->data)) 
 		{
