@@ -31,6 +31,7 @@ class WikiView extends Wiki
 
 		$oModuleModel = &getModel('module');
 		$document_config = $oModuleModel->getModulePartConfig('document', $this->module_info->module_srl);
+		if(!$document_config) $document_config = new stdClass;
 		if(!isset($document_config->use_history))
 		{
 			$document_config->use_history = 'N';
@@ -143,59 +144,59 @@ class WikiView extends Wiki
 		return new Object(0, 'success');
 	}
 
-    /**
-     * @return Object
-     */
-    function dispWikiHistoryCompare()
-    {
-        $old_history_srl = Context::get('old_history_srl');
-        $history_srl = Context::get('history_srl');
-        $document_srl = Context::get('document_srl');
+	/**
+	 * @return Object
+	 */
+	function dispWikiHistoryCompare()
+	{
+		$old_history_srl = Context::get('old_history_srl');
+		$history_srl = Context::get('history_srl');
+		$document_srl = Context::get('document_srl');
 
-        if(!$old_history_srl || !$document_srl)
-        {
-            return new Object(-1, 'msg_invalid_request');
-        }
+		if(!$old_history_srl || !$document_srl)
+		{
+			return new Object(-1, 'msg_invalid_request');
+		}
 
-        $oDocumentModel = &getModel('document');
+		$oDocumentModel = &getModel('document');
 
-        $oDocument = $oDocumentModel->getDocument($document_srl);
-        Context::set('oDocument', $oDocument);
+		$oDocument = $oDocumentModel->getDocument($document_srl);
+		Context::set('oDocument', $oDocument);
 		$entry = $oDocumentModel->getAlias($document_srl);
 		Context::set('entry', $entry);
 
 		// Set up old version
-        $output = $oDocumentModel->getHistory($old_history_srl);
+		$output = $oDocumentModel->getHistory($old_history_srl);
 		$old_version = new stdClass;
 		$old_version->content = $output->content;
 		$old_version->regdate = $output->regdate;
 
 		// Set up new version (can be either history or document itself)
 		$new_version = new stdClass;
-        if(!$history_srl || $history_srl == $document_srl)
-        {
-            $new_version->content = $oDocument->get('content');
+		if(!$history_srl || $history_srl == $document_srl)
+		{
+			$new_version->content = $oDocument->get('content');
 			$new_version->regdate = $oDocument->get('last_update');
-        }
-        else
-        {
-            $output = $oDocumentModel->getHistory($history_srl);
+		}
+		else
+		{
+			$output = $oDocumentModel->getHistory($history_srl);
 			$new_version->content = $output->content;
 			$new_version->regdate = $output->regdate;
-        }
+		}
 
-        // Include the diff class
-        require_once dirname(__FILE__).'/lib/Diff.php';
+		// Include the diff class
+		require_once dirname(__FILE__).'/lib/Diff.php';
 
-        // Initialize the diff class
-        $a = explode("\n", str_replace("\r", '', $old_version->content));
-        $b = explode("\n", str_replace("\r", '', $new_version->content));
-        $diff = new Diff($a, $b, array());
+		// Initialize the diff class
+		$a = explode("\n", str_replace("\r", '', $old_version->content));
+		$b = explode("\n", str_replace("\r", '', $new_version->content));
+		$diff = new Diff($a, $b, array());
 
-        // Generate a side by side diff
-        require_once dirname(__FILE__).'/lib/Diff/Renderer/Html/SideBySide.php';
-        $renderer = new Diff_Renderer_Html_SideBySide;
-        $diff_html = $diff->Render($renderer);
+		// Generate a side by side diff
+		require_once dirname(__FILE__).'/lib/Diff/Renderer/Html/SideBySide.php';
+		$renderer = new Diff_Renderer_Html_SideBySide;
+		$diff_html = $diff->Render($renderer);
 		if($diff_html == "")
 		{
 			$diff_html = Context::getLang('diff_no_differences');
@@ -214,14 +215,14 @@ class WikiView extends Wiki
 			$diff_html = str_replace("New Version", $new_version_header, $diff_html);
 		}
 
-        Context::set('old_version', $old_version);
-        Context::set('new_version', $new_version);
-        Context::set('diff_html', $diff_html);
+		Context::set('old_version', $old_version);
+		Context::set('new_version', $new_version);
+		Context::set('diff_html', $diff_html);
 
-        $this->setTemplateFile('document_compare');
+		$this->setTemplateFile('document_compare');
 
 		return new Object(0, 'success');
-    }
+	}
 
 	/**
 	 * @brief Document editing screen
@@ -272,14 +273,14 @@ class WikiView extends Wiki
 			{
 				require_once $this->module_path . 'lib/WikiText.class.php';
 				$content = $oDocument->get('content');
-                $lang = $this->module_info->markup_type;
-                if ($lang == 'mediawiki_markup') $lang = 'wikitext';
-                elseif ($lang == 'googlecode_markup') $lang = 'googlecode';
-                //markdown stays markdown
-                elseif ($lang == 'xe_wiki_markup') $lang = 'xewiki';
-                $wt = new WTParser($content, $lang);
+				$lang = $this->module_info->markup_type;
+				if ($lang == 'mediawiki_markup') $lang = 'wikitext';
+				elseif ($lang == 'googlecode_markup') $lang = 'googlecode';
+				//markdown stays markdown
+				elseif ($lang == 'xe_wiki_markup') $lang = 'xewiki';
+				$wt = new WTParser($content, $lang);
 				$paragraph = $wt->getText((int)$section);
-                $oDocument->add('content', $paragraph);
+				$oDocument->add('content', $paragraph);
 			}
 		}
 		else
@@ -342,6 +343,7 @@ class WikiView extends Wiki
 	{
 		$page = Context::get('page');
 		$oDocumentModel = &getModel('document');
+		$obj = new stdClass;
 		$obj->module_srl = $this->module_info->module_srl;
 		$obj->sort_index = 'update_order';
 		$obj->page = $page;
@@ -580,7 +582,7 @@ class WikiView extends Wiki
 				}
 				else {
 					$content = Context::getLang('create_first_page_description');
-                }
+				}
 
 				$oDocument->add('title', $title);
 				$alias = $this->beautifyEntryName($title);
@@ -893,7 +895,7 @@ class WikiView extends Wiki
 			$cache_key = $oCacheHandler->getGroupKey('wikiContent', $object_key);
 			$content = $oCacheHandler->get($cache_key);
 		}
-        //disable cache here: (true || ...)
+		//disable cache here: (true || ...)
 		if(true || !$content)
 		{
 			$wiki_syntax_parser = $this->getWikiTextParser();
@@ -922,7 +924,7 @@ class WikiView extends Wiki
 			$this->list = $oWikiModel->getMenuTree($module_srl, $document_srl, $this->module_info->mid);
 		}
 		Context::set("list", $this->list);
-		
+
 		$security = new Security();
 		$security->encodeHTML('list..title');
 	}

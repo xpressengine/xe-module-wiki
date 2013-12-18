@@ -69,6 +69,7 @@ class WikiAdminView extends Wiki
 	 */
 	function dispWikiAdminContent()
 	{
+		$args = new stdClass;
 		$args->sort_index = "module_srl";
 		$args->page = Context::get('page');
 		$args->list_count = 20;

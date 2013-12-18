@@ -116,6 +116,7 @@ class WikiAdminController extends Wiki
 			return new Object(-1, 'msg_invalid_request');
 		}
 		// Wiki article of the target entry has no value extraction
+		$args = new stdClass;
 		$args->module_srl = $module_srl;
 		$output = executeQueryArray('wiki.getDocumentWithoutAlias', $args);
 

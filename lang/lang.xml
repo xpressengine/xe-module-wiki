@@ -175,7 +175,7 @@
 		<value xml:lang="ko"><![CDATA[마크다운]]></value>
 		<value xml:lang="en"><![CDATA[Markdown]]></value>
 		<value xml:lang="zh-CN"><![CDATA[Markdown]]></value>
-	</item>	
+	</item>
 	<item name="googlecode_markup">
 		<value xml:lang="ko"><![CDATA[구글코드위키]]></value>
 		<value xml:lang="en"><![CDATA[Google Code]]></value>
@@ -185,7 +185,7 @@
 		<value xml:lang="ko"><![CDATA[미디어위키]]></value>
 		<value xml:lang="en"><![CDATA[MediaWiki]]></value>
 		<value xml:lang="zh-CN"><![CDATA[MediaWiki]]></value>
-	</item>	
+	</item>
 	<item name="xe_wiki_markup">
 		<value xml:lang="ko"><![CDATA[XE위키]]></value>
 		<value xml:lang="en"><![CDATA[XE Wiki]]></value>
@@ -348,7 +348,7 @@
 		<value xml:lang="ko"><![CDATA[XpressEngine 위키에 오신 것을 환영합니다!]]></value>
 		<value xml:lang="en"><![CDATA[Welcome to XpressEngine Wiki!]]></value>
 		<value xml:lang="zh-CN"><![CDATA[欢迎来到 XpressEngine 维基系统!]]></value>
-	</item>	
+	</item>
 	<item name="create_first_page_description">
 		<value xml:lang="ko"><![CDATA[생성된 문서가 없습니다. 새로운 페이지를 생성하세요.]]></value>
 		<value xml:lang="en"><![CDATA[You don't have any documents yet. Go ahead and add your first page!]]></value>
@@ -358,9 +358,9 @@
 		<value xml:lang="en"><![CDATA[
 You haven't created any pages yet so here's a few tips to get you started.
 
-You should now that XpressEngine Wiki now uses [Markdown](http://daringfireball.net/projects/markdown/) as its default syntax for adding content.  
+You should now that XpressEngine Wiki now uses [Markdown](http://daringfireball.net/projects/markdown/) as its default syntax for adding content.
 
-### What is Markdown? 
+### What is Markdown?
 
 Here's how it's presented on its website:
 
@@ -378,13 +378,13 @@ For headings, like the one above use
 
 \# Heading 1
 
-\## Heading 2 
+\## Heading 2
 
 \#\#\# Heading 3
 
 or even simpler, divide content with many dashes:
 
-     ---------------------------
+	 ---------------------------
 
 #### Links
 
@@ -414,18 +414,18 @@ You can also link to pages inside the same wiki, but instead of using an url you
 This page was just a quick intro to get you started. For more help, take a look at:
 
 + PHP Markdown extra - http://michelf.com/projects/php-markdown/extra/
-+ Markdown's official reference - http://daringfireball.net/projects/markdown/syntax		
++ Markdown's official reference - http://daringfireball.net/projects/markdown/syntax
 		]]></value>
 		<value xml:lang="zh-CN"><![CDATA[
 你还没有建立任何页面，这里提供一些帮助提示。
 
 XpressEngine 维基系统使用 [Markdown](http://daringfireball.net/projects/markdown/) 作为默认的语法规则来添加内容。
 
-### 什么是 Markdown? 
+### 什么是 Markdown?
 
 以下是Markdown官网的描述：
 
-> _Markdown 是一个 文本-HTML 的转换工具，它允许你在写文章时使用一种易读写的文本格式，然后将其转换成标准的XHTML（或者HTML） 
+> _Markdown 是一个 文本-HTML 的转换工具，它允许你在写文章时使用一种易读写的文本格式，然后将其转换成标准的XHTML（或者HTML）
 
 是什么意思呢？请看一些例子！
 
@@ -439,13 +439,13 @@ XpressEngine 维基系统使用 [Markdown](http://daringfireball.net/projects/ma
 
 \# Heading 1
 
-\## Heading 2 
+\## Heading 2
 
 \#\#\# Heading 3
 
 或者更简单，使用减号即可：
 
-     ---------------------------
+	 ---------------------------
 
 #### 链接
 
@@ -475,68 +475,68 @@ XpressEngine 维基系统使用 [Markdown](http://daringfireball.net/projects/ma
 这个页面简单地介绍了怎样使用Markdown。请点击以下链接获得更多帮助
 
 + PHP Markdown extra - http://michelf.com/projects/php-markdown/extra/
-+ Markdown's 官方参考 - http://daringfireball.net/projects/markdown/syntax		
++ Markdown's 官方参考 - http://daringfireball.net/projects/markdown/syntax
 		]]></value>
 	</item>
 	<item name="top_of_page">
 		<value xml:lang="ko"><![CDATA[상단으로]]></value>
 		<value xml:lang="en"><![CDATA[Go to top]]></value>
 		<value xml:lang="zh-CN"><![CDATA[去顶端]]></value>
-	</item>	
+	</item>
 	<item name="comment">
 		<value xml:lang="ko"><![CDATA[댓글]]></value>
 		<value xml:lang="en"><![CDATA[Comments]]></value>
 		<value xml:lang="zh-CN"><![CDATA[评论]]></value>
-	</item>		
+	</item>
 	<item name="translate_page_into">
 		<value xml:lang="ko"><![CDATA[페이지를 %s로 번역]]></value>
 		<value xml:lang="en"><![CDATA[Translate page into %s]]></value>
 		<value xml:lang="zh-CN"><![CDATA[翻译页面到%s]]></value>
-	</item>			
+	</item>
 	<item name="you_are_viewing">
 		<value xml:lang="ko"><![CDATA[현재 %s로 보고 있습니다.]]></value>
 		<value xml:lang="en"><![CDATA[You are currently viewing this page in %s]]></value>
 		<value xml:lang="zh-CN"><![CDATA[你正在浏览此%s页面]]></value>
-	</item>				
+	</item>
 	<item name="view_this_page_in">
 		<value xml:lang="ko"><![CDATA[%s로 이페이지 보기]]></value>
 		<value xml:lang="en"><![CDATA[View this page in %s]]></value>
 		<value xml:lang="zh-CN"><![CDATA[浏览此页面的%s版本]]></value>
-	</item>					
+	</item>
 	<item name="pages_that_link_to_this">
 		<value xml:lang="ko"><![CDATA[이 문서를 참조하는 페이지:]]></value>
 		<value xml:lang="en"><![CDATA[Pages that reference this entry:]]></value>
 		<value xml:lang="zh-CN"><![CDATA[链接到此的页面:]]></value>
-	</item>				
+	</item>
 	<item name="links_in_this_page">
 		<value xml:lang="ko"><![CDATA[이 페이지의 링크:]]></value>
 		<value xml:lang="en"><![CDATA[Links in this page:]]></value>
 		<value xml:lang="zh-CN"><![CDATA[页面中的链接:]]></value>
-	</item>					
+	</item>
 	<item name="confirm_document_override">
 		<value xml:lang="ko"><![CDATA[글을 쓰는동안 다른 누군가에 의해 문서가 갱신됐습니다. 당신의 변경사항으로 덮어 쓸까요?]]></value>
 		<value xml:lang="en"><![CDATA[The document has been updated by someone else. Do you still want to save your changes?]]></value>
-	</item>			
+	</item>
 	<item name="wiki_language_help">
 		<value xml:lang="ko"><![CDATA[위키 문법]]></value>
 		<value xml:lang="en"><![CDATA[Wiki Syntax]]></value>
-	</item>				
+	</item>
 	<item name="markdown_help">
 		<value xml:lang="en"><![CDATA[
 		# Heading 1 #
 		## Heading 2 ##
 		### Heading 3 ##############
-		
+
 		*italic*, **bold**
 		escape \*
-		
+
 		- Use a minus sign for a bullet list
 		+ Or plus sign
 		* Or an asterisk
 		1. Numbered lists are easy
 		2. Markdown keeps track of the numbers for you
 		7. So this will be item 3.
-		
+
 		Links:
 		&nbsp;&nbsp;  http://site/page
 		&nbsp;&nbsp;  Add description: [Page description](http://site/page)
@@ -548,17 +548,17 @@ XpressEngine 维基系统使用 [Markdown](http://daringfireball.net/projects/ma
 		Images:
 		![Image description](url_to_image)
 
-        Line breaks
-        - Add an empty line
+		Line breaks
+		- Add an empty line
 		- Add two spaces the end of a line
-		
+
 		For more help, take a look at:
 		<ul>
 		<li> PHP Markdown extra - <a href=http://michelf.com/projects/php-markdown/extra/ target=_blank>http://michelf.com/projects/php-markdown/extra/</a>
 		<li> Markdown's official reference - <a href=http://daringfireball.net/projects/markdown/syntax target=_blank>http://daringfireball.net/projects/markdown/syntax</a>
 		</ul>
 		]]></value>
-	</item>		
+	</item>
 	<item name="googlecode_markup_help">
 		<value xml:lang="en"><![CDATA[
 		=Heading1=
@@ -578,17 +578,17 @@ XpressEngine 维基系统使用 [Markdown](http://daringfireball.net/projects/ma
 		}}}
 
 		Horizontal rule
-		---- 
+		----
 
 		WikiWordLink
 		[http://domain/page label]
 		http://domain/page
 
-		|| table || cells ||		
-		
+		|| table || cells ||
+
 		For more help, take a look at <a href=http://code.google.com/p/support/wiki/WikiSyntax target=_blank>http://code.google.com/p/support/wiki/WikiSyntax</a>
 		]]></value>
-	</item>		
+	</item>
 <item name="mediawiki_markup_help">
 		<value xml:lang="en"><![CDATA[
 		== Heading2 ==
@@ -599,19 +599,19 @@ XpressEngine 维基系统使用 [Markdown](http://daringfireball.net/projects/ma
 
 		Lists
 		* bullet item
-		** deeper level	
+		** deeper level
 		# numbered list
 
 		Horizontal rule
-		---- 
+		----
 
 		Links
 		[[Internal_link]]
 		[[Internal_link | You should use page alias]]
-		
+
 		http://domain/page
 		[http://domain/page label]
-		
+
 		Table:
 		{|
 		|Orange
@@ -621,35 +621,35 @@ XpressEngine 维基系统使用 [Markdown](http://daringfireball.net/projects/ma
 		|Pie
 		|-
 		|Butter
-		|Ice cream 
+		|Ice cream
 		|}
-		
+
 		For more help, take a look at <a href=http://www.mediawiki.org/wiki/Help:Formatting target=_blank>http://www.mediawiki.org/wiki/Help:Formatting</a>
 		]]></value>
 	</item>
-    <item name="xe_wiki_markup_help">
-        <value xml:lang="ko"><![CDATA[XE 위키 마크업은 XE HTML 편집기를 사용합니다. XE 위키의 지난 버전에 존재하던 방식입니다.]]></value>
-        <value xml:lang="en"><![CDATA[XE Wiki markup uses XE Editor to add content. This is the way documents were added in older versions of XE Wiki.]]></value>
-    </item>
-    <item name="diff_no_differences">
-        <value xml:lang="ko"><![CDATA[두 버전 사이에 차이가 없습니다.]]></value>
-        <value xml:lang="en"><![CDATA[There are no differences between the two versions.]]></value>
-    </item>
-    <item name="diff_old_version">
-        <value xml:lang="ko"><![CDATA[낡은 버전]]></value>
-        <value xml:lang="en"><![CDATA[Old version]]></value>
-    </item>
-    <item name="diff_new_version">
-        <value xml:lang="ko"><![CDATA[새 버전]]></value>
-        <value xml:lang="en"><![CDATA[New version]]></value>
-    </item>
-    <item name="compare">
-        <value xml:lang="ko"><![CDATA[비교]]></value>
-        <value xml:lang="en"><![CDATA[Compare]]></value>
-    </item>
-    <item name="about_use_status">
-        <value xml:lang="ko"><![CDATA[글 작성 시 선택할 수 있는 상태를 지정해주세요.]]></value>
-        <value xml:lang="en"><![CDATA[Please select status that can be selected when writing an article.]]></value>
-        <value xml:lang="jp"><![CDATA[記事作成時に選択することができる状態を指定してください。]]></value>
-    </item>
+	<item name="xe_wiki_markup_help">
+		<value xml:lang="ko"><![CDATA[XE 위키 마크업은 XE HTML 편집기를 사용합니다. XE 위키의 지난 버전에 존재하던 방식입니다.]]></value>
+		<value xml:lang="en"><![CDATA[XE Wiki markup uses XE Editor to add content. This is the way documents were added in older versions of XE Wiki.]]></value>
+	</item>
+	<item name="diff_no_differences">
+		<value xml:lang="ko"><![CDATA[두 버전 사이에 차이가 없습니다.]]></value>
+		<value xml:lang="en"><![CDATA[There are no differences between the two versions.]]></value>
+	</item>
+	<item name="diff_old_version">
+		<value xml:lang="ko"><![CDATA[낡은 버전]]></value>
+		<value xml:lang="en"><![CDATA[Old version]]></value>
+	</item>
+	<item name="diff_new_version">
+		<value xml:lang="ko"><![CDATA[새 버전]]></value>
+		<value xml:lang="en"><![CDATA[New version]]></value>
+	</item>
+	<item name="compare">
+		<value xml:lang="ko"><![CDATA[비교]]></value>
+		<value xml:lang="en"><![CDATA[Compare]]></value>
+	</item>
+	<item name="about_use_status">
+		<value xml:lang="ko"><![CDATA[글 작성 시 선택할 수 있는 상태를 지정해주세요.]]></value>
+		<value xml:lang="en"><![CDATA[Please select status that can be selected when writing an article.]]></value>
+		<value xml:lang="jp"><![CDATA[記事作成時に選択することができる状態を指定してください。]]></value>
+	</item>
 </lang>
