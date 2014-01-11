@@ -1,6 +1,6 @@
 <include target="header.html" />
 <h1>{$lang->confirm_delete}</h1>
-<form action="./" method="get" ruleset="delete_comment">
+<form action="./" method="post" ruleset="delete_comment">
 	<input type="hidden" name="act" value="procWikiDeleteComment" />
 	<input type="hidden" name="success_return_url" value="{getUrl('act','dispWikiContent', 'module_srl', $module_info->module_srl,'document_srl',$oDocument->document_srl)}" />
 	<input type="hidden" name="module" value="wiki" />
