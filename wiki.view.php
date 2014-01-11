@@ -29,7 +29,7 @@ class WikiView extends Wiki
 		}
 		$this->setTemplatePath($template_path);
 
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 		$document_config = $oModuleModel->getModulePartConfig('document', $this->module_info->module_srl);
 		if(!$document_config) $document_config = new stdClass;
 		if(!isset($document_config->use_history))
@@ -45,13 +45,14 @@ class WikiView extends Wiki
 
 		// Force simple textarea if markup is Markdown, Google Code or MediaWiki
 		$editor_config = $oModuleModel->getModulePartConfig('editor', $this->module_info->module_srl);
+		if(!$editor_config) $editor_config = new stdClass;
 		if($this->module_info->markup_type != 'xe_wiki_markup'
 				&& (!$editor_config || $editor_config->sel_editor_colorset != 'white_text_usehtml'))
 		{
 			$editor_config->editor_skin = 'xpresseditor';
 			$editor_config->sel_editor_colorset = 'white_text_usehtml';
 			$editor_config->content_style = 'default';
-			$oModuleController = &getController('module');
+			$oModuleController = getController('module');
 			$oModuleController->insertModulePartConfig('editor', $this->module_info->module_srl, $editor_config);
 		}
 
@@ -94,7 +95,7 @@ class WikiView extends Wiki
 	*/
 	function dispWikiHistory()
 	{
-		$oDocumentModel = &getModel('document');
+		$oDocumentModel = getModel('document');
 		$document_srl = Context::get('document_srl');
 		$page = Context::get('page');
 		$entry = Context::get('entry');
@@ -103,7 +104,7 @@ class WikiView extends Wiki
 		{
 			if(!$entry)
 			{
-				$oWikiModel = &getModel('wiki');
+				$oWikiModel = getModel('wiki');
 				$root = $oWikiModel->getRootDocument($this->module_info->module_srl);
 				$document_srl = $root->document_srl;
 				$entry = $oDocumentModel->getAlias($document_srl);
@@ -158,7 +159,7 @@ class WikiView extends Wiki
 			return new Object(-1, 'msg_invalid_request');
 		}
 
-		$oDocumentModel = &getModel('document');
+		$oDocumentModel = getModel('document');
 
 		$oDocument = $oDocumentModel->getDocument($document_srl);
 		Context::set('oDocument', $oDocument);
@@ -342,7 +343,7 @@ class WikiView extends Wiki
 	function dispWikiTitleIndex()
 	{
 		$page = Context::get('page');
-		$oDocumentModel = &getModel('document');
+		$oDocumentModel = getModel('document');
 		$obj = new stdClass;
 		$obj->module_srl = $this->module_info->module_srl;
 		$obj->sort_index = 'update_order';
@@ -387,7 +388,7 @@ class WikiView extends Wiki
 	 */
 	function dispWikiTreeIndex()
 	{
-		$oWikiModel = &getModel('wiki');
+		$oWikiModel = getModel('wiki');
 		Context::set('document_tree', $oWikiModel->readWikiTreeCache($this->module_srl));
 		$this->setTemplateFile('tree_list');
 
@@ -459,8 +460,8 @@ class WikiView extends Wiki
 	*/
 	function dispWikiContentView()
 	{
-		$oWikiModel = &getModel('wiki');
-		$oDocumentModel = &getModel('document');
+		$oWikiModel = getModel('wiki');
+		$oDocumentModel = getModel('document');
 
 		// The requested order parameter values
 		$document_srl = Context::get('document_srl');
@@ -658,7 +659,7 @@ class WikiView extends Wiki
 			return new Object(-1, 'msg_invalid_request');
 		}
 		// Look for the comment
-		$oCommentModel = &getModel('comment');
+		$oCommentModel = getModel('comment');
 		$oSourceComment = $oCommentModel->getComment($parent_srl, $this->grant->manager);
 
 		// If there is no reply error
@@ -707,7 +708,7 @@ class WikiView extends Wiki
 			return new Object(-1, 'msg_invalid_request');
 		}
 		// Look for the comment
-		$oCommentModel = &getModel('comment');
+		$oCommentModel = getModel('comment');
 		$oComment = $oCommentModel->getComment($comment_srl, $this->grant->manager);
 		// If there is no reply error
 		if(!$oComment->isExists())
@@ -749,7 +750,7 @@ class WikiView extends Wiki
 		// If you do not have error for specified comment
 		if($comment_srl)
 		{
-			$oCommentModel = &getModel('comment');
+			$oCommentModel = getModel('comment');
 			$oComment = $oCommentModel->getComment($comment_srl, $this->grant->manager);
 		}
 
@@ -786,7 +787,7 @@ class WikiView extends Wiki
 		}
 		$document_srl = Context::get('document_srl');
 
-		$oDocumentModel = &getModel("document");
+		$oDocumentModel = getModel("document");
 		$oDocument = $oDocumentModel->getDocument($document_srl);
 		if(!$oDocument->isExists())
 		{
@@ -797,7 +798,7 @@ class WikiView extends Wiki
 			return new Object(-1, 'comments_disabled');
 		}
 		Context::set('oDocument', $oDocument);
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 		$module_info = $oModuleModel->getModuleInfoByModuleSrl($oDocument->get('module_srl'));
 		Context::set("module_info", $module_info);
 
@@ -849,7 +850,7 @@ class WikiView extends Wiki
 		$content = $oDocument->getContent(FALSE, FALSE, FALSE, FALSE);
 		$content = $this->_renderWikiContent($oDocument->document_srl, $content);
 		// Retrieve documents that link here and that this doc links to
-		$oWikiModel = &getModel('wiki');
+		$oWikiModel = getModel('wiki');
 		$inbound_links = $oWikiModel->getInboundLinks($oDocument->document_srl);
 		$outbound_links = $oWikiModel->getOutboundLinks($oDocument->document_srl);
 
@@ -920,7 +921,7 @@ class WikiView extends Wiki
 	{
 		if($document_srl)
 		{
-			$oWikiModel = &getModel('wiki');
+			$oWikiModel = getModel('wiki');
 			$this->list = $oWikiModel->getMenuTree($module_srl, $document_srl, $this->module_info->mid);
 		}
 		Context::set("list", $this->list);
@@ -937,12 +938,12 @@ class WikiView extends Wiki
 	 */
 	function getLeftMenu()
 	{
-		$oWikiModel = &getModel("wiki");
-		$oDocumentModel = &getModel("document");
+		$oWikiModel = getModel("wiki");
+		$oDocumentModel = getModel("document");
 		$module_srl = $this->module_info->module_srl;
 		// We need to retrieve skin info directly from module model
 		// because it wasn't yet synced with module_info (this method executes on init)
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 		$skin_vars = $oModuleModel->getModuleSkinVars($module_srl);
 		if($skin_vars["menu_style"]->value == "classic")
 		{
@@ -1006,9 +1007,9 @@ class WikiView extends Wiki
 	*/
 	function dispWikiSearchResults()
 	{
-		$oWikiModel = &getModel('wiki');
-		$oDocumentModel = &getModel('document');
-		$oModuleModel = &getModel('module');
+		$oWikiModel = getModel('wiki');
+		$oDocumentModel = getModel('document');
+		$oModuleModel = getModel('module');
 
 		$moduleList = $oWikiModel->getModuleList(TRUE);
 		$moduleList = $this->_sortArrayByKeyDesc($moduleList, 'search_rank');
@@ -1103,9 +1104,9 @@ class WikiView extends Wiki
 				$search_target = 'tags';
 			}
 		}
-		$oWikiModel = &getModel('wiki');
-		$oModuleModel = &getModel('module');
-		$oDocumentModel = &getModel('document');
+		$oWikiModel = getModel('wiki');
+		$oModuleModel = getModel('module');
+		$oDocumentModel = getModel('document');
 
 		$output = $oWikiModel->search($is_keyword, $target_mid, $search_target, $page, 10);
 		if($output->data)
@@ -1134,7 +1135,7 @@ class WikiView extends Wiki
 	  */
 	function _getStatusNameList()
 	{
-		$oDocumentModel = &getModel('document');
+		$oDocumentModel = getModel('document');
 		$resultList = array();
 		if(!empty($this->module_info->use_status))
 		{

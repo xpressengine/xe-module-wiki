@@ -25,7 +25,7 @@ class WikiAdminView extends Wiki
 		}
 
 		// Create Object Module model
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 
 		// Second module_srl come over to save the module, putting the information in advance
 		if($module_srl)
@@ -104,14 +104,14 @@ class WikiAdminView extends Wiki
 			return $this->alertMessage('msg_invalid_request');
 		}
 		// set skin list
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 		$skin_list = $oModuleModel->getSkins($this->module_path);
 		Context::set('skin_list', $skin_list);
 		$mskin_list = $oModuleModel->getSkins($this->module_path, "m.skins");
 		Context::set('mskin_list', $mskin_list);
 
 		// set layout list
-		$oLayoutModel = &getModel('layout');
+		$oLayoutModel = getModel('layout');
 		$layout_list = $oLayoutModel->getLayoutList();
 		Context::set('layout_list', $layout_list);
 		$mobile_layout_list = $oLayoutModel->getLayoutList(0, "M");
@@ -121,7 +121,7 @@ class WikiAdminView extends Wiki
 		Context::set('wiki_markup_list', $wiki_markup_list);
 
 		// get document status list
-		$oDocumentModel = &getModel('document');
+		$oDocumentModel = getModel('document');
 		$documentStatusList = $oDocumentModel->getStatusNameList();
 		Context::set('document_status_list', $documentStatusList);
 
@@ -166,7 +166,7 @@ class WikiAdminView extends Wiki
 			return $this->alertMessage('msg_invalid_request');
 		}
 		$module_info = Context::get('module_info');
-		$oDocumentModel = &getModel('document');
+		$oDocumentModel = getModel('document');
 		$document_count = $oDocumentModel->getDocumentCount($module_info->module_srl);
 		$module_info->document_count = $document_count;
 		Context::set('module_info', $module_info);

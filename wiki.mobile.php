@@ -37,7 +37,7 @@ class wikiMobile extends wikiView
 			$this->consultation = false;
 		}
 
-		$oDocumentModel = &getModel('document');
+		$oDocumentModel = getModel('document');
 		$extra_keys = $oDocumentModel->getExtraKeys($this->module_info->module_srl);
 		Context::set('extra_keys', $extra_keys);
 
@@ -53,7 +53,7 @@ class wikiMobile extends wikiView
 	function displayWikiCommentList()
 	{
 		$document_srl = Context::get('document_srl');
-		$oDocumentModel = &getModel('document');
+		$oDocumentModel = getModel('document');
 
 		$oDocument = $oDocumentModel->getDocument($document_srl);
 
@@ -67,7 +67,7 @@ class wikiMobile extends wikiView
 	function dispWikiAddComment()
 	{
 		$document_srl = Context::get('document_srl');
-		$oDocumentModel = &getModel('document');
+		$oDocumentModel = getModel('document');
 
 		$oDocument  = $oDocumentModel->getDocument($document_srl);
 		Context::set('oDocument', $oDocument);

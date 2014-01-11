@@ -19,7 +19,7 @@ class wikiWAP extends wiki
 		}
 
 		// Create document model
-		$oDocumentModel = &getModel('document');
+		$oDocumentModel = getModel('document');
 
 		// Check if you have selected an existing document (article)
 		$document_srl = Context::get('document_srl');
@@ -40,7 +40,7 @@ class wikiWAP extends wiki
 				// If a comment
 				if($this->act=='dispWikiContentView')
 				{
-					$oCommentModel = &getModel('comment');
+					$oCommentModel = getModel('comment');
 					$output = $oCommentModel->getCommentList($oDocument->document_srl, 0, false, $oDocument->getCommentCount());
 
 					$content = '';

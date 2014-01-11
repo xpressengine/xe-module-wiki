@@ -21,7 +21,7 @@ class WikiModel extends module
 	**/
 	function getWikiTreeList()
 	{
-		$oWikiController = &getController('wiki');
+		$oWikiController = getController('wiki');
 
 		header("Content-Type: text/xml; charset=UTF-8");
 		header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
@@ -46,7 +46,7 @@ class WikiModel extends module
 	function readWikiTreeCache($module_srl)
 	{
 
-		$oWikiController = &getController('wiki');
+		$oWikiController = getController('wiki');
 		if(!$module_srl) return new Object(-1,'msg_invalid_request');
 
 		$dat_file = sprintf('%sfiles/cache/wiki/%d.dat', _XE_PATH_,$module_srl);
@@ -220,7 +220,7 @@ class WikiModel extends module
 
 	function getContributors($document_srl)
 	{
-		$oDocumentModel = &getModel('document');
+		$oDocumentModel = getModel('document');
 		$oDocument = $oDocumentModel->getDocument($document_srl);
 		if(!$oDocument->isExists()) return array();
 
@@ -272,7 +272,7 @@ class WikiModel extends module
 			$documents_tree[$node_srl_iterator]->type = 'active_root';
 			$node_srl_iterator = $documents_tree[$node_srl_iterator]->parent_srl;
 		}
-		$oDocumentModel = &getModel("document");
+		$oDocumentModel = getModel("document");
 
 		$documents_tree_copy = $documents_tree;
 		foreach($documents_tree_copy as $key => $value)
@@ -306,7 +306,7 @@ class WikiModel extends module
 	*/
 	function createBreadcrumbsList($document_srl, $list, $list_breadcrumbs = array())
 	{
-		$oDocumentModel = &getModel("document");
+		$oDocumentModel = getModel("document");
 
 		if ((int)$list[$document_srl]->parent_srl > 0)
 		{
@@ -329,8 +329,8 @@ class WikiModel extends module
 		$breadcrumbs = array_reverse($this->createBreadcrumbsList($document_srl, $list));
 		$uri = Context::getRequestUri().Context::get("mid")."/";
 		//$menu_breadcrumbs = "<a href='" . $uri . "'>Front Page</a>";
-		$oModuleModel = &getModel("module");
-		$oDocumentModel = &getModel("document");
+		$oModuleModel = getModel("module");
+		$oDocumentModel = getModel("document");
 		$module_srl = $oModuleModel->getModuleSrlByMid(Context::get("mid"));
 		$root = $this->getRootDocument($module_srl[0]);
 		$document_srl = $root->document_srl;
@@ -383,7 +383,7 @@ class WikiModel extends module
 				return  $output->data;
 		}
 
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 
 		if($output->data)
 		{
@@ -405,7 +405,7 @@ class WikiModel extends module
 	*/
 	function search($is_keyword, $target_module_srl, $search_target, $page, $items_per_page= 10)
 	{
-		$oLuceneModule = &getModule('lucene');
+		$oLuceneModule = getModule('lucene');
 
 		if( !isset($oLuceneModule) )
 		{
@@ -423,7 +423,7 @@ class WikiModel extends module
 	*/
 	function _lucene_search($is_keyword, $target_module_srl, $search_target, $page, $items_per_page= 10 )
 	{
-		$oLuceneModel = &getModel('wiki'); //temporary imported sources so we not interfere with nlucene
+		$oLuceneModel = getModel('wiki'); //temporary imported sources so we not interfere with nlucene
 
 		$searchAPI = "lucene_search_bloc-1.0/SearchBO/";
 		$searchUrl = $oLuceneModel->getDefaultSearchUrl($searchAPI);
@@ -460,7 +460,7 @@ class WikiModel extends module
 		{
 				$service_prefix = $this->getDefaultServicePrefix();
 		}
-		$oModelDocument = &getModel('document');
+		$oModelDocument = getModel('document');
 
 		if(!$params) $params = new stdClass;
 		$params->serviceName = $service_prefix.'_document';
@@ -534,7 +534,7 @@ class WikiModel extends module
 
 	function getDefaultSearchUrl($searchAPI)
 	{
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 		$config = $oModuleModel->getModuleConfig('lucene');
 		syslog(1, "lucene config: ".print_r($config, true)."\n");
 		return $searchUrl = $config->searchUrl.$searchAPI;
@@ -593,7 +593,7 @@ class WikiModel extends module
 	*/
 	function _is_search($is_keyword, $target_module_srl, $search_target, $page, $items_per_page= 10)
 	{
-		$oDocumentModel = &getModel('document');
+		$oDocumentModel = getModel('document');
 
 		$obj = new stdClass;
 		$obj->module_srl = array($target_module_srl);
@@ -641,7 +641,7 @@ class WikiModel extends module
 
 	function getDefaultServicePrefix()
 	{
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 		$config = $oModuleModel->getModuleConfig('lucene');
 		return $config->service_name_prefix;
 	}

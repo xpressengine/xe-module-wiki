@@ -16,8 +16,8 @@ class WikiAdminController extends Wiki
 	 */
 	function procWikiAdminInsertWiki($args = NULL)
 	{
-		$oModuleController = &getController('module');
-		$oModuleModel = &getModel('module');
+		$oModuleController = getController('module');
+		$oModuleModel = getModel('module');
 
 		$args = Context::getRequestVars();
 		$args->module = 'wiki';
@@ -51,7 +51,7 @@ class WikiAdminController extends Wiki
 			{
 				// If insert was succesful, enable document history
 				$document_config->use_history = 'Y';
-				$oModuleController = &getController('module');
+				$oModuleController = getController('module');
 				$oModuleController->insertModulePartConfig('document', $output->get('module_srl'), $document_config);
 			}
 		}
@@ -82,7 +82,7 @@ class WikiAdminController extends Wiki
 	function procWikiAdminDeleteWiki()
 	{
 		$module_srl = Context::get('module_srl');
-		$oModuleController = &getController('module');
+		$oModuleController = getController('module');
 		$output = $oModuleController->deleteModule($module_srl);
 		if(!$output->toBool())
 		{
@@ -105,8 +105,8 @@ class WikiAdminController extends Wiki
 	 */
 	function procWikiAdminArrangeList()
 	{
-		$oModuleModel = &getModel('module');
-		$oDocumentController = &getController('document');
+		$oModuleModel = getModel('module');
+		$oDocumentController = getController('document');
 
 		// Verification target Wiki
 		$module_srl = Context::get('module_srl');

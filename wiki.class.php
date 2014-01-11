@@ -144,7 +144,7 @@ class Wiki extends ModuleObject /* implements WikiSite // Commented for backward
 	 */
 	function checkUpdate()
 	{
-		$oModuleModel = &getModel('module');
+		$oModuleModel = getModel('module');
 		$flag = FALSE; $flag = $this->_hasOldStyleAliases(); $oDB = DB::getInstance();
 		if(!$oDB->isIndexExists("wiki_links", "idx_link_doc_cur_doc"))
 		{
@@ -163,8 +163,8 @@ class Wiki extends ModuleObject /* implements WikiSite // Commented for backward
 	 */
 	function moduleUpdate()
 	{
-		$oModuleModel = &getModel('module');
-		$oModuleController = &getController('module');
+		$oModuleModel = getModel('module');
+		$oModuleController = getController('module');
 
 		if($this->_hasOldStyleAliases())
 		{
