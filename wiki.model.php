@@ -224,10 +224,13 @@ class WikiModel extends module
 		$oDocument = $oDocumentModel->getDocument($document_srl);
 		if(!$oDocument->isExists()) return array();
 
+		$args = new stdClass;
 		$args->document_srl = $document_srl;
 		$output = executeQueryArray("wiki.getContributors", $args);
 		if($output->data) $list = $output->data;
 		else $list = array();
+
+		$contributors = array();
 
 		$item = new stdClass;
 		$item->member_srl = $oDocument->getMemberSrl();
