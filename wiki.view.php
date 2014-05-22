@@ -98,7 +98,9 @@ class WikiView extends Wiki
 		$oDocumentModel = getModel('document');
 		$document_srl = Context::get('document_srl');
 		$page = Context::get('page');
-		$entry = Context::get('entry');
+		$entry = URLEncode( Context::get('entry') );
+		$entry = URLDecode( $entry );
+		$entry = iconv( "CP949", "UTF-8", $entry );
 
 		if(!$document_srl)
 		{
@@ -240,7 +242,9 @@ class WikiView extends Wiki
 
 		$oDocumentModel = & getModel('document');
 		$document_srl = Context::get('document_srl');
-		$entry = Context::get('entry');
+		$entry = URLEncode( Context::get('entry') );
+		$entry = URLDecode( $entry );
+		$entry = iconv( "CP949", "UTF-8", $entry );
 		$section = Context::get('section');
 
 		if(!$document_srl)
@@ -466,7 +470,10 @@ class WikiView extends Wiki
 		// The requested order parameter values
 		$document_srl = Context::get('document_srl');
 
-		$entry = Context::get('entry');
+		$entry = URLEncode( Context::get('entry') );
+		$entry = URLDecode( $entry );
+		$entry = iconv( "CP949", "UTF-8", $entry );
+
 		if(!$document_srl)
 		{
 			if(!$entry)
@@ -953,7 +960,9 @@ class WikiView extends Wiki
 		else
 		{
 			$document_srl = Context::get("document_srl");
-			$entry = Context::get("entry");
+			$entry = URLEncode( Context::get('entry') );
+			$entry = URLDecode( $entry );
+			$entry = iconv( "CP949", "UTF-8", $entry );
 			$root = $oWikiModel->getRootDocument($module_srl);
 			if(!$document_srl)
 			{
